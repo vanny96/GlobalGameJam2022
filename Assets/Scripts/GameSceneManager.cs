@@ -16,6 +16,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     void Awake()
     {
         runner.AddCallbacks(this);
+        
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
@@ -37,7 +38,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 
         Debug.Log("Player " + player + " left the lobby");
     }
-
+    
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
     public void OnConnectedToServer(NetworkRunner runner) { }
@@ -51,4 +52,10 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     public void OnSceneLoadDone(NetworkRunner runner) { }
     public void OnSceneLoadStart(NetworkRunner runner) { }
     public void OnInput(NetworkRunner runner, NetworkInput input) { }
+
+    public NetworkObject GetMyPlayerObject()
+    {
+        if (!runner.IsPlayer) return null;
+        return spawnedCharacters.TryGetValue(runner.LocalPlayer, out NetworkObject networkObject) ? networkObject : null;
+    }
 }
