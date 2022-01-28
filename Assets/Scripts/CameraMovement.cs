@@ -1,34 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
+using System.Linq;
 
 public class CameraMovement : MonoBehaviour
 {
-    [SerializeField] private GameSceneManager gameSceneManager;
-
     [SerializeField] private Vector3 relativeCameraPosition;
-    private Transform playerAvatar= null;
+    public Transform PlayerAvatar;
     
 
     // Start is called before the first frame update
 
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (playerAvatar == null)
+        if (PlayerAvatar != null)
         {
-            var playerObject = gameSceneManager.GetMyPlayerObject();
-            if (playerObject == null) return;
-        
-            playerAvatar=playerObject.transform.Find("PlayerView");
+            transform.position = PlayerAvatar.position + relativeCameraPosition;
         }
-        else
-        {
-            transform.position = playerAvatar.position + relativeCameraPosition;
-        }
-
-        
     }
 }
