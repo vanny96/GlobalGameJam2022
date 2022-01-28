@@ -7,19 +7,18 @@ using System;
 public class GhostBehaviour : NetworkBehaviour
 {
     [Networked] public bool Angry { get; set; }
-    [Networked] private Vector3 currentDestination { get; set; }
-    [Networked] private float speed { get; set; }
+    [SerializeField] [Networked] private Vector3 currentDestination { get; set; }
+    [SerializeField] [Networked] private float speed { get; set; }
+    [HideInInspector] public Bounds destinationBounds;
 
-    [SerializeField] private List<Vector2> pathCoordinates;
-    private Queue<Vector2> pathQueue;
     private new Rigidbody rigidbody;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
-
-        FillPathQueue();
+        currentDestination = GetNextDestination();
+        Debug.Log(currentDestination);
     }
 
     // Update is called once per frame
@@ -35,25 +34,21 @@ public class GhostBehaviour : NetworkBehaviour
     private void CalmPattern()
     {
         Vector3 direction = (currentDestination - transform.position);
-        Vector3 movement = transform.position +
-            (direction.normalized * speed * Runner.DeltaTime);
+        Vector3 movement = direction.normalized * speed * Runner.DeltaTime;
 
         if (movement.magnitude > direction.magnitude) movement = direction;
 
-        rigidbody.MovePosition(movement);
+        Vector3 endPosition = transform.position + movement;
+        endPosition.y = transform.position.y;
+
+        rigidbody.MovePosition(endPosition);
 
         if (transform.position == currentDestination)
             currentDestination = GetNextDestination();
     }
 
-    private void FillPathQueue()
-    {
-        pathQueue = new Queue<Vector2>(pathCoordinates);
-    }
-
     private Vector3 GetNextDestination()
     {
-        if (pathQueue.Count == 0) FillPathQueue();
-        return pathQueue.Dequeue();
+        return RandomCoordinates.FromBoundsAndY(destinationBounds, transform.position.y);
     }
 }
