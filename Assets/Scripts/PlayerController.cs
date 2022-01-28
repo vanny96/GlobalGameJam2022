@@ -19,8 +19,8 @@ public class PlayerController : NetworkBehaviour
     {
         Vector3 movement = new Vector3();
 
-        if (buttons.IsSet(PirateButtons.Forward)) movement.y++;
-        if (buttons.IsSet(PirateButtons.Backward)) movement.y--;
+        if (buttons.IsSet(PirateButtons.Forward)) movement.z++;
+        if (buttons.IsSet(PirateButtons.Backward)) movement.z--;
         if (buttons.IsSet(PirateButtons.Right)) movement.x++;
         if (buttons.IsSet(PirateButtons.Left)) movement.x--;
 
