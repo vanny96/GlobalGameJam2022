@@ -72,10 +72,4 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) { }
     public void OnSceneLoadStart(NetworkRunner runner) { }
     public void OnInput(NetworkRunner runner, NetworkInput input) { }
-
-    public NetworkObject GetMyPlayerObject()
-    {
-        if (!runner.IsPlayer) return null;
-        return spawnedCharacters.TryGetValue(runner.LocalPlayer, out NetworkObject networkObject) ? networkObject : null;
-    }
 }

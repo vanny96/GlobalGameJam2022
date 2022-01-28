@@ -21,6 +21,14 @@ public class PlayerController : NetworkBehaviour
         rigidbody = GetComponent<Rigidbody>();
     }
 
+    void Start()
+    {
+        if (GetComponent<NetworkObject>().HasInputAuthority)
+        {
+            FindObjectOfType<CameraMovement>().PlayerAvatar = this.transform;
+        }
+    }
+
     public override void FixedUpdateNetwork()
     {
         if (GetInput<PirateGameInput>(out PirateGameInput input) == false) return;
