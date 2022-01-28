@@ -53,8 +53,8 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         {
             for(int i=0; i< ghostsPerArea; i++)
             {
-                Vector3 spawnPosition = RandomCoordinates.FromBoundsAndY(ghostSpawnArea, 2);
-                NetworkObject ghostObject = runner.Spawn(ghostPrefab, spawnPosition);
+                Vector3 spawnPosition = RandomCoordinates.FromBoundsAndY(ghostSpawnArea, 1);
+                NetworkObject ghostObject = runner.Spawn(ghostPrefab, spawnPosition, Quaternion.identity);
                 ghostObject.GetComponent<GhostBehaviour>().destinationBounds = ghostSpawnArea;
             }
         }
