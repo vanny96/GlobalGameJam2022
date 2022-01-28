@@ -5,39 +5,30 @@ using Fusion;
 using Fusion.Sockets;
 using System;
 
-public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
+public class InputHandler : SimulationBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] private NetworkRunner runner;
-    [SerializeField] private NetworkPrefabRef playerPrefab;
-
-    private Dictionary<PlayerRef, NetworkObject> spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
-
 
     void Awake()
     {
         runner.AddCallbacks(this);
     }
 
-    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
+    public void OnInput(NetworkRunner runner, NetworkInput input)
     {
-        Vector3 spawnPosition = Vector3.zero;
-        NetworkObject playerObject = runner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
+        PirateGameInput pirateGameInput = new PirateGameInput();
 
-        spawnedCharacters[player] = playerObject;
-        Debug.Log("Player " + player + " joined the lobby");
+        pirateGameInput.Buttons.Set(PirateButtons.Forward, Input.GetKey(KeyCode.W));
+        pirateGameInput.Buttons.Set(PirateButtons.Backward, Input.GetKey(KeyCode.S));
+        pirateGameInput.Buttons.Set(PirateButtons.Left, Input.GetKey(KeyCode.A));
+        pirateGameInput.Buttons.Set(PirateButtons.Right, Input.GetKey(KeyCode.D));
+
+        input.Set(pirateGameInput);
     }
 
-    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player)
-    {
-        if (spawnedCharacters.TryGetValue(player, out NetworkObject networkObject))
-        {
-            runner.Despawn(networkObject);
-            spawnedCharacters.Remove(player);
-        }
 
-        Debug.Log("Player " + player + " left the lobby");
-    }
-
+    public void OnPlayerJoined(NetworkRunner runner, PlayerRef player) { }
+    public void OnPlayerLeft(NetworkRunner runner, PlayerRef player) { }
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
     public void OnConnectedToServer(NetworkRunner runner) { }
@@ -50,5 +41,17 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) { }
     public void OnSceneLoadDone(NetworkRunner runner) { }
     public void OnSceneLoadStart(NetworkRunner runner) { }
-    public void OnInput(NetworkRunner runner, NetworkInput input) { }
+}
+
+public enum PirateButtons
+{
+    Forward = 0,
+    Backward = 1,
+    Left = 2,
+    Right = 3
+}
+
+public struct PirateGameInput : INetworkInput
+{
+    public NetworkButtons Buttons;
 }
