@@ -19,6 +19,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 
     void Awake()
     {
+        
         runner.AddCallbacks(this);
 
         Terrain terrain = FindObjectOfType<Terrain>();
@@ -31,8 +32,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     {
         Vector3 spawnPosition = Vector3.zero;
         NetworkObject playerObject = runner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
-
-        spawnedCharacters[player] = playerObject;
+        
         Debug.Log("Player " + player + " joined the lobby");
     }
 
@@ -62,6 +62,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
+
     public void OnConnectedToServer(NetworkRunner runner) { }
     public void OnDisconnectedFromServer(NetworkRunner runner) { }
     public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
@@ -76,6 +77,34 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     public NetworkObject GetMyPlayerObject()
     {
         if (!runner.IsPlayer) return null;
-        return spawnedCharacters.TryGetValue(runner.LocalPlayer, out NetworkObject networkObject) ? networkObject : null;
+        //Debug.Log(runner.LocalPlayer);
+        /*foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            PlayerController playerController=player.GetComponent<PlayerController>();
+            spawnedCharacters[playerController.Object.InputAuthority] = playerController.Object;
+        }*/
+        if (spawnedCharacters.TryGetValue(runner.LocalPlayer, out NetworkObject networkObject)) {
+            //Debug.Log(networkObject);
+            foreach (var VARIABLE in spawnedCharacters)
+            {
+                Debug.Log(VARIABLE.Key);
+                Debug.Log(VARIABLE.Value);
+            }
+
+            return networkObject;
+        }
+        
+        //Debug.Log("wtfwtf");
+        return null;
+    }
+
+    public void AddToDirectory(PlayerRef playerRef,NetworkObject networkObject)
+    {
+        spawnedCharacters[playerRef] = networkObject;
+        foreach (var VARIABLE in spawnedCharacters)
+        {
+            Debug.Log(VARIABLE.Key);
+            Debug.Log(VARIABLE.Value);
+        }
     }
 }

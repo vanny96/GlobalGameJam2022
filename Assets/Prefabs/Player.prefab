@@ -245,7 +245,7 @@ GameObject:
   - component: {fileID: -4517719799412607146}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -284,6 +284,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   speed: 5
+  _treasure: 0
   leftTrigger: {fileID: 7451428485770216104}
   rightTrigger: {fileID: 3455076716976046530}
   forwardTrigger: {fileID: 6106926492589398435}

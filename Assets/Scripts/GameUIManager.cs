@@ -1,35 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using Fusion;
+using UnityEngine.UI;
 
-public class CameraMovement : MonoBehaviour
+public class GameUIManager : MonoBehaviour
 {
     [SerializeField] private GameSceneManager gameSceneManager;
 
-    [SerializeField] private Vector3 relativeCameraPosition;
-    private Transform playerAvatar= null;
-    
+    [SerializeField] private TextMeshProUGUI treasureText;
 
+    [SerializeField] private PlayerController playerController= null;
     // Start is called before the first frame update
-
+    void Start()
+    {
+        
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if (playerAvatar == null)
+        if (playerController == null)
         {
             var playerObject = gameSceneManager.GetMyPlayerObject();
             //Debug.Log(playerObject);
             if (playerObject == null) return;
         
-            playerAvatar=playerObject.transform.Find("PlayerView");
+            playerController=playerObject.GetComponent<PlayerController>();
         }
         else
         {
-            transform.position = playerAvatar.position + relativeCameraPosition;
+            treasureText.text = playerController.treasure.ToString();
         }
-
-        
     }
 }

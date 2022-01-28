@@ -31,8 +31,15 @@ public class PlayerController : NetworkBehaviour
         wasMoving = true;
     }
 
+    public override void Spawned()
+    {
+        base.Spawned();
+        GameObject.Find("SceneManager").GetComponent<GameSceneManager>().AddToDirectory(Object.InputAuthority, Object);
+    }
+
     public override void FixedUpdateNetwork()
     {
+       // Debug.Log(treasure);
         if (GetInput<PirateGameInput>(out PirateGameInput input) == false) return;
 
         Move(input.Buttons);
