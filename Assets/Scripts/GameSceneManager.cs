@@ -4,19 +4,27 @@ using UnityEngine;
 using Fusion;
 using Fusion.Sockets;
 using System;
+using System.Linq;
 
 public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] private NetworkRunner runner;
     [SerializeField] private NetworkPrefabRef playerPrefab;
+    [SerializeField] private NetworkPrefabRef ghostPrefab;
+    [SerializeField] private int ghostsPerArea;
 
     private Dictionary<PlayerRef, NetworkObject> spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
+    private IEnumerable<Bounds> ghostsSpawnAreas;
 
 
     void Awake()
     {
         runner.AddCallbacks(this);
-        
+
+        Terrain terrain = FindObjectOfType<Terrain>();
+        ghostsSpawnAreas = terrain.GetComponentsInChildren<Collider>()
+            .Where(collider => collider.gameObject.tag == "SpawnArea")
+            .Select(collider => collider.bounds);
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
@@ -38,7 +46,20 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 
         Debug.Log("Player " + player + " left the lobby");
     }
-    
+
+    public void OnSceneLoadDone(NetworkRunner runner)
+    {
+        foreach(Bounds ghostSpawnArea in ghostsSpawnAreas)
+        {
+            for(int i=0; i< ghostsPerArea; i++)
+            {
+                Vector3 spawnPosition = RandomCoordinates.FromBoundsAndY(ghostSpawnArea, 1);
+                NetworkObject ghostObject = runner.Spawn(ghostPrefab, spawnPosition, Quaternion.identity);
+                ghostObject.GetComponent<GhostBehaviour>().destinationBounds = ghostSpawnArea;
+            }
+        }
+    }
+
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
     public void OnConnectedToServer(NetworkRunner runner) { }
@@ -49,7 +70,6 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
     public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) { }
     public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) { }
-    public void OnSceneLoadDone(NetworkRunner runner) { }
     public void OnSceneLoadStart(NetworkRunner runner) { }
     public void OnInput(NetworkRunner runner, NetworkInput input) { }
 
