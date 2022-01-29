@@ -16,6 +16,9 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     [SerializeField] private GameObject gameUI;
     [SerializeField] private GameObject instructionsScreen;
 
+    [SerializeField] private Vector3 spawnPosition;
+
+
     private Dictionary<PlayerRef, NetworkObject> spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
     private IEnumerable<Bounds> ghostsSpawnAreas;
 
@@ -58,7 +61,6 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        Vector3 spawnPosition = new Vector3(0, 0, 41);
         NetworkObject playerObject = runner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
 
         if (startScreen != null)
