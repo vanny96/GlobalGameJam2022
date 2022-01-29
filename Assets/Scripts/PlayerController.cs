@@ -16,11 +16,6 @@ public class PlayerController : NetworkBehaviour
     private TreasureHolder treasureHolder;
     private Animator animator;
 
-   /* [SerializeField] private PlayerTriggerDetection leftTrigger;
-    [SerializeField] private PlayerTriggerDetection rightTrigger;
-    [SerializeField] private PlayerTriggerDetection forwardTrigger;
-    [SerializeField] private PlayerTriggerDetection backwardTrigger;*/
-
     [SerializeField] private TreasureHolderTrigger treasureHolderTrigger;
     [SerializeField] StepsSoundController soundController;
     private static readonly int Y = Animator.StringToHash("Y");
@@ -29,8 +24,15 @@ public class PlayerController : NetworkBehaviour
 
     [Networked] private NetworkBool wasMoving { get; set; }
 
+
     private float animationXdirection = 1;
     private float animationYdirection = 1;
+
+    [SerializeField] private int treasureThresholdForBeacon;
+    [Networked] public NetworkBool isBeacon { get; set; }
+
+
+
     void Awake()
     {
         characterController = GetComponent<NetworkCharacterController>();
@@ -54,18 +56,27 @@ public class PlayerController : NetworkBehaviour
 
     public override void FixedUpdateNetwork()
     {
-       // Debug.Log(treasure);
-       //if (Object.HasInputAuthority)
-       {
-           if (GetInput<PirateGameInput>(out PirateGameInput input) == false) return;
+        if (GetInput<PirateGameInput>(out PirateGameInput input) == false) return;
 
-           Move(input.Buttons);
-           Siphon(input.Buttons);
-       }
+        Move(input.Buttons);
+        Siphon(input.Buttons);
+    }
+
+    public void OnGainedCoin()
+    {
+        if(treasureHolder.treasure > treasureThresholdForBeacon)
+        {
+            isBeacon = true;
+        }
     }
 
     public void OnLostCoin()
     {
+        if (treasureHolder.treasure < treasureThresholdForBeacon)
+        {
+            isBeacon = false;
+        }
+
         if (treasureHolder.treasure == 0)
             CallGameOver();
     }
@@ -87,10 +98,12 @@ public class PlayerController : NetworkBehaviour
 
         bool isMoving = movement != Vector3.zero;
 
-        UpdateSoundController(isMoving, wasMoving);
         movement.Normalize();
+
+        UpdateSoundController(isMoving, wasMoving);
         characterController.Move( movement);
         UpdateAnimation(movement, isMoving);
+
         wasMoving = isMoving;
         
     }
