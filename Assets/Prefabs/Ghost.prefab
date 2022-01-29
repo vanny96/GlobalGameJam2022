@@ -246,7 +246,7 @@ Transform:
   m_GameObject: {fileID: 7532207286343549071}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 7140667813272997941}
   - {fileID: 8374569345308751256}
@@ -342,7 +342,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _Angry:
     _value: 0
-  _speed: 2
+  _speed: 10
   siphonCooldown: 2
   destinationBounds:
     m_Center: {x: 0, y: 0, z: 0}
