@@ -14,6 +14,7 @@ public class PlayerController : NetworkBehaviour
     private new NetworkCharacterController characterController;
     private StepsSoundController stepsSoundController;
     private TreasureHolder treasureHolder;
+    private Animator animator;
 
    /* [SerializeField] private PlayerTriggerDetection leftTrigger;
     [SerializeField] private PlayerTriggerDetection rightTrigger;
@@ -22,6 +23,9 @@ public class PlayerController : NetworkBehaviour
 
     [SerializeField] private TreasureHolderTrigger treasureHolderTrigger;
     [SerializeField] StepsSoundController soundController;
+    private static readonly int Y = Animator.StringToHash("Y");
+    private static readonly int X = Animator.StringToHash("X");
+    private static readonly int Running = Animator.StringToHash("Running");
 
     [Networked] private NetworkBool wasMoving { get; set; }
 
@@ -42,6 +46,9 @@ public class PlayerController : NetworkBehaviour
     {
         base.Spawned();
         GameObject.Find("SceneManager").GetComponent<GameSceneManager>().AddToDirectory(Object.InputAuthority, Object);
+        animator = GetComponentInChildren<Animator>() ;
+
+        
     }
 
     public override void FixedUpdateNetwork()
@@ -82,13 +89,16 @@ public class PlayerController : NetworkBehaviour
         UpdateSoundController(isMoving, wasMoving);
         movement.Normalize();
         characterController.Move( movement);
-        /*if (isMoving && !IsBlocked(movement))
-        {
-            Vector3 newPosition = transform.position + (movement * speed * Runner.DeltaTime);
-            rigidbody.MovePosition(newPosition);
-        }*/
-
+        UpdateAnimation(movement, isMoving);
         wasMoving = isMoving;
+        
+    }
+
+    private void UpdateAnimation(Vector3 direction, bool moving)
+    {
+        animator.SetInteger(X,Mathf.RoundToInt(direction.x)); 
+        animator.SetInteger(Y,Mathf.RoundToInt(direction.z)); 
+        animator.SetBool(Running,moving);
     }
 
     private void Siphon(NetworkButtons buttons)
@@ -109,23 +119,6 @@ public class PlayerController : NetworkBehaviour
             }
         }
     }
-
-    private bool IsBlocked(Vector3 movement)
-    {
-        /*if (movement.x > 0) return ContainsBlocking(rightTrigger);
-        if (movement.x < 0) return ContainsBlocking(leftTrigger);
-        if (movement.z > 0) return ContainsBlocking(forwardTrigger);
-        if (movement.z < 0) return ContainsBlocking(backwardTrigger);*/
-
-        return false;
-    }
-
-    /*private bool ContainsBlocking(PlayerTriggerDetection trigger)
-    {
-        return trigger.CollidersInTrigger
-            .Any(collider => !collider.isTrigger);
-    
-    }*/
 
     private void UpdateSoundController(bool isMoving, NetworkBool wasMoving)
     {
