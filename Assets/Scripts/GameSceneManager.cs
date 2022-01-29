@@ -58,7 +58,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        Vector3 spawnPosition = new Vector3(0, 0, 41);
+        Vector3 spawnPosition = new Vector3(0,2.5f,0);
         NetworkObject playerObject = runner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
 
         if (startScreen != null)
