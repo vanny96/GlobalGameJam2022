@@ -42,7 +42,7 @@ Animator:
   m_GameObject: {fileID: 6044249900995632992}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 0f265c0504cac2541a7a6827425b17e2, type: 2}
+  m_Controller: {fileID: 9100000, guid: d513593a9f9a6c944b0572ffc168b8cc, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -78,5 +78,5 @@ MonoBehaviour:
     _value: 0.001
     _inverse: 999.99994
     _hash: -814817977
-  StateHashes: 000000002b1a167c79406955f3b09ce077934a0f
+  StateHashes: 000000002b1a167c79406955f3b09ce077934a0f855035e50173e30aa6159944bc84a3ae
   TriggerHashes: 00000000
