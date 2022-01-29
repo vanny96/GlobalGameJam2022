@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 7140667813272997941}
   - component: {fileID: 3956263207550874449}
   m_Layer: 0
-  m_Name: Collider
+  m_Name: GhostCollider
   m_TagString: ActualCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -343,7 +343,7 @@ MonoBehaviour:
   _Angry:
     _value: 0
   _speed: 2
-  siphonCooldown: 8
+  siphonCooldown: 2
   destinationBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
@@ -361,7 +361,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb440faa7a764f98b3df7163e57486c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingTreasure: 2
+  startingTreasure: 8
   OnTreasureTaken:
     m_PersistentCalls:
       m_Calls:

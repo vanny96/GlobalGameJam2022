@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: -4517719799412607146}
   - component: {fileID: 4259027426557984416}
   - component: {fileID: 6938286709200908751}
+  - component: {fileID: 2283606126156590892}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -116,6 +117,9 @@ MonoBehaviour:
     _value: 0
   treasureHolderTrigger: {fileID: 4413254336488494146}
   soundController: {fileID: 0}
+  treasureThresholdForBeacon: 6
+  _isBeacon:
+    _value: 0
 --- !u!114 &1175178919492223223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,7 +143,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 5298650122944942551}
-  - {fileID: 0}
+  - {fileID: 6938286709200908751}
   SimulationBehaviours:
   - {fileID: -8108924302188112735}
   - {fileID: 4259027426557984416}
@@ -186,10 +190,10 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
+  MinDistance: 0
+  MaxDistance: 15
   Pan2D: 0
-  rolloffMode: 0
+  rolloffMode: 1
   BypassEffects: 0
   BypassListenerEffects: 0
   BypassReverbZones: 0
@@ -277,7 +281,19 @@ MonoBehaviour:
   startingTreasure: 2
   OnTreasureTaken:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5298650122944942551}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnGainedCoin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnTreasureGiven:
     m_PersistentCalls:
       m_Calls:
@@ -339,6 +355,22 @@ MonoBehaviour:
     MaxSlope: 60
     MaxSlopeSpeed: 5
     _gravity: {x: 0, y: 0, z: 0}
+--- !u!54 &2283606126156590892
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4743985825440454326}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 116
+  m_CollisionDetection: 0
 --- !u!1 &4850882414085235268
 GameObject:
   m_ObjectHideFlags: 0
@@ -396,7 +428,7 @@ Transform:
   m_GameObject: {fileID: 7734478979747647365}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 0.1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8194805124351178002}
   m_RootOrder: 0
