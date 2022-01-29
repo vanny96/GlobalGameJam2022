@@ -15,7 +15,6 @@ public class GameUIManager : MonoBehaviour
         if (playerTreasure == null)
         {
             var playerObject = gameSceneManager.GetMyPlayerObject();
-            Debug.Log(playerObject.InputAuthority);
             if (playerObject == null) return;
         
             playerTreasure=playerObject.GetComponent<TreasureHolder>();

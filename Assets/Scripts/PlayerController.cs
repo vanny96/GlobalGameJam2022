@@ -39,6 +39,12 @@ public class PlayerController : NetworkBehaviour
     void Start()
     {
         wasMoving = true;
+
+        if (Object.HasInputAuthority)
+        {
+            gameObject.AddComponent<AudioListener>();
+            GameObject.Destroy(FindObjectOfType<Camera>().GetComponent<AudioListener>());
+        }
     }
 
     public override void Spawned()
