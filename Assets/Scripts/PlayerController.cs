@@ -29,7 +29,8 @@ public class PlayerController : NetworkBehaviour
 
     [Networked] private NetworkBool wasMoving { get; set; }
 
-
+    private float animationXdirection = 1;
+    private float animationYdirection = 1;
     void Awake()
     {
         characterController = GetComponent<NetworkCharacterController>();
@@ -96,10 +97,13 @@ public class PlayerController : NetworkBehaviour
 
     private void UpdateAnimation(Vector3 direction, bool moving)
     {
-        direction.x = direction.x != 0 ? direction.x : 1;
-        direction.z = direction.z != 0 ? direction.z : -1;
-        animator.SetFloat(X,Mathf.Round(direction.x)); 
-        animator.SetFloat(Y,Mathf.Round(direction.z)); 
+
+        if (direction.x > 0.1f) animationXdirection = 1;
+        if (direction.x < -0.1f) animationXdirection = -1;
+        if (direction.z > 0.1f) animationYdirection = 1;
+        if (direction.z < -0.1f) animationYdirection = -1;
+        animator.SetFloat(X,animationXdirection); 
+        animator.SetFloat(Y,animationYdirection); 
         animator.SetBool(Running,moving);
     }
 
