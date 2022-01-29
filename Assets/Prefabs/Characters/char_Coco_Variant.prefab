@@ -9,7 +9,31 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1150103998637264936, guid: ffc308db548966144a745935bf787612, type: 3}
       propertyPath: StateHashes.Array.size
-      value: 5
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150103998637264936, guid: ffc308db548966144a745935bf787612, type: 3}
+      propertyPath: TriggerHashes.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150103998637264936, guid: ffc308db548966144a745935bf787612, type: 3}
+      propertyPath: StateHashes.Array.data[5]
+      value: 1127082276
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150103998637264936, guid: ffc308db548966144a745935bf787612, type: 3}
+      propertyPath: StateHashes.Array.data[6]
+      value: 572872540
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150103998637264936, guid: ffc308db548966144a745935bf787612, type: 3}
+      propertyPath: StateHashes.Array.data[7]
+      value: -437346719
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150103998637264936, guid: ffc308db548966144a745935bf787612, type: 3}
+      propertyPath: StateHashes.Array.data[8]
+      value: -1152290863
+      objectReference: {fileID: 0}
+    - target: {fileID: 1150103998637264936, guid: ffc308db548966144a745935bf787612, type: 3}
+      propertyPath: TriggerHashes.Array.data[1]
+      value: 724700051
       objectReference: {fileID: 0}
     - target: {fileID: 6044249900995632992, guid: ffc308db548966144a745935bf787612, type: 3}
       propertyPath: m_Name
