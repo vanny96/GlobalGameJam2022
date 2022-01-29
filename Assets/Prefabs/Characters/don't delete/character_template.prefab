@@ -28,7 +28,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 7401028734671144834}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -80,3 +81,49 @@ MonoBehaviour:
     _hash: -814817977
   StateHashes: 000000002b1a167c79406955f3b09ce077934a0f855035e50173e30aa6159944bc84a3ae
   TriggerHashes: 00000000
+--- !u!1001 &8921839872663873089
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 8059033480603209404}
+    m_Modifications:
+    - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -45
+      objectReference: {fileID: 0}
+    - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2613124214335415417, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
+      propertyPath: m_Name
+      value: Coins_Effect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
+--- !u!4 &7401028734671144834 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
+  m_PrefabInstance: {fileID: 8921839872663873089}
+  m_PrefabAsset: {fileID: 0}
