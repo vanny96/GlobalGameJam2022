@@ -14,6 +14,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     [SerializeField] private int ghostsPerArea;
     [SerializeField] private GameObject startScreen;
     [SerializeField] private GameObject gameUI;
+    [SerializeField] private GameObject instructionsScreen;
 
     private Dictionary<PlayerRef, NetworkObject> spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
     private IEnumerable<Bounds> ghostsSpawnAreas;
@@ -36,6 +37,21 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         ghostsSpawnAreas = terrain.GetComponentsInChildren<Collider>()
             .Where(collider => collider.gameObject.tag == "SpawnArea")
             .Select(collider => collider.bounds);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown("i"))
+        {
+            if (instructionsScreen.active)
+            {
+                closeInsructions();
+            }
+            else
+            {
+                bringUpInstructions();
+            }
+        }
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
@@ -116,4 +132,15 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     {
         Application.Quit();
     }
+
+    public void bringUpInstructions()
+    {
+        instructionsScreen.SetActive(true);
+    }
+
+    public void closeInsructions()
+    {
+        instructionsScreen.SetActive(false);
+    }
+
 }
