@@ -14,6 +14,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private PlayerTriggerDetection rightTrigger;
     [SerializeField] private PlayerTriggerDetection forwardTrigger;
     [SerializeField] private PlayerTriggerDetection backwardTrigger;
+    [SerializeField] SoundController soundController;
 
 
     void Awake()
