@@ -78,6 +78,8 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
                 ghostObject.GetComponent<GhostBehaviour>().destinationBounds = ghostSpawnArea;
             }
         }
+
+        FindObjectOfType<VictoryDetection>().networkRunner = runner;
     }
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }

@@ -29,7 +29,7 @@ public class NetworkStarter : MonoBehaviour
         StartGameArgs gameArgs = new StartGameArgs()
         {
             GameMode = mode,
-            SessionName = "TestRoom",
+            SessionName = "TestRoom1",
             Scene = SceneManager.GetActiveScene().buildIndex,
             SceneObjectProvider = gameObject.AddComponent<NetworkSceneManagerDefault>()
         };
