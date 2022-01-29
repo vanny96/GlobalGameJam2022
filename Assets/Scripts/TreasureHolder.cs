@@ -2,7 +2,7 @@ using Fusion;
 using UnityEngine.EventSystems;
 using UnityEngine.Events;
 
-public class TreasureHolder : SimulationBehaviour
+public class TreasureHolder : NetworkBehaviour
 {
     [Networked] public int treasure { get; set; }
     public int startingTreasure;
