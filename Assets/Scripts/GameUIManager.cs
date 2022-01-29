@@ -10,7 +10,7 @@ public class GameUIManager : MonoBehaviour
 
     [SerializeField] private TextMeshProUGUI treasureText;
 
-    [SerializeField] private PlayerController playerController= null;
+    [SerializeField] private TreasureHolder playerTreasure= null;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,17 +20,17 @@ public class GameUIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (playerController == null)
+        if (playerTreasure == null)
         {
             var playerObject = gameSceneManager.GetMyPlayerObject();
             //Debug.Log(playerObject);
             if (playerObject == null) return;
         
-            playerController=playerObject.GetComponent<PlayerController>();
+            playerTreasure=playerObject.GetComponent<TreasureHolder>();
         }
         else
         {
-            treasureText.text = playerController.treasure.ToString();
+            treasureText.text = playerTreasure.treasure.ToString();
         }
     }
 }

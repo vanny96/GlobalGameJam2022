@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - SpawnArea
+  - ActualCollider
   layers:
   - Default
   - TransparentFX

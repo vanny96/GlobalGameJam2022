@@ -57,6 +57,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa51aaa6677e64f5f840343b9dff4c27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &2441968299904413499
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4896015350766095995}
+  - component: {fileID: 1738844169348360965}
+  - component: {fileID: 4413254336488494146}
+  m_Layer: 0
+  m_Name: TreasureHoldersTrigger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4896015350766095995
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2441968299904413499}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 6, y: 6, z: 6}
+  m_Children: []
+  m_Father: {fileID: 8194805124351178002}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1738844169348360965
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2441968299904413499}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4413254336488494146
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2441968299904413499}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 506e7cd814e184342b98aa2ac368036f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ThisTreasureHolder: {fileID: 4259027426557984416}
 --- !u!1 &2875764778463892628
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,6 +301,7 @@ GameObject:
   - component: {fileID: 754702163006730482}
   - component: {fileID: -8108924302188112735}
   - component: {fileID: -4517719799412607146}
+  - component: {fileID: 4259027426557984416}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -267,6 +326,7 @@ Transform:
   - {fileID: 455908212663003411}
   - {fileID: 6539414339969990913}
   - {fileID: 7174118913157326992}
+  - {fileID: 4896015350766095995}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -284,11 +344,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   speed: 5
-  _treasure: 0
+  siphonCooldown: 2
+  _siphoning:
+    _value: 0
   leftTrigger: {fileID: 7451428485770216104}
   rightTrigger: {fileID: 3455076716976046530}
   forwardTrigger: {fileID: 6106926492589398435}
   backwardTrigger: {fileID: 8345958923633872694}
+  treasureHolderTrigger: {fileID: 4413254336488494146}
   soundController: {fileID: 0}
 --- !u!114 &2372858883371372479
 MonoBehaviour:
@@ -346,6 +409,7 @@ MonoBehaviour:
   - {fileID: 2372858883371372479}
   SimulationBehaviours:
   - {fileID: -8108924302188112735}
+  - {fileID: 4259027426557984416}
 --- !u!54 &754702163006730482
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -481,6 +545,25 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &4259027426557984416
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4743985825440454326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cb440faa7a764f98b3df7163e57486c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startingTreasure: 2
+  OnTreasureTaken:
+    m_PersistentCalls:
+      m_Calls: []
+  OnTreasureGiven:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4850882414085235268
 GameObject:
   m_ObjectHideFlags: 0
@@ -605,8 +688,8 @@ GameObject:
   - component: {fileID: 5055939588211516750}
   - component: {fileID: 4701096754644709522}
   m_Layer: 0
-  m_Name: Collider
-  m_TagString: Untagged
+  m_Name: PlayerCollider
+  m_TagString: ActualCollider
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

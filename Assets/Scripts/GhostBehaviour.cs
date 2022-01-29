@@ -11,14 +11,15 @@ public class GhostBehaviour : NetworkBehaviour
     [SerializeField] [Networked] private float speed { get; set; }
     [HideInInspector] public Bounds destinationBounds;
 
-    private new Rigidbody rigidbody;
+    private Rigidbody rigidbody;
+    private TreasureHolder treasureHolder;
 
     // Start is called before the first frame update
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
         currentDestination = GetNextDestination();
-        Debug.Log(currentDestination);
+        treasureHolder = GetComponent<TreasureHolder>();
     }
 
     // Update is called once per frame
@@ -28,6 +29,17 @@ public class GhostBehaviour : NetworkBehaviour
         else
         {
             CalmPattern();
+        }
+    }
+
+    public void OnTreasureChange()
+    {
+        if (Angry && treasureHolder.TreasureIsAtStartAmount())
+        {
+            Angry = false;
+        } else if (treasureHolder.TreasureIsEmpty())
+        {
+            Angry = true;
         }
     }
 

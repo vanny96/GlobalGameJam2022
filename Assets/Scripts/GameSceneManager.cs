@@ -77,34 +77,16 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     public NetworkObject GetMyPlayerObject()
     {
         if (!runner.IsPlayer) return null;
-        //Debug.Log(runner.LocalPlayer);
-        /*foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
-        {
-            PlayerController playerController=player.GetComponent<PlayerController>();
-            spawnedCharacters[playerController.Object.InputAuthority] = playerController.Object;
-        }*/
         if (spawnedCharacters.TryGetValue(runner.LocalPlayer, out NetworkObject networkObject)) {
-            //Debug.Log(networkObject);
-            foreach (var VARIABLE in spawnedCharacters)
-            {
-                Debug.Log(VARIABLE.Key);
-                Debug.Log(VARIABLE.Value);
-            }
 
             return networkObject;
         }
         
-        //Debug.Log("wtfwtf");
         return null;
     }
 
     public void AddToDirectory(PlayerRef playerRef,NetworkObject networkObject)
     {
         spawnedCharacters[playerRef] = networkObject;
-        foreach (var VARIABLE in spawnedCharacters)
-        {
-            Debug.Log(VARIABLE.Key);
-            Debug.Log(VARIABLE.Value);
-        }
     }
 }

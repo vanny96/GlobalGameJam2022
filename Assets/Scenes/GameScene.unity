@@ -575,20 +575,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3b2f475ceb7c6e4fa5e4442af508963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pirateFootStepsAC:
-  - {fileID: 8300000, guid: aed792b438255cc42b6aeed1e911681c, type: 3}
-  - {fileID: 8300000, guid: e0e79aa731feea7489b36a8deff4ec42, type: 3}
-  - {fileID: 8300000, guid: 9d3492dbd3d618044882ebe38c3fe944, type: 3}
-  - {fileID: 8300000, guid: 609105f07af783d458c5461b20071156, type: 3}
-  - {fileID: 8300000, guid: 1a67dcfa72bd29a41a60cf8f9130b322, type: 3}
-  - {fileID: 8300000, guid: d3f99d37bf0b4c744ac52c6145b2c046, type: 3}
-  - {fileID: 8300000, guid: deaa22ba4b29429408e3d85fa196febb, type: 3}
-  - {fileID: 8300000, guid: 4d4e657e9261b6a4b9e98b338036133f, type: 3}
-  pirateFootStepsAS: {fileID: 53280881}
-  nextFootStep: 0
-  footStepDelay: 0
-  index: 0
-  isWalking: 0
 --- !u!4 &53280883
 Transform:
   m_ObjectHideFlags: 0
@@ -737,7 +723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameSceneManager: {fileID: 1535212024}
   treasureText: {fileID: 700933680}
-  playerController: {fileID: 0}
+  playerTreasure: {fileID: 0}
 --- !u!1 &312268832
 GameObject:
   m_ObjectHideFlags: 0
@@ -1423,7 +1409,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8194805124351178002, guid: d89aa973d51bf48f1a872fbb5fcd1ea6, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.522466
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 8194805124351178002, guid: d89aa973d51bf48f1a872fbb5fcd1ea6, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1957,7 +1943,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9011343449617277887, guid: 59d58a8eb24be4ce6ae3f29f2ccdfa84, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 10.526692
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 9011343449617277887, guid: 59d58a8eb24be4ce6ae3f29f2ccdfa84, type: 3}
       propertyPath: m_LocalPosition.y

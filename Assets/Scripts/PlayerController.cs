@@ -1,23 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
-using System;
 using System.Linq;
 
 public class PlayerController : NetworkBehaviour
 {
     [SerializeField] private float speed;
+
+    [SerializeField] private float siphonCooldown;
+    [Networked] private float currentSiphonCooldown { get; set; } = 0;
+    [Networked] public NetworkBool siphoning { get; set; } = false; 
+
     private new Rigidbody rigidbody;
     private StepsSoundController stepsSoundController;
+    private TreasureHolder treasureHolder;
 
     [SerializeField] private PlayerTriggerDetection leftTrigger;
     [SerializeField] private PlayerTriggerDetection rightTrigger;
     [SerializeField] private PlayerTriggerDetection forwardTrigger;
     [SerializeField] private PlayerTriggerDetection backwardTrigger;
-    [SerializeField] StepsSoundController soundController;
 
-    [Networked] public int treasure { get; set; }
+    [SerializeField] private TreasureHolderTrigger treasureHolderTrigger;
+    [SerializeField] StepsSoundController soundController;
 
     [Networked] private NetworkBool wasMoving { get; set; }
 
@@ -26,6 +29,7 @@ public class PlayerController : NetworkBehaviour
     {
         rigidbody = GetComponent<Rigidbody>();
         stepsSoundController = GetComponent<StepsSoundController>();
+        treasureHolder = GetComponent<TreasureHolder>();
     }
 
     void Start()
@@ -45,12 +49,11 @@ public class PlayerController : NetworkBehaviour
         if (GetInput<PirateGameInput>(out PirateGameInput input) == false) return;
 
         Move(input.Buttons);
+        Siphon(input.Buttons);
     }
 
     private void Move(NetworkButtons buttons)
     {
-        if (buttons.IsSet(PirateButtons.Space)) treasure++;
-
         Vector3 movement = new Vector3();
 
         if (buttons.IsSet(PirateButtons.Forward)) movement.z++;
@@ -69,6 +72,25 @@ public class PlayerController : NetworkBehaviour
         }
 
         wasMoving = isMoving;
+    }
+
+    private void Siphon(NetworkButtons buttons)
+    {
+        siphoning = buttons.IsSet(PirateButtons.Space);
+
+        if (currentSiphonCooldown >= 0) currentSiphonCooldown -= Runner.DeltaTime;
+
+        if(siphoning && currentSiphonCooldown <= 0f)
+        {
+            TreasureHolder activeTreasureHolder = treasureHolderTrigger.ActiveTreasureHolder;
+            if (activeTreasureHolder != null)
+            {
+                int stolenAmount = activeTreasureHolder.GiveTreasure();
+                treasureHolder.TakeTreasure(stolenAmount);
+
+                currentSiphonCooldown = siphonCooldown;
+            }
+        }
     }
 
     private bool IsBlocked(Vector3 movement)
