@@ -12,6 +12,8 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     [SerializeField] private NetworkPrefabRef playerPrefab;
     [SerializeField] private NetworkPrefabRef ghostPrefab;
     [SerializeField] private int ghostsPerArea;
+    [SerializeField] private GameObject startScreen;
+    [SerializeField] private GameObject gameUI;
 
     private Dictionary<PlayerRef, NetworkObject> spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
     private IEnumerable<Bounds> ghostsSpawnAreas;
@@ -19,7 +21,15 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 
     void Awake()
     {
-        
+        if (startScreen != null)
+        {
+            startScreen.SetActive(true);
+        }
+        if (gameUI != null)
+        {
+            gameUI.SetActive(false);
+        }
+
         runner.AddCallbacks(this);
 
         Terrain terrain = FindObjectOfType<Terrain>();
@@ -32,7 +42,17 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     {
         Vector3 spawnPosition = new Vector3(0, 0, 41);
         NetworkObject playerObject = runner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
-        
+
+        if (startScreen != null)
+        {
+            startScreen.SetActive(false);
+        }
+        if (gameUI != null)
+        {
+            gameUI.SetActive(true);
+        }
+
+
         Debug.Log("Player " + player + " joined the lobby");
     }
 
@@ -90,5 +110,10 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     public void AddToDirectory(PlayerRef playerRef,NetworkObject networkObject)
     {
         spawnedCharacters[playerRef] = networkObject;
+    }
+
+    public void doExitGame()
+    {
+        Application.Quit();
     }
 }
