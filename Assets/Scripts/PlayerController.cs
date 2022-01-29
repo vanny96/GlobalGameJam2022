@@ -96,8 +96,10 @@ public class PlayerController : NetworkBehaviour
 
     private void UpdateAnimation(Vector3 direction, bool moving)
     {
-        animator.SetInteger(X,Mathf.RoundToInt(direction.x)); 
-        animator.SetInteger(Y,Mathf.RoundToInt(direction.z)); 
+        direction.x = direction.x != 0 ? direction.x : 1;
+        direction.z = direction.z != 0 ? direction.z : -1;
+        animator.SetFloat(X,Mathf.Round(direction.x)); 
+        animator.SetFloat(Y,Mathf.Round(direction.z)); 
         animator.SetBool(Running,moving);
     }
 
