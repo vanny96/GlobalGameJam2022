@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6044249900995632992, guid: ffc308db548966144a745935bf787612, type: 3}
       propertyPath: m_Name
-      value: char_Gully Variant
+      value: char_Gully_Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8059033480603209404, guid: ffc308db548966144a745935bf787612, type: 3}
       propertyPath: m_RootOrder

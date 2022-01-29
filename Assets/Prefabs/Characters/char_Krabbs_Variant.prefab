@@ -9,7 +9,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 861647701170414795, guid: 8549239d206592942b230a4c179bdfae, type: 3}
       propertyPath: m_Name
-      value: char2_skele
+      value: char_skele
       objectReference: {fileID: 0}
     - target: {fileID: 1532114888199640118, guid: 8549239d206592942b230a4c179bdfae, type: 3}
       propertyPath: m_Bounds.m_Center.x
@@ -82,7 +82,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6044249900995632992, guid: ffc308db548966144a745935bf787612, type: 3}
       propertyPath: m_Name
-      value: char_Krabbs
+      value: char_Krabbs_Variant
       objectReference: {fileID: 0}
     - target: {fileID: 8059033480603209404, guid: ffc308db548966144a745935bf787612, type: 3}
       propertyPath: m_RootOrder
