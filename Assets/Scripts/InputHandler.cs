@@ -22,7 +22,7 @@ public class InputHandler : SimulationBehaviour, INetworkRunnerCallbacks
         pirateGameInput.Buttons.Set(PirateButtons.Backward, Input.GetKey(KeyCode.S));
         pirateGameInput.Buttons.Set(PirateButtons.Left, Input.GetKey(KeyCode.A));
         pirateGameInput.Buttons.Set(PirateButtons.Right, Input.GetKey(KeyCode.D));
-
+        pirateGameInput.Buttons.Set(PirateButtons.Space, Input.GetKey(KeyCode.Space));
         input.Set(pirateGameInput);
     }
 
@@ -48,7 +48,8 @@ public enum PirateButtons
     Forward = 0,
     Backward = 1,
     Left = 2,
-    Right = 3
+    Right = 3,
+    Space = 4
 }
 
 public struct PirateGameInput : INetworkInput

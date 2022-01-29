@@ -17,6 +17,8 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private PlayerTriggerDetection backwardTrigger;
     [SerializeField] StepsSoundController soundController;
 
+    [Networked] public int treasure { get; set; }
+
     [Networked] private NetworkBool wasMoving { get; set; }
 
 
@@ -31,8 +33,15 @@ public class PlayerController : NetworkBehaviour
         wasMoving = true;
     }
 
+    public override void Spawned()
+    {
+        base.Spawned();
+        GameObject.Find("SceneManager").GetComponent<GameSceneManager>().AddToDirectory(Object.InputAuthority, Object);
+    }
+
     public override void FixedUpdateNetwork()
     {
+       // Debug.Log(treasure);
         if (GetInput<PirateGameInput>(out PirateGameInput input) == false) return;
 
         Move(input.Buttons);
@@ -40,6 +49,8 @@ public class PlayerController : NetworkBehaviour
 
     private void Move(NetworkButtons buttons)
     {
+        if (buttons.IsSet(PirateButtons.Space)) treasure++;
+
         Vector3 movement = new Vector3();
 
         if (buttons.IsSet(PirateButtons.Forward)) movement.z++;
