@@ -58,6 +58,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThisTreasureHolder: {fileID: 4259027426557984416}
+  outlining: 1
+  outlineMaterial: {fileID: 2100000, guid: 6eb74db231172484a9ee535af6b75e8a, type: 2}
+  normalMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!1 &4743985825440454326
 GameObject:
   m_ObjectHideFlags: 0
@@ -278,6 +281,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb440faa7a764f98b3df7163e57486c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _treasure: 0
   startingTreasure: 2
   OnTreasureTaken:
     m_PersistentCalls:
