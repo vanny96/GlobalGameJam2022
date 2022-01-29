@@ -459,7 +459,7 @@ AnimatorController:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: ghost_animation_controller
+  m_Name: OLD
   serializedVersion: 5
   m_AnimatorParameters:
   - m_Name: Angry
@@ -467,19 +467,19 @@ AnimatorController:
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: Y
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   - m_Name: X
     m_Type: 3
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 0}
+    m_Controller: {fileID: 9100000}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Animation
@@ -507,10 +507,10 @@ AnimatorStateMachine:
     m_Position: {x: 800, y: 310, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 8408636460977738}
-    m_Position: {x: 560, y: -10, z: 0}
+    m_Position: {x: 550, y: -50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -569949426007559677}
-    m_Position: {x: 820, y: -10, z: 0}
+    m_Position: {x: 820, y: -50, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -5556033555627756181}
     m_Position: {x: 580, y: 310, z: 0}
@@ -538,7 +538,7 @@ AnimatorStateMachine:
   m_AnyStatePosition: {x: 710, y: 160, z: 0}
   m_EntryPosition: {x: 1090, y: 240, z: 0}
   m_ExitPosition: {x: 1080, y: 180, z: 0}
-  m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
+  m_ParentStateMachinePosition: {x: 880, y: 130, z: 0}
   m_DefaultState: {fileID: 554390905854000976}
 --- !u!1102 &8408636460977738
 AnimatorState:

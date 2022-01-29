@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8059033480603209404}
   - component: {fileID: 6631260288696536870}
+  - component: {fileID: 1150103998637264936}
   m_Layer: 0
   m_Name: character_template
   m_TagString: Untagged
@@ -41,7 +42,7 @@ Animator:
   m_GameObject: {fileID: 6044249900995632992}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c6a89d6215e8769409ce8289ecee98a0, type: 2}
+  m_Controller: {fileID: 9100000, guid: 0f265c0504cac2541a7a6827425b17e2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -50,3 +51,32 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1150103998637264936
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6044249900995632992}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  Animator: {fileID: 6631260288696536870}
+  SyncSettings: 79
+  FloatAccuracy:
+    _value: 0.001
+    _inverse: 999.99994
+    _hash: -814817977
+  TimeAccuracy:
+    _value: 0.0001
+    _inverse: 10000
+    _hash: 1061325578
+  WeightAccuracy:
+    _value: 0.001
+    _inverse: 999.99994
+    _hash: -814817977
+  StateHashes: 000000002b1a167c79406955f3b09ce077934a0f
+  TriggerHashes: 00000000
