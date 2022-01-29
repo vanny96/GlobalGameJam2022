@@ -72,7 +72,7 @@ GameObject:
   - component: {fileID: -8108924302188112735}
   - component: {fileID: -4517719799412607146}
   - component: {fileID: 4259027426557984416}
-  - component: {fileID: 2053638873576516349}
+  - component: {fileID: 6938286709200908751}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -139,7 +139,7 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 5298650122944942551}
-  - {fileID: 2053638873576516349}
+  - {fileID: 0}
   SimulationBehaviours:
   - {fileID: -8108924302188112735}
   - {fileID: 4259027426557984416}
@@ -280,8 +280,20 @@ MonoBehaviour:
       m_Calls: []
   OnTreasureGiven:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &2053638873576516349
+      m_Calls:
+      - m_Target: {fileID: 5298650122944942551}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnLostCoin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &6938286709200908751
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -310,7 +322,7 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   SyncScale: 0
   Space: 0
-  _collider: {fileID: 0}
+  _collider: {fileID: 5606617678028598252}
   Config:
     AllowedPenetration: 0.1
     PenetrationCorrection: 0.5
@@ -318,12 +330,12 @@ MonoBehaviour:
     LayerMask:
       serializedVersion: 2
       m_Bits: 4294967295
-    TriggerInteraction: 1
+    TriggerInteraction: 0
     AirControl: 1
-    Acceleration: 20
+    Acceleration: 30
     Braking: 10
     BaseJumpImpulse: 5
-    MaxSpeed: 8
+    MaxSpeed: 6
     MaxSlope: 60
     MaxSlopeSpeed: 5
     _gravity: {x: 0, y: 0, z: 0}
@@ -449,7 +461,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5055939588211516750}
-  - component: {fileID: 6652044572919176576}
+  - component: {fileID: 5606617678028598252}
   m_Layer: 0
   m_Name: PlayerCollider
   m_TagString: ActualCollider
@@ -465,13 +477,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7734478979747647365}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.054, y: -0.116, z: -0.159}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 0.1}
   m_Children: []
   m_Father: {fileID: 8194805124351178002}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &6652044572919176576
+--- !u!136 &5606617678028598252
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
