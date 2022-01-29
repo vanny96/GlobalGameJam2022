@@ -30,7 +30,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        Vector3 spawnPosition = Vector3.zero;
+        Vector3 spawnPosition = new Vector3(0, 0, 41);
         NetworkObject playerObject = runner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
         
         Debug.Log("Player " + player + " joined the lobby");
