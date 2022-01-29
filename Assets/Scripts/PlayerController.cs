@@ -12,12 +12,11 @@ public class PlayerController : NetworkBehaviour
     [Networked] public NetworkBool siphoning { get; set; } = false; 
 
     private new NetworkCharacterController characterController;
-    private StepsSoundController stepsSoundController;
     private TreasureHolder treasureHolder;
     private Animator animator;
+    [SerializeField] SoundController soundController;
 
     [SerializeField] private TreasureHolderTrigger treasureHolderTrigger;
-    [SerializeField] StepsSoundController soundController;
     private static readonly int Y = Animator.StringToHash("Y");
     private static readonly int X = Animator.StringToHash("X");
     private static readonly int Running = Animator.StringToHash("Running");
@@ -31,7 +30,7 @@ public class PlayerController : NetworkBehaviour
     void Awake()
     {
         characterController = GetComponent<NetworkCharacterController>();
-        stepsSoundController = GetComponent<StepsSoundController>();
+        //SoundController = GetComponent<SoundController>();
         treasureHolder = GetComponent<TreasureHolder>();
     }
 
@@ -90,17 +89,20 @@ public class PlayerController : NetworkBehaviour
         if (buttons.IsSet(PirateButtons.Backward)) movement.z--;
         if (buttons.IsSet(PirateButtons.Right)) movement.x++;
         if (buttons.IsSet(PirateButtons.Left)) movement.x--;
-
+          
         bool isMoving = movement != Vector3.zero;
 
         movement.Normalize();
 
-        UpdateSoundController(isMoving, wasMoving);
+       // UpdateSoundController(isMoving, wasMoving);
         characterController.Move( movement);
         UpdateAnimation(movement, isMoving);
 
         wasMoving = isMoving;
-        
+
+        if (isMoving && !wasMoving) soundController.StartWalking();
+        if (wasMoving && !isMoving) soundController.StopWalking();
+
     }
 
     private void UpdateAnimation(Vector3 direction, bool moving)
@@ -131,9 +133,9 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-    private void UpdateSoundController(bool isMoving, NetworkBool wasMoving)
+   /* private void UpdateSoundController(bool isMoving, NetworkBool wasMoving)
     {
-        if (isMoving && !wasMoving) stepsSoundController.StartWalking();
-        if (wasMoving && !isMoving) stepsSoundController.StopWalking();
-    }
+        if (isMoving && !wasMoving) soundController.StartWalking();
+        if (wasMoving && !isMoving) soundController.StopWalking();
+    } */
 }

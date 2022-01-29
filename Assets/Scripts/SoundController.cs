@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 
-public class StepsSoundController : SimulationBehaviour
+public class SoundController : SimulationBehaviour
 {
     //Audio clips
     [SerializeField] private AudioClip[] pirateFootStepsAC;
+    [SerializeField] private AudioClip[] musicAC;
 
     //Audio sources
     [SerializeField] private AudioSource pirateFootStepsAS;
+    [SerializeField] private AudioSource musicAS;
 
     //Vars
-    private float nextFootStep;
+    [SerializeField] private float nextFootStep;
     [SerializeField] private float footStepDelay;
 
     private int index;
@@ -30,7 +32,7 @@ public class StepsSoundController : SimulationBehaviour
     public void StartWalking()
     {
         this.isWalking = true;
-        this.nextFootStep = 0f;
+       // this.nextFootStep = 0f;
     }
 
     public void StopWalking()
