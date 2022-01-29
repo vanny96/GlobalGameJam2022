@@ -10,7 +10,7 @@ public class PlayerController : NetworkBehaviour
     [Networked] private float currentSiphonCooldown { get; set; } = 0;
     [Networked] public NetworkBool siphoning { get; set; } = false; 
 
-    private new Rigidbody rigidbody;
+    private new NetworkCharacterController cc;
     private StepsSoundController stepsSoundController;
     private TreasureHolder treasureHolder;
 
@@ -27,7 +27,7 @@ public class PlayerController : NetworkBehaviour
 
     void Awake()
     {
-        rigidbody = GetComponent<Rigidbody>();
+        cc = GetComponent<NetworkCharacterController>();
         stepsSoundController = GetComponent<StepsSoundController>();
         treasureHolder = GetComponent<TreasureHolder>();
     }
@@ -64,12 +64,12 @@ public class PlayerController : NetworkBehaviour
         bool isMoving = movement != Vector3.zero;
 
         UpdateSoundController(isMoving, wasMoving);
-
-        if (isMoving && !IsBlocked(movement))
+        cc.Move( movement);
+        /*if (isMoving && !IsBlocked(movement))
         {
             Vector3 newPosition = transform.position + (movement * speed * Runner.DeltaTime);
             rigidbody.MovePosition(newPosition);
-        }
+        }*/
 
         wasMoving = isMoving;
     }
