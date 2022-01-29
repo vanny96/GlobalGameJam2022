@@ -5,6 +5,7 @@ using System;
 
 public class PlayerController : NetworkBehaviour
 {
+    private static int counter = 0;
     [SerializeField] private float speed;
 
     [SerializeField] private float siphonCooldown;
@@ -135,6 +136,8 @@ public class PlayerController : NetworkBehaviour
                 treasureHolder.TakeTreasure(stolenAmount);
 
                 currentSiphonCooldown = siphonCooldown;
+
+                Debug.Log("Siphon number " + ++counter);
             }
         }
     }

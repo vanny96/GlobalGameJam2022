@@ -12,7 +12,9 @@ public class GhostSightTrigger : MonoBehaviour
         if (other.tag != "ActualCollider") return;
 
         TreasureHolder treasureHolder = other.GetComponentInParent<TreasureHolder>();
+        PlayerController playerController = other.GetComponentInParent<PlayerController>();
         if (treasureHolder == null ||
+            playerController == null ||
             treasureHolder == ThisTreasureHolder ||
             treasureHolder == ActiveTreasureHolder)
         {
