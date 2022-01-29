@@ -121,6 +121,7 @@ MonoBehaviour:
   treasureHolderTrigger: {fileID: 4413254336488494146}
   soundController: {fileID: 0}
   treasureThresholdForBeacon: 6
+  beaconTarget: {fileID: 5875438887617997827}
   _isBeacon:
     _value: 0
 --- !u!114 &1175178919492223223
@@ -146,10 +147,11 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 5298650122944942551}
+  - {fileID: 4259027426557984416}
   - {fileID: 6938286709200908751}
+  - {fileID: 314706031515174184}
   SimulationBehaviours:
   - {fileID: -8108924302188112735}
-  - {fileID: 4259027426557984416}
 --- !u!114 &-8108924302188112735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,6 +164,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 97094b79219fe4a45a1c451c9d17aed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
   pirateFootStepsAC:
   - {fileID: 8300000, guid: aed792b438255cc42b6aeed1e911681c, type: 3}
   - {fileID: 8300000, guid: e0e79aa731feea7489b36a8deff4ec42, type: 3}
@@ -229,7 +232,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 1
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -475,6 +478,10 @@ PrefabInstance:
       propertyPath: m_Bounds.m_Extent.z
       value: 0.0000001467962
       objectReference: {fileID: 0}
+    - target: {fileID: 6192157045946430660, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6642169277187134119, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
       propertyPath: m_Name
       value: char_Gully_Variant
@@ -528,5 +535,21 @@ PrefabInstance:
 --- !u!4 &7240805551501794236 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6925327615819367291, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
+  m_PrefabInstance: {fileID: 317282288422164679}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &314706031515174184 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 16107813399928303, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
+  m_PrefabInstance: {fileID: 317282288422164679}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!212 &5875438887617997827 stripped
+SpriteRenderer:
+  m_CorrespondingSourceObject: {fileID: 6192157045946430660, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
   m_PrefabInstance: {fileID: 317282288422164679}
   m_PrefabAsset: {fileID: 0}

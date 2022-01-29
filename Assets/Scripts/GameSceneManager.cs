@@ -33,8 +33,10 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 
         runner.AddCallbacks(this);
 
-        Terrain terrain = FindObjectOfType<Terrain>();
-        ghostsSpawnAreas = terrain.GetComponentsInChildren<Collider>()
+        ghostsSpawnAreas = FindObjectsOfType<GameObject>()
+            .Where(gameObject => gameObject.tag == "World")
+            .First()
+            .GetComponentsInChildren<Collider>()
             .Where(collider => collider.gameObject.tag == "SpawnArea")
             .Select(collider => collider.bounds);
     }
