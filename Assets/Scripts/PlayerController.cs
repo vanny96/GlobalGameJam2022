@@ -5,7 +5,6 @@ using System;
 
 public class PlayerController : NetworkBehaviour
 {
-    private static int counter = 0;
     [SerializeField] private float speed;
 
     [SerializeField] private float siphonCooldown;
@@ -26,8 +25,8 @@ public class PlayerController : NetworkBehaviour
     [Networked] private NetworkBool wasMoving { get; set; }
 
     [SerializeField] private int treasureThresholdForBeacon;
+    [SerializeField] private SpriteRenderer beaconTarget;
     [Networked] public NetworkBool isBeacon { get; set; }
-
 
     void Awake()
     {
@@ -66,9 +65,10 @@ public class PlayerController : NetworkBehaviour
 
     public void OnGainedCoin()
     {
-        if(treasureHolder.treasure > treasureThresholdForBeacon)
+        if(treasureHolder.treasure >= treasureThresholdForBeacon)
         {
             isBeacon = true;
+            beaconTarget.enabled = true;
         }
     }
 
@@ -77,6 +77,7 @@ public class PlayerController : NetworkBehaviour
         if (treasureHolder.treasure < treasureThresholdForBeacon)
         {
             isBeacon = false;
+            beaconTarget.enabled = true;
         }
 
         if (treasureHolder.treasure == 0)
@@ -134,8 +135,6 @@ public class PlayerController : NetworkBehaviour
                 treasureHolder.TakeTreasure(stolenAmount);
 
                 currentSiphonCooldown = siphonCooldown;
-
-                Debug.Log("Siphon number " + ++counter);
             }
         }
     }
