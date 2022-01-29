@@ -10,14 +10,14 @@ public class PlayerController : NetworkBehaviour
     [Networked] private float currentSiphonCooldown { get; set; } = 0;
     [Networked] public NetworkBool siphoning { get; set; } = false; 
 
-    private new NetworkCharacterController cc;
+    private new NetworkCharacterController characterController;
     private StepsSoundController stepsSoundController;
     private TreasureHolder treasureHolder;
 
-    [SerializeField] private PlayerTriggerDetection leftTrigger;
+   /* [SerializeField] private PlayerTriggerDetection leftTrigger;
     [SerializeField] private PlayerTriggerDetection rightTrigger;
     [SerializeField] private PlayerTriggerDetection forwardTrigger;
-    [SerializeField] private PlayerTriggerDetection backwardTrigger;
+    [SerializeField] private PlayerTriggerDetection backwardTrigger;*/
 
     [SerializeField] private TreasureHolderTrigger treasureHolderTrigger;
     [SerializeField] StepsSoundController soundController;
@@ -27,7 +27,7 @@ public class PlayerController : NetworkBehaviour
 
     void Awake()
     {
-        cc = GetComponent<NetworkCharacterController>();
+        characterController = GetComponent<NetworkCharacterController>();
         stepsSoundController = GetComponent<StepsSoundController>();
         treasureHolder = GetComponent<TreasureHolder>();
     }
@@ -46,10 +46,13 @@ public class PlayerController : NetworkBehaviour
     public override void FixedUpdateNetwork()
     {
        // Debug.Log(treasure);
-        if (GetInput<PirateGameInput>(out PirateGameInput input) == false) return;
+       //if (Object.HasInputAuthority)
+       {
+           if (GetInput<PirateGameInput>(out PirateGameInput input) == false) return;
 
-        Move(input.Buttons);
-        Siphon(input.Buttons);
+           Move(input.Buttons);
+           Siphon(input.Buttons);
+       }
     }
 
     private void Move(NetworkButtons buttons)
@@ -64,7 +67,8 @@ public class PlayerController : NetworkBehaviour
         bool isMoving = movement != Vector3.zero;
 
         UpdateSoundController(isMoving, wasMoving);
-        cc.Move( movement);
+        movement.Normalize();
+        characterController.Move( movement);
         /*if (isMoving && !IsBlocked(movement))
         {
             Vector3 newPosition = transform.position + (movement * speed * Runner.DeltaTime);
@@ -95,20 +99,20 @@ public class PlayerController : NetworkBehaviour
 
     private bool IsBlocked(Vector3 movement)
     {
-        if (movement.x > 0) return ContainsBlocking(rightTrigger);
+        /*if (movement.x > 0) return ContainsBlocking(rightTrigger);
         if (movement.x < 0) return ContainsBlocking(leftTrigger);
         if (movement.z > 0) return ContainsBlocking(forwardTrigger);
-        if (movement.z < 0) return ContainsBlocking(backwardTrigger);
+        if (movement.z < 0) return ContainsBlocking(backwardTrigger);*/
 
         return false;
     }
 
-    private bool ContainsBlocking(PlayerTriggerDetection trigger)
+    /*private bool ContainsBlocking(PlayerTriggerDetection trigger)
     {
         return trigger.CollidersInTrigger
             .Any(collider => !collider.isTrigger);
     
-    }
+    }*/
 
     private void UpdateSoundController(bool isMoving, NetworkBool wasMoving)
     {
