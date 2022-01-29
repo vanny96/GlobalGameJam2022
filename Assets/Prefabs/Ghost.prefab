@@ -219,7 +219,7 @@ MonoBehaviour:
   - {fileID: 8426044348922004093}
   - {fileID: 63163226549319935}
   SimulationBehaviours:
-  - {fileID: 0}
+  - {fileID: 304986511069415913}
 --- !u!54 &6375065396051541235
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -281,7 +281,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _Angry: 0
   _currentDestination: {x: 0, y: 0, z: 0}
-  _speed: 5
+  _speed: 9.8
   destinationBounds:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
