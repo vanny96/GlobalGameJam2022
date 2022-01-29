@@ -1,6 +1,7 @@
 using UnityEngine;
 using Fusion;
 using System.Linq;
+using System;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -50,6 +51,18 @@ public class PlayerController : NetworkBehaviour
 
         Move(input.Buttons);
         Siphon(input.Buttons);
+    }
+
+    public void OnLostCoin()
+    {
+        if (treasureHolder.treasure == 0)
+            CallGameOver();
+    }
+
+    [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]
+    private void CallGameOver()
+    {
+        Runner.SetActiveScene(1);
     }
 
     private void Move(NetworkButtons buttons)
