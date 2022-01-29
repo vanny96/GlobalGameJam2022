@@ -11,7 +11,7 @@ public class PlayerController : NetworkBehaviour
     [Networked] private float currentSiphonCooldown { get; set; } = 0;
     [Networked] public NetworkBool siphoning { get; set; } = false; 
 
-    private new NetworkCharacterController characterController;
+    private NetworkCharacterController characterController;
     private StepsSoundController stepsSoundController;
     private TreasureHolder treasureHolder;
     private Animator animator;
@@ -25,7 +25,7 @@ public class PlayerController : NetworkBehaviour
     [Networked] private NetworkBool wasMoving { get; set; }
 
     [SerializeField] private int treasureThresholdForBeacon;
-    [SerializeField] private SpriteRenderer beaconTarget;
+    [SerializeField] private GameObject beaconTarget;
     [Networked] public NetworkBool isBeacon { get; set; }
 
     void Awake()
@@ -51,8 +51,6 @@ public class PlayerController : NetworkBehaviour
         base.Spawned();
         GameObject.Find("SceneManager").GetComponent<GameSceneManager>().AddToDirectory(Object.InputAuthority, Object);
         animator = GetComponentInChildren<Animator>() ;
-
-        
     }
 
     public override void FixedUpdateNetwork()
@@ -68,7 +66,7 @@ public class PlayerController : NetworkBehaviour
         if(treasureHolder.treasure >= treasureThresholdForBeacon)
         {
             isBeacon = true;
-            beaconTarget.enabled = true;
+            beaconTarget.SetActive(true);
         }
     }
 
@@ -77,7 +75,7 @@ public class PlayerController : NetworkBehaviour
         if (treasureHolder.treasure < treasureThresholdForBeacon)
         {
             isBeacon = false;
-            beaconTarget.enabled = true;
+            beaconTarget.SetActive(false);
         }
 
         if (treasureHolder.treasure == 0)

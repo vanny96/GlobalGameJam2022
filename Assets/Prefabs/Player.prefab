@@ -121,7 +121,7 @@ MonoBehaviour:
   treasureHolderTrigger: {fileID: 4413254336488494146}
   soundController: {fileID: 0}
   treasureThresholdForBeacon: 6
-  beaconTarget: {fileID: 5875438887617997827}
+  beaconTarget: {fileID: 1025883394801957857}
   _isBeacon:
     _value: 0
 --- !u!114 &1175178919492223223
@@ -462,6 +462,30 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7174118913157326992}
     m_Modifications:
+    - target: {fileID: 16107813399928303, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
+      propertyPath: TriggerHashes.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 16107813399928303, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
+      propertyPath: StateHashes.Array.data[5]
+      value: -449490811
+      objectReference: {fileID: 0}
+    - target: {fileID: 16107813399928303, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
+      propertyPath: StateHashes.Array.data[6]
+      value: 182678273
+      objectReference: {fileID: 0}
+    - target: {fileID: 16107813399928303, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
+      propertyPath: StateHashes.Array.data[7]
+      value: 1150883238
+      objectReference: {fileID: 0}
+    - target: {fileID: 16107813399928303, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
+      propertyPath: StateHashes.Array.data[8]
+      value: -1365015364
+      objectReference: {fileID: 0}
+    - target: {fileID: 746362839446938406, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3734972145791319825, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
       propertyPath: m_Bounds.m_Center.y
       value: 1.2341659
@@ -480,7 +504,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6192157045946430660, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6642169277187134119, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
       propertyPath: m_Name
@@ -548,8 +572,8 @@ MonoBehaviour:
   m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!212 &5875438887617997827 stripped
-SpriteRenderer:
-  m_CorrespondingSourceObject: {fileID: 6192157045946430660, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
+--- !u!1 &1025883394801957857 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 746362839446938406, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
   m_PrefabInstance: {fileID: 317282288422164679}
   m_PrefabAsset: {fileID: 0}
