@@ -1641,6 +1641,8 @@ MonoBehaviour:
   ghostsPerArea: 2
   startScreen: {fileID: 312268832}
   gameUI: {fileID: 264068626}
+  instructionsScreen: {fileID: 0}
+  spawnPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &1535212025
 Transform:
   m_ObjectHideFlags: 0
@@ -2046,6 +2048,30 @@ PrefabInstance:
     - target: {fileID: 4529933795501606989, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
       propertyPath: m_Name
       value: Map
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237959592660859651, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237959593130550121, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237959593443620369, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237959593523983986, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6237959593742487422, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -5.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6613556812908333575, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
