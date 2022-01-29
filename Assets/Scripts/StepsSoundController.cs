@@ -1,37 +1,36 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Fusion;
 
-public class SoundController : MonoBehaviour
+public class StepsSoundController : SimulationBehaviour
 {
     //Audio clips
     [SerializeField] private AudioClip[] pirateFootStepsAC;
-    [SerializeField] private AudioClip[] musicAC;
 
     //Audio sources
     [SerializeField] private AudioSource pirateFootStepsAS;
-    [SerializeField] private AudioSource musicAS;
 
     //Vars
-    [SerializeField] private float nextFootStep;
+    private float nextFootStep;
     [SerializeField] private float footStepDelay;
 
     private int index;
-    private bool isWalking = false;
+    [Networked] private NetworkBool isWalking { get; set; } = false;
 
     // Update is called once per frame
-    void Update()
+    public override void Render()
     {
-      /*  if(this.isWalking = true)
+        if(this.isWalking)
         {
-            this.PlaySteps(this.pirateFootStepsAC);
+            this.PlaySteps();
         }
-      */
     }
 
     public void StartWalking()
     {
         this.isWalking = true;
+        this.nextFootStep = 0f;
     }
 
     public void StopWalking()
@@ -39,17 +38,14 @@ public class SoundController : MonoBehaviour
         this.isWalking = false;
     }
 
-    private void PlaySteps(AudioClip[] stepClips)
+    private void PlaySteps()
     {
-        this.nextFootStep -= Time.deltaTime;
+        this.nextFootStep -= Runner.DeltaTime;
         if (this.nextFootStep <= 0)
         {
             this.pirateFootStepsAS.PlayOneShot(pirateFootStepsAC[index]);
             this.index = (this.index + 1) % pirateFootStepsAC.Length;
-            this.nextFootStep += this.footStepDelay;
+            this.nextFootStep = this.footStepDelay;
         }
     }
-
-
-
 }

@@ -217,7 +217,8 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 8426044348922004093}
   - {fileID: 63163226549319935}
-  SimulationBehaviours: []
+  SimulationBehaviours:
+  - {fileID: 0}
 --- !u!54 &6375065396051541235
 Rigidbody:
   m_ObjectHideFlags: 0

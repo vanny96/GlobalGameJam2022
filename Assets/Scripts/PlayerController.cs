@@ -9,17 +9,26 @@ public class PlayerController : NetworkBehaviour
 {
     [SerializeField] private float speed;
     private new Rigidbody rigidbody;
+    private StepsSoundController stepsSoundController;
 
     [SerializeField] private PlayerTriggerDetection leftTrigger;
     [SerializeField] private PlayerTriggerDetection rightTrigger;
     [SerializeField] private PlayerTriggerDetection forwardTrigger;
     [SerializeField] private PlayerTriggerDetection backwardTrigger;
-    [SerializeField] SoundController soundController;
+    [SerializeField] StepsSoundController soundController;
+
+    [Networked] private NetworkBool wasMoving { get; set; }
 
 
     void Awake()
     {
         rigidbody = GetComponent<Rigidbody>();
+        stepsSoundController = GetComponent<StepsSoundController>();
+    }
+
+    void Start()
+    {
+        wasMoving = true;
     }
 
     public override void FixedUpdateNetwork()
@@ -38,11 +47,17 @@ public class PlayerController : NetworkBehaviour
         if (buttons.IsSet(PirateButtons.Right)) movement.x++;
         if (buttons.IsSet(PirateButtons.Left)) movement.x--;
 
-        if (!IsBlocked(movement))
+        bool isMoving = movement != Vector3.zero;
+
+        UpdateSoundController(isMoving, wasMoving);
+
+        if (isMoving && !IsBlocked(movement))
         {
             Vector3 newPosition = transform.position + (movement * speed * Runner.DeltaTime);
             rigidbody.MovePosition(newPosition);
         }
+
+        wasMoving = isMoving;
     }
 
     private bool IsBlocked(Vector3 movement)
@@ -60,5 +75,11 @@ public class PlayerController : NetworkBehaviour
         return trigger.CollidersInTrigger
             .Any(collider => !collider.isTrigger);
     
+    }
+
+    private void UpdateSoundController(bool isMoving, NetworkBool wasMoving)
+    {
+        if (isMoving && !wasMoving) stepsSoundController.StartWalking();
+        if (wasMoving && !isMoving) stepsSoundController.StopWalking();
     }
 }
