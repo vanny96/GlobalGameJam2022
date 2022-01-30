@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3973032154447970849}
-  - component: {fileID: 1157976579407050755}
+  - component: {fileID: 2675211980562484544}
   m_Layer: 0
   m_Name: Barrel
   m_TagString: Untagged
@@ -33,7 +33,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!54 &1157976579407050755
+--- !u!54 &2675211980562484544
 Rigidbody:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -48,7 +48,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 122
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!1 &6049952785076761276
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,7 +58,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5627696248042207382}
-  - component: {fileID: 4995215827636993808}
+  - component: {fileID: 7443196891471788736}
   m_Layer: 0
   m_Name: Collider
   m_TagString: Untagged
@@ -80,7 +80,7 @@ Transform:
   m_Father: {fileID: 3973032154447970849}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &4995215827636993808
+--- !u!136 &7443196891471788736
 CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -90,10 +90,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 1.0058821
-  m_Height: 2.883893
+  m_Radius: 0.77768207
+  m_Height: 3.459643
   m_Direction: 1
-  m_Center: {x: 0, y: 0.4419465, z: 0.13697135}
+  m_Center: {x: -0.026445866, y: 0.00060009956, z: 0}
 --- !u!1 &8132300338361864730
 GameObject:
   m_ObjectHideFlags: 0
@@ -118,13 +118,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8132300338361864730}
-  m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.5, z: 1}
   m_Children: []
   m_Father: {fileID: 3973032154447970849}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8342775981222460205
 SpriteRenderer:
   m_ObjectHideFlags: 0

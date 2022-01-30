@@ -8,7 +8,9 @@ public class GhostBehaviour : NetworkBehaviour
 {
     [Networked] [HideInInspector] public NetworkBool Angry { get; set; }
     [Networked] private Vector3 currentDestination { get; set; }
-    [SerializeField] [Networked] private float speed { get; set; }
+
+    [SerializeField] [Networked] private float normalSpeed { get; set; }
+    [SerializeField] [Networked] private float angrySpeed { get; set; }
 
     [SerializeField] private float siphonCooldown;
     [Networked] private float currentSiphonCooldown { get; set; } = 0;
@@ -20,9 +22,13 @@ public class GhostBehaviour : NetworkBehaviour
 
     private Rigidbody rigidbody;
     private TreasureHolder treasureHolder;
+    private Animator animator;
+    private static readonly int Angry1 = Animator.StringToHash("Angry");
+    private static readonly int Y = Animator.StringToHash("Y");
+    private static readonly int X = Animator.StringToHash("X");
 
-
-
+    private float animationXdirection = 1;
+    private float animationYdirection = 1;
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +50,16 @@ public class GhostBehaviour : NetworkBehaviour
         }
     }
 
+    public override void Spawned()
+    {
+        base.Spawned();
+        GameObject.Find("SceneManager").GetComponent<GameSceneManager>().AddToDirectory(Object.InputAuthority, Object);
+        animator = GetComponentInChildren<Animator>() ;
+
+        
+    }
+
+    
 
     public void OnTreasureChange()
     {
@@ -79,7 +95,7 @@ public class GhostBehaviour : NetworkBehaviour
 
     private void CalmPattern()
     {
-        MoveToDestination(currentDestination);
+        MoveToDestination(currentDestination, normalSpeed);
 
         if (transform.position == currentDestination)
             currentDestination = GetNextDestination();
@@ -89,7 +105,7 @@ public class GhostBehaviour : NetworkBehaviour
     private void FollowPlayer()
     {
         Vector3 playerPosition = ghostSightTrigger.ActiveTreasureHolder.transform.position;
-        MoveToDestination(playerPosition);
+        MoveToDestination(playerPosition, angrySpeed);
     }
 
     private void StealFromPlayer()
@@ -111,19 +127,31 @@ public class GhostBehaviour : NetworkBehaviour
 
     }
 
-    private void MoveToDestination(Vector3 destination)
+    private void MoveToDestination(Vector3 destination, float speed)
     {
         Vector3 direction = (destination - transform.position);
         Vector3 movement = direction.normalized * speed * Runner.DeltaTime;
 
         if (movement.magnitude > direction.magnitude) movement = direction;
 
-        Vector3 endPosition = transform.position + movement;
-        endPosition.y = transform.position.y;
-
+        var position = transform.position;
+        Vector3 endPosition = position + movement;
+        endPosition.y = position.y;
+        UpdateAnimation((endPosition-position).normalized,Angry);
         rigidbody.MovePosition(endPosition);
     }
 
+    private void UpdateAnimation(Vector3 direction, bool angry)
+    {
+
+        if (direction.x > 0.1f) animationXdirection = 1;
+        if (direction.x < -0.1f) animationXdirection = -1;
+        if (direction.z > 0.1f) animationYdirection = 1;
+        if (direction.z < -0.1f) animationYdirection = -1;
+        animator.SetFloat(X,animationXdirection); 
+        animator.SetFloat(Y,animationYdirection); 
+        animator.SetBool(Angry1,angry);
+    }
 
     private Vector3 GetNextDestination()
     {

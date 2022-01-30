@@ -6,6 +6,11 @@ using Fusion.Sockets;
 using System;
 using System.Linq;
 
+using Random = UnityEngine.Random;
+
+using UnityEngine.UI;
+
+
 public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 {
     [SerializeField] private NetworkRunner runner;
@@ -15,11 +20,15 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     [SerializeField] private GameObject startScreen;
     [SerializeField] private GameObject gameUI;
     [SerializeField] private GameObject instructionsScreen;
+    [SerializeField] private Text playerNameInput;
+    [SerializeField] private Text playerNameUI;
 
     [SerializeField] private Vector3 spawnPosition;
+    Text userNameInputText;
 
 
     private Dictionary<PlayerRef, NetworkObject> spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
+    private Dictionary<PlayerRef, int> playerSkins = new Dictionary<PlayerRef, int>();
     private IEnumerable<Bounds> ghostsSpawnAreas;
 
 
@@ -42,19 +51,31 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
             .GetComponentsInChildren<Collider>()
             .Where(collider => collider.gameObject.tag == "SpawnArea")
             .Select(collider => collider.bounds);
+       
+
     }
 
     void Update()
     {
         if (Input.GetKeyDown("i"))
         {
-            if (instructionsScreen.active)
+            if(!startScreen.active)
             {
-                closeInsructions();
+                if (instructionsScreen.active)
+                {
+                    closeInsructions();
+                }
+                else
+                {
+                    bringUpInstructions();
+                }
             }
-            else
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!startScreen.active)
             {
-                bringUpInstructions();
+                doExitGame();
             }
         }
     }
@@ -71,8 +92,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         {
             gameUI.SetActive(true);
         }
-
-
+        
         Debug.Log("Player " + player + " joined the lobby");
     }
 
@@ -84,6 +104,10 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
             spawnedCharacters.Remove(player);
         }
 
+        if (runner.IsServer)
+        {
+            playerSkins.Remove(player);
+        }
         Debug.Log("Player " + player + " left the lobby");
     }
 
@@ -127,6 +151,34 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         return null;
     }
 
+    public void RetrieveSkin(PlayerRef playerRef,PlayerController playerController)
+    {
+        if (runner.IsServer)
+        {
+            
+            var skin = Random.Range(0, 4);
+            if (playerSkins.Count > 3)
+            {
+                Debug.LogError("No skins available: ");
+                return;
+            }
+            while (playerSkins.ContainsValue(skin))
+            {
+                skin += 1;
+                if (skin == 4)
+                {
+                    skin = 0;
+                }
+            }
+            playerSkins[playerRef] = skin;
+            playerController.skin = skin;
+            
+            
+        }
+        playerController.ApplySkin();
+        
+
+    }
     public void AddToDirectory(PlayerRef playerRef,NetworkObject networkObject)
     {
         spawnedCharacters[playerRef] = networkObject;
@@ -137,14 +189,23 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         Application.Quit();
     }
 
+
     public void bringUpInstructions()
     {
         instructionsScreen.SetActive(true);
+        
     }
 
     public void closeInsructions()
     {
         instructionsScreen.SetActive(false);
     }
+
+
+    public void ShowPlayerName()
+    {
+        playerNameUI.text = playerNameInput.text;
+    }
+
 
 }
