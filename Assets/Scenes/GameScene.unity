@@ -2019,6 +2019,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameSceneManager: {fileID: 1535212024}
   relativeCameraPosition: {x: 0, y: 100, z: -100}
+  maxX: 89
+  maxZ: -26
+  minX: -97
+  minZ: -157
 --- !u!81 &1247364138
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2034,6 +2038,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1930283548144361053, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -7.84
+      objectReference: {fileID: 0}
+    - target: {fileID: 2981514737226227941, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
+      propertyPath: m_LocalScale.x
+      value: -5.6744714
+      objectReference: {fileID: 0}
+    - target: {fileID: 2981514737226227941, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
+      propertyPath: m_LocalScale.y
+      value: -2.9192827
+      objectReference: {fileID: 0}
     - target: {fileID: 4529933795501606988, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
       propertyPath: m_RootOrder
       value: 9
@@ -2044,7 +2060,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4529933795501606988, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4529933795501606988, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -2086,7 +2102,16 @@ PrefabInstance:
       propertyPath: m_TagString
       value: World
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6816502089011541983, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 8294712184434320297, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -3.69
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7824797019437339566, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dcf06c54345ff7b4bb0e3172ec2418cd, type: 3}
 --- !u!1 &1519891332
 GameObject:
@@ -2827,7 +2852,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4651193033072761945, guid: 687e7851968e14076a974d87d3f627ef, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.48
+      value: 8.98
       objectReference: {fileID: 0}
     - target: {fileID: 4651193033072761945, guid: 687e7851968e14076a974d87d3f627ef, type: 3}
       propertyPath: m_LocalPosition.z
