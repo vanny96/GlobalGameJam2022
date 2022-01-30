@@ -46,11 +46,12 @@ public class PlayerController : NetworkBehaviour
         {
             gameObject.AddComponent<AudioListener>();
             Destroy(FindObjectOfType<Camera>().GetComponent<AudioListener>());
+
+            mainSoundController = GameObject.Find("MainSoundController").GetComponent<MainSoundController>();
+            mainSoundController.musicPlay();
         }
 
-        mainSoundController = GameObject.Find("MainSoundController").GetComponent<MainSoundController>();
         gameUIManager = FindObjectOfType<GameUIManager>();
-        mainSoundController.musicPlay();
     }
 
     public override void Spawned()
