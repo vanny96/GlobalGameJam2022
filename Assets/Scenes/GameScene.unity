@@ -212,7 +212,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: eda1f9604218a4a40b93fc26d61875b7, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.1
+  m_Volume: 0.305
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1769,6 +1769,7 @@ GameObject:
   - component: {fileID: 1247364135}
   - component: {fileID: 1247364137}
   - component: {fileID: 1247364134}
+  - component: {fileID: 1247364138}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1879,6 +1880,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameSceneManager: {fileID: 1535212024}
   relativeCameraPosition: {x: 0, y: 100, z: -100}
+--- !u!81 &1247364138
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247364133}
+  m_Enabled: 1
 --- !u!1001 &1457055939
 PrefabInstance:
   m_ObjectHideFlags: 0

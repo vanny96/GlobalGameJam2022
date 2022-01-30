@@ -85,6 +85,14 @@ public class PlayerController : NetworkBehaviour
             CallGameOver();
     }
 
+    public void OnTargeted()
+    {
+        if (Object.HasInputAuthority)
+        {
+            mainSoundController.GhostLockOn();
+        }
+    }
+
     [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]
     private void CallGameOver()
     {

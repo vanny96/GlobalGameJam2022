@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThisTreasureHolder: {fileID: 304986511069415913}
+  ghostBehaviour: {fileID: 63163226549319935}
 --- !u!1 &2163710717300959925
 GameObject:
   m_ObjectHideFlags: 0
