@@ -175,7 +175,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: deaa22ba4b29429408e3d85fa196febb, type: 3}
   - {fileID: 8300000, guid: 4d4e657e9261b6a4b9e98b338036133f, type: 3}
   pirateFootStepsAS: {fileID: -4517719799412607146}
-  footStepDelay: 0.4
+  footStepDelay: 0.5
 --- !u!82 &-4517719799412607146
 AudioSource:
   m_ObjectHideFlags: 0
@@ -188,7 +188,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.1
+  m_Volume: 0.05
   m_Pitch: 1
   Loop: 0
   Mute: 0

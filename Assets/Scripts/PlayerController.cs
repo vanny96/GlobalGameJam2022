@@ -15,6 +15,7 @@ public class PlayerController : NetworkBehaviour
     private StepsSoundController stepsSoundController;
     private TreasureHolder treasureHolder;
     private Animator animator;
+    private MainSoundController mainSoundController;
 
     [SerializeField] private TreasureHolderTrigger treasureHolderTrigger;
     [SerializeField] StepsSoundController soundController;
@@ -44,6 +45,8 @@ public class PlayerController : NetworkBehaviour
             gameObject.AddComponent<AudioListener>();
             GameObject.Destroy(FindObjectOfType<Camera>().GetComponent<AudioListener>());
         }
+
+        mainSoundController = GameObject.Find("MainSoundController").GetComponent<MainSoundController>();
     }
 
     public override void Spawned()
@@ -126,6 +129,7 @@ public class PlayerController : NetworkBehaviour
 
         if(siphoning && currentSiphonCooldown <= 0f)
         {
+            this.mainSoundController.SiphonSound();
             TreasureHolder activeTreasureHolder = treasureHolderTrigger.ActiveTreasureHolder;
             if (activeTreasureHolder != null)
             {
