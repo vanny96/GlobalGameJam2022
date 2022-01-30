@@ -16,6 +16,10 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     [SerializeField] private int ghostsPerArea;
     [SerializeField] private GameObject startScreen;
     [SerializeField] private GameObject gameUI;
+    [SerializeField] private GameObject instructionsScreen;
+
+    [SerializeField] private Vector3 spawnPosition;
+
 
     private Dictionary<PlayerRef, NetworkObject> spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
     private Dictionary<PlayerRef, int> playerSkins = new Dictionary<PlayerRef, int>();
@@ -35,15 +39,31 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 
         runner.AddCallbacks(this);
 
-        Terrain terrain = FindObjectOfType<Terrain>();
-        ghostsSpawnAreas = terrain.GetComponentsInChildren<Collider>()
+        ghostsSpawnAreas = FindObjectsOfType<GameObject>()
+            .Where(gameObject => gameObject.tag == "World")
+            .First()
+            .GetComponentsInChildren<Collider>()
             .Where(collider => collider.gameObject.tag == "SpawnArea")
             .Select(collider => collider.bounds);
     }
 
+    void Update()
+    {
+        if (Input.GetKeyDown("i"))
+        {
+            if (instructionsScreen.active)
+            {
+                closeInsructions();
+            }
+            else
+            {
+                bringUpInstructions();
+            }
+        }
+    }
+
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        Vector3 spawnPosition = new Vector3(0, 0, 41);
         NetworkObject playerObject = runner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
 
         if (startScreen != null)
@@ -136,6 +156,17 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     public void doExitGame()
     {
         Application.Quit();
+    }
+
+
+    public void bringUpInstructions()
+    {
+        instructionsScreen.SetActive(true);
+    }
+
+    public void closeInsructions()
+    {
+        instructionsScreen.SetActive(false);
     }
 
 

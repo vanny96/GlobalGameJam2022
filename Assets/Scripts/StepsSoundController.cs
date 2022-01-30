@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
 
-public class StepsSoundController : SimulationBehaviour
+public class StepsSoundController : NetworkBehaviour
 {
     //Audio clips
     [SerializeField] private AudioClip[] pirateFootStepsAC;

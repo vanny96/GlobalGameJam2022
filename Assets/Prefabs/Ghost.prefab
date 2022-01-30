@@ -58,6 +58,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThisTreasureHolder: {fileID: 304986511069415913}
+  ghostBehaviour: {fileID: 63163226549319935}
 --- !u!1 &2163710717300959925
 GameObject:
   m_ObjectHideFlags: 0
@@ -196,8 +197,8 @@ MonoBehaviour:
   NetworkedBehaviours:
   - {fileID: 8426044348922004093}
   - {fileID: 63163226549319935}
-  SimulationBehaviours:
   - {fileID: 304986511069415913}
+  SimulationBehaviours: []
 --- !u!54 &6375065396051541235
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -278,6 +279,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cb440faa7a764f98b3df7163e57486c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  _treasure: 0
   startingTreasure: 8
   OnTreasureTaken:
     m_PersistentCalls:
@@ -367,6 +370,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ThisTreasureHolder: {fileID: 304986511069415913}
+  outlining: 0
+  outlineMaterial: {fileID: 0}
+  normalMaterial: {fileID: 0}
 --- !u!1001 &7212703250113977956
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -438,6 +444,10 @@ PrefabInstance:
       propertyPath: m_Bounds.m_Extent.z
       value: 0.00000035762787
       objectReference: {fileID: 0}
+    - target: {fileID: 7190948861105430755, guid: bbcfa1cf66845024b8c4a0979f2e1f65, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bbcfa1cf66845024b8c4a0979f2e1f65, type: 3}
 --- !u!4 &8270611716049775390 stripped

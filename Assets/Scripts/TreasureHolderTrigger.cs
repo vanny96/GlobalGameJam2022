@@ -1,11 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+using Fusion;
 
 public class TreasureHolderTrigger : MonoBehaviour
 {
     public TreasureHolder ActiveTreasureHolder { get; set; }
+
     [SerializeField] private TreasureHolder ThisTreasureHolder;
+
+    [SerializeField] private bool outlining;
+    [SerializeField] private Material outlineMaterial;
+    [SerializeField] private Material normalMaterial;
 
     private void OnTriggerStay(Collider other)
     {
@@ -18,6 +23,7 @@ public class TreasureHolderTrigger : MonoBehaviour
             ActiveTreasureHolder == null)
         {
             ActiveTreasureHolder = treasureHolder;
+            if (outlining) ApplyMaterial(outlineMaterial);
         }
     }
 
@@ -28,7 +34,17 @@ public class TreasureHolderTrigger : MonoBehaviour
         TreasureHolder treasureHolder = other.GetComponentInParent<TreasureHolder>();
         if (treasureHolder == ActiveTreasureHolder)
         {
+            if (outlining) ApplyMaterial(normalMaterial);
             ActiveTreasureHolder = null;
+        }
+    }
+
+    private void ApplyMaterial(Material material)
+    {
+        if (GetComponentInParent<NetworkObject>().HasInputAuthority)
+        {
+            SpriteRenderer targetRenderer = ActiveTreasureHolder.GetComponentInChildren<SpriteRenderer>();
+            targetRenderer.material = material;
         }
     }
 }

@@ -68,6 +68,12 @@ public class GhostBehaviour : NetworkBehaviour
         else if (treasureHolder.TreasureIsEmpty())
         {
             Angry = true;
+            if(ghostSightTrigger.ActiveTreasureHolder != null)
+            {
+                Debug.Log("Got Angry and has a target");
+                ghostSightTrigger.ActiveTreasureHolder.GetComponent<PlayerController>().OnTargeted();
+            }
+
         }
     }
 

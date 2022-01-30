@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,8 @@ public class GhostSightTrigger : MonoBehaviour
 {
     public TreasureHolder ActiveTreasureHolder { get; set; }
     [SerializeField] private TreasureHolder ThisTreasureHolder;
+    [SerializeField] private GhostBehaviour ghostBehaviour;
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -23,7 +26,7 @@ public class GhostSightTrigger : MonoBehaviour
 
         if (ActiveTreasureHolder == null)
         {
-            ActiveTreasureHolder = treasureHolder;
+            AddTarget(treasureHolder, playerController);
         }
 
         if(ActiveTreasureHolder != null)
@@ -33,8 +36,17 @@ public class GhostSightTrigger : MonoBehaviour
 
             if(newTreasureHolderTreasure > currentTargetTreasure)
             {
-                ActiveTreasureHolder = treasureHolder;
+                AddTarget(treasureHolder, playerController);
             }
+        }
+    }
+
+    private void AddTarget(TreasureHolder treasureHolder, PlayerController playerController)
+    {
+        ActiveTreasureHolder = treasureHolder;
+        if (ghostBehaviour.Angry)
+        {
+            playerController.OnTargeted();
         }
     }
 
