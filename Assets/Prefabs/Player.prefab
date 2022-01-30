@@ -147,11 +147,11 @@ MonoBehaviour:
   NestedObjects: []
   NetworkedBehaviours:
   - {fileID: 5298650122944942551}
+  - {fileID: -8108924302188112735}
   - {fileID: 4259027426557984416}
   - {fileID: 6938286709200908751}
   - {fileID: 314706031515174184}
-  SimulationBehaviours:
-  - {fileID: -8108924302188112735}
+  SimulationBehaviours: []
 --- !u!114 &-8108924302188112735
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,7 +359,7 @@ MonoBehaviour:
     Acceleration: 30
     Braking: 10
     BaseJumpImpulse: 5
-    MaxSpeed: 6
+    MaxSpeed: 10
     MaxSlope: 60
     MaxSlopeSpeed: 5
     _gravity: {x: 0, y: 0, z: 0}

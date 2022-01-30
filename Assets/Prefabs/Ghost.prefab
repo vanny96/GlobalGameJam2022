@@ -259,7 +259,7 @@ MonoBehaviour:
   _interpolationDataSource: 0
   _Angry:
     _value: 0
-  _speed: 2
+  _speed: 9.8
   siphonCooldown: 2
   destinationBounds:
     m_Center: {x: 0, y: 0, z: 0}
