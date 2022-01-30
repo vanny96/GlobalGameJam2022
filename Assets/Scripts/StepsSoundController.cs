@@ -30,7 +30,7 @@ public class StepsSoundController : NetworkBehaviour
     public void StartWalking()
     {
         this.isWalking = true;
-        this.nextFootStep = 0f;
+        this.nextFootStep = 0.05f;
     }
 
     public void StopWalking()
