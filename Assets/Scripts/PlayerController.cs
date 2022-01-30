@@ -15,7 +15,9 @@ public class PlayerController : NetworkBehaviour
     private StepsSoundController stepsSoundController;
     private TreasureHolder treasureHolder;
     private Animator animator;
+
     private MainSoundController mainSoundController;
+    private GameUIManager gameUIManager;
 
     [SerializeField] private TreasureHolderTrigger treasureHolderTrigger;
     [SerializeField] StepsSoundController soundController;
@@ -34,6 +36,8 @@ public class PlayerController : NetworkBehaviour
         characterController = GetComponent<NetworkCharacterController>();
         stepsSoundController = GetComponent<StepsSoundController>();
         treasureHolder = GetComponent<TreasureHolder>();
+
+        gameUIManager = FindObjectOfType<GameUIManager>();
     }
 
     void Start()
@@ -70,6 +74,7 @@ public class PlayerController : NetworkBehaviour
         {
             isBeacon = true;
             beaconTarget.SetActive(true);
+            RPC_NotifyBeacon("playername");
         }
     }
 
@@ -82,7 +87,13 @@ public class PlayerController : NetworkBehaviour
         }
 
         if (treasureHolder.treasure == 0)
-            CallGameOver();
+            RPC_CallGameOver();
+    }
+
+    [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.All)]
+    public void RPC_NotifyBeacon(String player)
+    {
+        gameUIManager.StartCoroutine(gameUIManager.ShowMessage(player + " got the beacon"));
     }
 
     public void OnTargeted()
@@ -94,7 +105,7 @@ public class PlayerController : NetworkBehaviour
     }
 
     [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]
-    private void CallGameOver()
+    private void RPC_CallGameOver()
     {
         Runner.SetActiveScene(1);
     }
