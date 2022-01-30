@@ -505,14 +505,21 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 46a7beb8c6cc36e43ad69fb1afc5324b, type: 3}
   - {fileID: 8300000, guid: e1a71658fbd8a4348ab75707d8867643, type: 3}
   - {fileID: 8300000, guid: 71e823d8ba00d2c4d9932ce4d75d337e, type: 3}
-  shanty1: []
-  shanty2: []
-  shanty3: []
+  shanty1:
+  - {fileID: 8300000, guid: d0a5e3e2a5f774de398b35a9af00f6af, type: 3}
+  - {fileID: 8300000, guid: 7db850b5da1ea4682b6826d3e03ab1cb, type: 3}
+  shanty2:
+  - {fileID: 8300000, guid: 941f37e08a61f4f38a045c418c891395, type: 3}
+  - {fileID: 8300000, guid: 7db850b5da1ea4682b6826d3e03ab1cb, type: 3}
+  shanty3:
+  - {fileID: 8300000, guid: d37381bddab254366aefe7797779dc1d, type: 3}
+  - {fileID: 8300000, guid: 7fbf51120f95f4b789c3171a34f8e2de, type: 3}
   siphonAS: {fileID: 53280881}
   ghostStun: {fileID: 53280880}
   ghostLockOn: {fileID: 53280879}
   coinSteal: {fileID: 53280884}
   music: {fileID: 0}
+  gameSceneManager: {fileID: 1535212024}
 --- !u!4 &53280883
 Transform:
   m_ObjectHideFlags: 0

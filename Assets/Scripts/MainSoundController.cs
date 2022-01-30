@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 using Fusion;
 
 public class MainSoundController : MonoBehaviour
@@ -19,6 +20,8 @@ public class MainSoundController : MonoBehaviour
     [SerializeField] private AudioSource coinSteal;
     [SerializeField] private AudioSource music;
 
+    [SerializeField] private GameSceneManager gameSceneManager;
+
 
     void Start()
     {
@@ -30,10 +33,17 @@ public class MainSoundController : MonoBehaviour
             };
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (music == null)
+        {
+            var playerObject = gameSceneManager.GetMyPlayerObject();
+            if (playerObject == null) return;
+
+            music = playerObject.GetComponentsInChildren<AudioSource>()
+                .Where(source => source.name == "SoundtrackPlayer")
+                .First();
+        }
     }
 
     public void SiphonSound()
@@ -48,6 +58,25 @@ public class MainSoundController : MonoBehaviour
         int pickTrackToPlay = Random.Range(0, 3);
         AudioClip[] trackToPlay = shantyMap[pickTrackToPlay];
 
+        StartCoroutine(PlayMusic(trackToPlay));
+    }
+
+    private IEnumerator PlayMusic(AudioClip[] audioClips)
+    {
+        this.music.clip = audioClips[0];
+        this.music.Play();
+
+        while (this.music.isPlaying)
+        {
+            Debug.Log("Still playing");
+            yield return 1;
+        }
+
+        Debug.Log("Stopped playing");
+
+        this.music.clip = audioClips[1];
+        this.music.loop = true;
+        this.music.Play();
     }
 
     public void GhostStun()
