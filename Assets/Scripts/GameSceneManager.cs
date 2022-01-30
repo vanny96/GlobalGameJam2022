@@ -5,7 +5,10 @@ using Fusion;
 using Fusion.Sockets;
 using System;
 using System.Linq;
+
 using Random = UnityEngine.Random;
+
+using UnityEngine.UI;
 
 
 public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
@@ -17,8 +20,11 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     [SerializeField] private GameObject startScreen;
     [SerializeField] private GameObject gameUI;
     [SerializeField] private GameObject instructionsScreen;
+    [SerializeField] private Text playerNameInput;
+    [SerializeField] private Text playerNameUI;
 
     [SerializeField] private Vector3 spawnPosition;
+    Text userNameInputText;
 
 
     private Dictionary<PlayerRef, NetworkObject> spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
@@ -45,19 +51,24 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
             .GetComponentsInChildren<Collider>()
             .Where(collider => collider.gameObject.tag == "SpawnArea")
             .Select(collider => collider.bounds);
+       
+
     }
 
     void Update()
     {
         if (Input.GetKeyDown("i"))
         {
-            if (instructionsScreen.active)
+            if(!startScreen.active)
             {
-                closeInsructions();
-            }
-            else
-            {
-                bringUpInstructions();
+                if (instructionsScreen.active)
+                {
+                    closeInsructions();
+                }
+                else
+                {
+                    bringUpInstructions();
+                }
             }
         }
     }
@@ -175,11 +186,18 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     public void bringUpInstructions()
     {
         instructionsScreen.SetActive(true);
+        
     }
 
     public void closeInsructions()
     {
         instructionsScreen.SetActive(false);
+    }
+
+
+    public void ShowPlayerName()
+    {
+        playerNameUI.text = playerNameInput.text;
     }
 
 
