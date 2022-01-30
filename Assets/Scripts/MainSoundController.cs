@@ -10,7 +10,7 @@ public class MainSoundController : MonoBehaviour
     [SerializeField] private AudioClip[] shanty1;
     [SerializeField] private AudioClip[] shanty2;
     [SerializeField] private AudioClip[] shanty3;
-   // [SerializeField] private shantyList;
+    private Dictionary<int, AudioClip[]> shantyMap;
 
     //Audio Sources
     [SerializeField] private AudioSource siphonAS;
@@ -20,6 +20,15 @@ public class MainSoundController : MonoBehaviour
     [SerializeField] private AudioSource music;
 
 
+    void Start()
+    {
+        shantyMap = new Dictionary<int, AudioClip[]>()
+            {
+                {0, shanty1 },
+                {1, shanty2 },
+                {2, shanty3 }
+            };
+    }
 
     // Update is called once per frame
     void Update()
@@ -36,7 +45,9 @@ public class MainSoundController : MonoBehaviour
 
     public void musicPlay()
     {
-       // int pickTrackToPlay = Random.Range(shanty1, shanty2, shanty3);
+        int pickTrackToPlay = Random.Range(0, 3);
+        AudioClip[] trackToPlay = shantyMap[pickTrackToPlay];
+
     }
 
     public void GhostStun()
