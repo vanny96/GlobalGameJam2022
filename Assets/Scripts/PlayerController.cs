@@ -65,7 +65,11 @@ public class PlayerController : NetworkBehaviour
             Destroy(FindObjectOfType<Camera>().GetComponent<AudioListener>());
 
             mainSoundController = GameObject.Find("MainSoundController").GetComponent<MainSoundController>();
-            ExecuteLocalAction(mainSoundController.musicPlay);
+
+            if (Object.HasInputAuthority)
+            {
+                mainSoundController.musicPlay();
+            }
         }
 
         gameUIManager = FindObjectOfType<GameUIManager>();
@@ -135,7 +139,10 @@ public class PlayerController : NetworkBehaviour
 
     public void OnLostCoin()
     {
-        ExecuteLocalAction(mainSoundController.CoinSteal);
+        if (Object.HasInputAuthority)
+        {
+            mainSoundController.CoinSteal();
+        }
 
         if (treasureHolder.treasure < treasureThresholdForBeacon)
         {
@@ -154,8 +161,10 @@ public class PlayerController : NetworkBehaviour
 
     public void OnTargeted()
     {
-        ExecuteLocalAction(mainSoundController.GhostLockOn);
-
+        if (Object.HasInputAuthority)
+        {
+            mainSoundController.GhostLockOn();
+        }
     }
 
     [Rpc(sources: RpcSources.All, targets: RpcTargets.StateAuthority)]
@@ -218,15 +227,10 @@ public class PlayerController : NetworkBehaviour
                 currentSiphonCooldown = siphonCooldown;
             }
 
-            ExecuteLocalAction(mainSoundController.SiphonSound);
-        }
-    }
-
-    private void ExecuteLocalAction(Action action)
-    {
-        if (Object.HasInputAuthority)
-        {
-            action.Invoke();
+            if (Object.HasInputAuthority)
+            {
+                mainSoundController.SiphonSound();
+            }
         }
     }
 
