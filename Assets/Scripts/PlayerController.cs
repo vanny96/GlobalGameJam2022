@@ -36,8 +36,6 @@ public class PlayerController : NetworkBehaviour
         characterController = GetComponent<NetworkCharacterController>();
         stepsSoundController = GetComponent<StepsSoundController>();
         treasureHolder = GetComponent<TreasureHolder>();
-
-        gameUIManager = FindObjectOfType<GameUIManager>();
     }
 
     void Start()
@@ -47,10 +45,11 @@ public class PlayerController : NetworkBehaviour
         if (Object.HasInputAuthority)
         {
             gameObject.AddComponent<AudioListener>();
-            GameObject.Destroy(FindObjectOfType<Camera>().GetComponent<AudioListener>());
+            Destroy(FindObjectOfType<Camera>().GetComponent<AudioListener>());
         }
 
         mainSoundController = GameObject.Find("MainSoundController").GetComponent<MainSoundController>();
+        gameUIManager = FindObjectOfType<GameUIManager>();
     }
 
     public override void Spawned()
@@ -104,7 +103,7 @@ public class PlayerController : NetworkBehaviour
         }
     }
 
-    [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]
+    [Rpc(sources: RpcSources.All, targets: RpcTargets.StateAuthority)]
     private void RPC_CallGameOver()
     {
         Runner.SetActiveScene(1);
