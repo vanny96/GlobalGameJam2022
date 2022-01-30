@@ -68,11 +68,8 @@ public class MainSoundController : MonoBehaviour
 
         while (this.music.isPlaying)
         {
-            Debug.Log("Still playing");
             yield return 1;
         }
-
-        Debug.Log("Stopped playing");
 
         this.music.clip = audioClips[1];
         this.music.loop = true;
@@ -86,7 +83,6 @@ public class MainSoundController : MonoBehaviour
 
     public void GhostLockOn()
     {
-        Debug.Log("Play sounds");
         this.ghostLockOn.Play();
     }
 
