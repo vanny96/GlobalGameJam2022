@@ -255,7 +255,7 @@ MonoBehaviour:
   _skin: -1
   treasureHolderTrigger: {fileID: 4413254336488494146}
   soundController: {fileID: 0}
-  treasureThresholdForBeacon: 6
+  treasureThresholdForBeacon: 10
   beaconTarget: {fileID: 1025883394801957857}
   _isBeacon:
     _value: 0
@@ -706,11 +706,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
---- !u!4 &7240805551501794236 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6925327615819367291, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
-  m_PrefabInstance: {fileID: 317282288422164679}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &314706031515174184 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 16107813399928303, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
@@ -725,6 +720,11 @@ MonoBehaviour:
 --- !u!1 &1025883394801957857 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 746362839446938406, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
+  m_PrefabInstance: {fileID: 317282288422164679}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &7240805551501794236 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6925327615819367291, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
   m_PrefabInstance: {fileID: 317282288422164679}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1775457943673441348
@@ -945,11 +945,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f8276561dc049e4ca8ae0c4869dba6b, type: 3}
---- !u!4 &3504713346317548666 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1368920127704694932, guid: 8f8276561dc049e4ca8ae0c4869dba6b, type: 3}
-  m_PrefabInstance: {fileID: 2475959045868715246}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5801114637659382510 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8277031882255425024, guid: 8f8276561dc049e4ca8ae0c4869dba6b, type: 3}
@@ -961,6 +956,11 @@ MonoBehaviour:
   m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &3504713346317548666 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1368920127704694932, guid: 8f8276561dc049e4ca8ae0c4869dba6b, type: 3}
+  m_PrefabInstance: {fileID: 2475959045868715246}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7879676906913748831
 PrefabInstance:
   m_ObjectHideFlags: 0

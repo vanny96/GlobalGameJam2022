@@ -221,10 +221,14 @@ public class PlayerController : NetworkBehaviour
             TreasureHolder activeTreasureHolder = treasureHolderTrigger.ActiveTreasureHolder;
             if (activeTreasureHolder != null)
             {
-                int stolenAmount = activeTreasureHolder.GiveTreasure();
-                treasureHolder.TakeTreasure(stolenAmount);
+                GhostBehaviour ghostBehaviour = activeTreasureHolder.GetComponent<GhostBehaviour>();
+                if (ghostBehaviour == null || !ghostBehaviour.Angry)
+                {
+                    int stolenAmount = activeTreasureHolder.GiveTreasure();
+                    treasureHolder.TakeTreasure(stolenAmount);
 
-                currentSiphonCooldown = siphonCooldown;
+                    currentSiphonCooldown = siphonCooldown;
+                }
             }
 
             if (Object.HasInputAuthority)

@@ -261,7 +261,7 @@ MonoBehaviour:
   _Angry:
     _value: 0
   _normalSpeed: 2
-  _angrySpeed: 4
+  _angrySpeed: 4.8
   siphonCooldown: 2
   destinationBounds:
     m_Center: {x: 0, y: 0, z: 0}
@@ -282,7 +282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
   _treasure: 0
-  startingTreasure: 8
+  startingTreasure: 5
   OnTreasureTaken:
     m_PersistentCalls:
       m_Calls:
