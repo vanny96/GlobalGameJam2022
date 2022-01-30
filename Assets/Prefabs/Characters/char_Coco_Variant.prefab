@@ -39,6 +39,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: char_Coco_Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 6044249900995632992, guid: ffc308db548966144a745935bf787612, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8059033480603209404, guid: ffc308db548966144a745935bf787612, type: 3}
       propertyPath: m_RootOrder
       value: 0

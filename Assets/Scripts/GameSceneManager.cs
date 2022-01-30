@@ -5,6 +5,8 @@ using Fusion;
 using Fusion.Sockets;
 using System;
 using System.Linq;
+using Random = UnityEngine.Random;
+
 
 public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 {
@@ -16,6 +18,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     [SerializeField] private GameObject gameUI;
 
     private Dictionary<PlayerRef, NetworkObject> spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
+    private Dictionary<PlayerRef, int> playerSkins = new Dictionary<PlayerRef, int>();
     private IEnumerable<Bounds> ghostsSpawnAreas;
 
 
@@ -51,8 +54,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         {
             gameUI.SetActive(true);
         }
-
-
+        
         Debug.Log("Player " + player + " joined the lobby");
     }
 
@@ -107,6 +109,25 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         return null;
     }
 
+    public void RetrieveSkin(PlayerRef playerRef,PlayerController playerController)
+    {
+        if (runner.IsServer)
+        {
+            
+            var skin = Random.Range(0, 4);
+            while (playerSkins.ContainsValue(skin))
+            {
+                skin += 1;
+            }
+            playerSkins[playerRef] = skin;
+            playerController.skin = skin;
+            Debug.Log("assign_skin: "+skin.ToString());
+            
+        }
+        playerController.ApplySkin();
+        
+
+    }
     public void AddToDirectory(PlayerRef playerRef,NetworkObject networkObject)
     {
         spawnedCharacters[playerRef] = networkObject;
@@ -116,4 +137,6 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     {
         Application.Quit();
     }
+
+
 }

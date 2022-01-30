@@ -2,6 +2,8 @@ using UnityEngine;
 using Fusion;
 using System.Linq;
 using System;
+using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -15,14 +17,18 @@ public class PlayerController : NetworkBehaviour
     private new NetworkCharacterController characterController;
     private StepsSoundController stepsSoundController;
     private TreasureHolder treasureHolder;
-    private Animator animator;
+    public Animator animator;
 
+    [SerializeField]private GameObject[] skins;
+
+    [Networked(OnChanged = nameof(MyCallbackMethod))]
+    public int skin { get; set; } = -1;
     [SerializeField] private TreasureHolderTrigger treasureHolderTrigger;
     [SerializeField] StepsSoundController soundController;
     private static readonly int Y = Animator.StringToHash("Y");
     private static readonly int X = Animator.StringToHash("X");
     private static readonly int Running = Animator.StringToHash("Running");
-
+    
     [Networked] private NetworkBool wasMoving { get; set; }
 
 
@@ -32,7 +38,44 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private int treasureThresholdForBeacon;
     [Networked] public NetworkBool isBeacon { get; set; }
 
+    protected static void MyCallbackMethod(Changed<PlayerController> changed)
+    {
+        //Debug.Log("changed skin");
+        //changed.Behaviour.ApplySkin();
 
+    }
+
+    static int GetSkin(PlayerRef playerRef)
+    {
+        
+        /*var playerSkins  = new Dictionary<PlayerRef,int>();
+        foreach (var player in GameObject.FindGameObjectsWithTag("Player"))
+        {
+            var playerController = player.GetComponent<PlayerController>();
+            if (playerController.skin != -1)
+            {
+                playerSkins[playerController.Object.InputAuthority] = playerController.skin;
+            }
+            Debug.Log("playerController.skin:"+playerController.skin.ToString());
+
+        }
+
+        
+        if (playerSkins.ContainsKey(playerRef))
+        {
+            return playerSkins[playerRef];
+        }*/
+
+        var skin = Random.Range(0, 4);//-playerSkins.Count());
+        /*while (playerSkins.ContainsValue(skin))
+        {
+
+            skin += 1;
+        }*/
+        Debug.Log("rng: "+skin.ToString());
+        //playerSkins[playerRef] = skin;
+        return skin;
+    }
 
     void Awake()
     {
@@ -49,10 +92,57 @@ public class PlayerController : NetworkBehaviour
     public override void Spawned()
     {
         base.Spawned();
-        GameObject.Find("SceneManager").GetComponent<GameSceneManager>().AddToDirectory(Object.InputAuthority, Object);
-        animator = GetComponentInChildren<Animator>() ;
+        var manager=GameObject.Find("SceneManager").GetComponent<GameSceneManager>();
+        manager.AddToDirectory(Object.InputAuthority, Object);
 
+        manager.RetrieveSkin(Object.InputAuthority, this);
+
+
+        /* if (Object.HasInputAuthority)
+         {
+             skin = GetSkin(Object.InputAuthority);
+             
+         }
+         else
+         {
+             ApplySkin();
+         }*/
+
+
+
+
+
+
+
+        //Debug.Log("playerRef: " + Object.InputAuthority.ToString() + " ---- " + skin.ToString());
+    }
+
+    public void ApplySkin()
+    {
+        var playerView = transform.Find("PlayerView");
+        for (var i =0;i<playerView.childCount;i++)
+        {
+            for (var j = 0; j < skins.Length; j++)
+            {
+                if (skins[j].name == playerView.GetChild(i).gameObject.name)
+                {
+                    skins[j] = playerView.GetChild(i).gameObject;
+                    skins[j].SetActive(false);
+                }
+            }
+            
+        }
+
+        Debug.Log(skins[skin].name);
+        var skinObject = skins[skin];
+        Debug.Log(skinObject);
+        skinObject.SetActive(true);
+        //var skinObject = Instantiate(skins[skin],
+        //    playerView.transform);
         
+        //skinObject.transform.localPosition = new Vector3(0, -0.6f, 0);
+        //skinObject.transform.Rotate(new Vector3(45, 0, 0));
+        animator = skinObject.GetComponentInChildren<Animator>();
     }
 
     public override void FixedUpdateNetwork()
@@ -61,6 +151,8 @@ public class PlayerController : NetworkBehaviour
 
         Move(input.Buttons);
         Siphon(input.Buttons);
+        Debug.Log(Object.InputAuthority.ToString()
+                  +"hello");
     }
 
     public void OnGainedCoin()
@@ -111,14 +203,18 @@ public class PlayerController : NetworkBehaviour
 
     private void UpdateAnimation(Vector3 direction, bool moving)
     {
+        if (animator != null)
+        {
+            if (direction.x > 0.1f) animationXdirection = 1;
+            if (direction.x < -0.1f) animationXdirection = -1;
+            if (direction.z > 0.1f) animationYdirection = 1;
+            if (direction.z < -0.1f) animationYdirection = -1;
+            
+            animator.SetFloat(X,animationXdirection); 
+            animator.SetFloat(Y,animationYdirection); 
+            animator.SetBool(Running,moving);
+        }
 
-        if (direction.x > 0.1f) animationXdirection = 1;
-        if (direction.x < -0.1f) animationXdirection = -1;
-        if (direction.z > 0.1f) animationYdirection = 1;
-        if (direction.z < -0.1f) animationYdirection = -1;
-        animator.SetFloat(X,animationXdirection); 
-        animator.SetFloat(Y,animationYdirection); 
-        animator.SetBool(Running,moving);
     }
 
     private void Siphon(NetworkButtons buttons)
