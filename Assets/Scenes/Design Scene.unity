@@ -1332,7 +1332,7 @@ Camera:
   far clip plane: 1000
   field of view: 90
   orthographic: 1
-  orthographic size: 30
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1376,6 +1376,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameSceneManager: {fileID: 1535212024}
   relativeCameraPosition: {x: 0, y: 100, z: -100}
+  maxX: 100
+  maxZ: -29
+  minX: -150
+  minZ: -158
 --- !u!114 &1247364138
 MonoBehaviour:
   m_ObjectHideFlags: 0

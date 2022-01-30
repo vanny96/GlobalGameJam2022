@@ -9,7 +9,19 @@ public class CameraMovement : MonoBehaviour
 
     [SerializeField] private Vector3 relativeCameraPosition;
     private Transform playerAvatar= null;
-    
+
+    [SerializeField]
+    private float maxX;
+
+    [SerializeField]
+    private float maxZ;
+
+    [SerializeField]
+    private float minX;
+
+    [SerializeField]
+    private float minZ;
+
 
     // Start is called before the first frame update
 
@@ -27,7 +39,9 @@ public class CameraMovement : MonoBehaviour
         }
         else
         {
-            transform.position = playerAvatar.position + relativeCameraPosition;
+            transform.position = new Vector3(Mathf.Clamp(playerAvatar.position.x + relativeCameraPosition.x, minX, maxX),
+                                         playerAvatar.position.y + relativeCameraPosition.y,
+                                         Mathf.Clamp(playerAvatar.position.z + relativeCameraPosition.z, minZ, maxZ));
         }
 
         
