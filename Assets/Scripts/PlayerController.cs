@@ -176,11 +176,11 @@ public class PlayerController : NetworkBehaviour
         bool isMoving = movement != Vector3.zero;
 
         movement.Normalize();
-
+        characterController.Velocity = new Vector3(characterController.Velocity.x, 0, characterController.Velocity.z);
         UpdateSoundController(isMoving, wasMoving);
         characterController.Move( movement);
         UpdateAnimation(movement, isMoving);
-
+        
         wasMoving = isMoving;
         
     }

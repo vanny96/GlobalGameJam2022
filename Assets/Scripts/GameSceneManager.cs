@@ -86,6 +86,10 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
             spawnedCharacters.Remove(player);
         }
 
+        if (runner.IsServer)
+        {
+            playerSkins.Remove(player);
+        }
         Debug.Log("Player " + player + " left the lobby");
     }
 
@@ -135,13 +139,22 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         {
             
             var skin = Random.Range(0, 4);
+            if (playerSkins.Count > 3)
+            {
+                Debug.LogError("No skins available: ");
+                return;
+            }
             while (playerSkins.ContainsValue(skin))
             {
                 skin += 1;
+                if (skin == 4)
+                {
+                    skin = 0;
+                }
             }
             playerSkins[playerRef] = skin;
             playerController.skin = skin;
-            Debug.Log("assign_skin: "+skin.ToString());
+            
             
         }
         playerController.ApplySkin();
