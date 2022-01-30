@@ -138,7 +138,11 @@ public class GhostBehaviour : NetworkBehaviour
         Vector3 endPosition = position + movement;
         endPosition.y = position.y;
         UpdateAnimation((endPosition-position).normalized,Angry);
-        rigidbody.MovePosition(endPosition);
+        if (!rigidbody)
+        {
+            rigidbody = GetComponent<Rigidbody>();
+        }
+            rigidbody.MovePosition(endPosition);
     }
 
     private void UpdateAnimation(Vector3 direction, bool angry)
