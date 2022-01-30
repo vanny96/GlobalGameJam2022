@@ -67,6 +67,7 @@ public class PlayerController : NetworkBehaviour
 
         mainSoundController = GameObject.Find("MainSoundController").GetComponent<MainSoundController>();
         gameUIManager = FindObjectOfType<GameUIManager>();
+        mainSoundController.musicPlay();
     }
 
     public override void Spawned()
@@ -135,6 +136,8 @@ public class PlayerController : NetworkBehaviour
 
     public void OnLostCoin()
     {
+        this.mainSoundController.CoinSteal();
+
         if (treasureHolder.treasure < treasureThresholdForBeacon)
         {
             isBeacon = false;
