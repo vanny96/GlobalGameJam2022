@@ -71,6 +71,13 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
                 }
             }
         }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!startScreen.active)
+            {
+                doExitGame();
+            }
+        }
     }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
