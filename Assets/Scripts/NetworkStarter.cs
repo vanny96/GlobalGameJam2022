@@ -43,7 +43,7 @@ public class NetworkStarter : MonoBehaviour
             Scene = SceneManager.GetActiveScene().buildIndex,
             SceneObjectProvider = gameObject.AddComponent<NetworkSceneManagerDefault>()
         };
-        Debug.LogError(gameArgs.SessionName);
+
         await runner.StartGame(gameArgs);
     }
 }

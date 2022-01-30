@@ -153,6 +153,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6d8a7df505164d3d8e3b866c74be625, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hostNameInput: {fileID: 1877685769}
 --- !u!114 &40023179
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -775,7 +776,7 @@ GameObject:
   - component: {fileID: 122584000}
   - component: {fileID: 122583999}
   m_Layer: 5
-  m_Name: InputField (1)
+  m_Name: InputFieldHostName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
