@@ -65,7 +65,7 @@ public class PlayerController : NetworkBehaviour
             Destroy(FindObjectOfType<Camera>().GetComponent<AudioListener>());
 
             mainSoundController = GameObject.Find("MainSoundController").GetComponent<MainSoundController>();
-            mainSoundController.musicPlay();
+            ExecuteLocalAction(mainSoundController.musicPlay);
         }
 
         gameUIManager = FindObjectOfType<GameUIManager>();
@@ -122,8 +122,6 @@ public class PlayerController : NetworkBehaviour
 
         Move(input.Buttons);
         Siphon(input.Buttons);
-        Debug.Log(Object.InputAuthority.ToString()
-                  +"hello");
     }
 
     public void OnGainedCoin()
@@ -137,7 +135,7 @@ public class PlayerController : NetworkBehaviour
 
     public void OnLostCoin()
     {
-        this.mainSoundController.CoinSteal();
+        ExecuteLocalAction(mainSoundController.CoinSteal);
 
         if (treasureHolder.treasure < treasureThresholdForBeacon)
         {
@@ -156,10 +154,8 @@ public class PlayerController : NetworkBehaviour
 
     public void OnTargeted()
     {
-        if (Object.HasInputAuthority)
-        {
-            mainSoundController.GhostLockOn();
-        }
+        ExecuteLocalAction(mainSoundController.GhostLockOn);
+
     }
 
     [Rpc(sources: RpcSources.All, targets: RpcTargets.StateAuthority)]
@@ -213,7 +209,6 @@ public class PlayerController : NetworkBehaviour
 
         if(siphoning && currentSiphonCooldown <= 0f)
         {
-            this.mainSoundController.SiphonSound();
             TreasureHolder activeTreasureHolder = treasureHolderTrigger.ActiveTreasureHolder;
             if (activeTreasureHolder != null)
             {
@@ -222,6 +217,16 @@ public class PlayerController : NetworkBehaviour
 
                 currentSiphonCooldown = siphonCooldown;
             }
+
+            ExecuteLocalAction(mainSoundController.SiphonSound);
+        }
+    }
+
+    private void ExecuteLocalAction(Action action)
+    {
+        if (Object.HasInputAuthority)
+        {
+            action.Invoke();
         }
     }
 
