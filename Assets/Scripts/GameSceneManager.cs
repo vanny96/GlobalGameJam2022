@@ -54,13 +54,16 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     {
         if (Input.GetKeyDown("i"))
         {
-            if (instructionsScreen.active)
+            if(!startScreen.active)
             {
-                closeInsructions();
-            }
-            else
-            {
-                bringUpInstructions();
+                if (instructionsScreen.active)
+                {
+                    closeInsructions();
+                }
+                else
+                {
+                    bringUpInstructions();
+                }
             }
         }
     }
