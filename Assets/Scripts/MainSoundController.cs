@@ -57,6 +57,7 @@ public class MainSoundController : MonoBehaviour
 
     public void GhostLockOn()
     {
+        Debug.Log("Play sounds");
         this.ghostLockOn.Play();
     }
 

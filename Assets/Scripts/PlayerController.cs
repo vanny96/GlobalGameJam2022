@@ -15,7 +15,9 @@ public class PlayerController : NetworkBehaviour
     private StepsSoundController stepsSoundController;
     private TreasureHolder treasureHolder;
     private Animator animator;
+
     private MainSoundController mainSoundController;
+    private GameUIManager gameUIManager;
 
     [SerializeField] private TreasureHolderTrigger treasureHolderTrigger;
     [SerializeField] StepsSoundController soundController;
@@ -43,10 +45,11 @@ public class PlayerController : NetworkBehaviour
         if (Object.HasInputAuthority)
         {
             gameObject.AddComponent<AudioListener>();
-            GameObject.Destroy(FindObjectOfType<Camera>().GetComponent<AudioListener>());
+            Destroy(FindObjectOfType<Camera>().GetComponent<AudioListener>());
         }
 
         mainSoundController = GameObject.Find("MainSoundController").GetComponent<MainSoundController>();
+        gameUIManager = FindObjectOfType<GameUIManager>();
     }
 
     public override void Spawned()
@@ -70,6 +73,7 @@ public class PlayerController : NetworkBehaviour
         {
             isBeacon = true;
             beaconTarget.SetActive(true);
+            RPC_NotifyBeacon("playername");
         }
     }
 
@@ -82,11 +86,25 @@ public class PlayerController : NetworkBehaviour
         }
 
         if (treasureHolder.treasure == 0)
-            CallGameOver();
+            RPC_CallGameOver();
     }
 
-    [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.StateAuthority)]
-    private void CallGameOver()
+    [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.All)]
+    public void RPC_NotifyBeacon(String player)
+    {
+        gameUIManager.StartCoroutine(gameUIManager.ShowMessage(player + " got the beacon"));
+    }
+
+    public void OnTargeted()
+    {
+        if (Object.HasInputAuthority)
+        {
+            mainSoundController.GhostLockOn();
+        }
+    }
+
+    [Rpc(sources: RpcSources.All, targets: RpcTargets.StateAuthority)]
+    private void RPC_CallGameOver()
     {
         Runner.SetActiveScene(1);
     }
