@@ -50,18 +50,16 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
             .First()
             .GetComponentsInChildren<Collider>()
             .Where(collider => collider.gameObject.tag == "SpawnArea")
-            .Select(collider => collider.bounds);
-       
-
+            .Select(collider => collider.bounds);     
     }
 
     void Update()
     {
         if (Input.GetKeyDown("i"))
         {
-            if(!startScreen.active)
+            if(!startScreen.activeSelf)
             {
-                if (instructionsScreen.active)
+                if (instructionsScreen.activeSelf)
                 {
                     closeInsructions();
                 }
@@ -73,7 +71,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         }
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (!startScreen.active)
+            if (!startScreen.activeSelf)
             {
                 doExitGame();
             }
@@ -176,9 +174,8 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
             
         }
         playerController.ApplySkin();
-        
-
     }
+
     public void AddToDirectory(PlayerRef playerRef,NetworkObject networkObject)
     {
         spawnedCharacters[playerRef] = networkObject;

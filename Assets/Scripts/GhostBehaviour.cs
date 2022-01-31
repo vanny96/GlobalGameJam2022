@@ -19,6 +19,7 @@ public class GhostBehaviour : NetworkBehaviour
 
     [SerializeField] private GhostSightTrigger ghostSightTrigger;
     [SerializeField] private TreasureHolderTrigger treasureHolderTrigger;
+    [SerializeField] private ParticleSystem coinEffect;
 
     private Rigidbody rigidbody;
     private TreasureHolder treasureHolder;
@@ -29,7 +30,8 @@ public class GhostBehaviour : NetworkBehaviour
 
     private float animationXdirection = 1;
     private float animationYdirection = 1;
-    // Start is called before the first frame update
+
+
     void Start()
     {
         rigidbody = GetComponent<Rigidbody>();
@@ -37,7 +39,6 @@ public class GhostBehaviour : NetworkBehaviour
         treasureHolder = GetComponent<TreasureHolder>();
     }
 
-    // Update is called once per frame
     public override void FixedUpdateNetwork()
     {
         if (Angry)
@@ -55,27 +56,27 @@ public class GhostBehaviour : NetworkBehaviour
         base.Spawned();
         GameObject.Find("SceneManager").GetComponent<GameSceneManager>().AddToDirectory(Object.InputAuthority, Object);
         animator = GetComponentInChildren<Animator>() ;
-
-        
     }
 
-    
 
     public void OnTreasureChange()
     {
-        if (Angry && treasureHolder.TreasureIsAtStartAmount())
-        {
-            Angry = false;
-        }
-        else if (treasureHolder.TreasureIsEmpty())
+        var emission = coinEffect.emission;
+        emission.rateOverTime = treasureHolder.treasure;
+
+        if (!treasureHolder.TreasureIsAtStartAmount())
         {
             Angry = true;
-            if(ghostSightTrigger.ActiveTreasureHolder != null)
+            if (ghostSightTrigger.ActiveTreasureHolder != null)
             {
                 Debug.Log("Got Angry and has a target");
                 ghostSightTrigger.ActiveTreasureHolder.GetComponent<PlayerController>().OnTargeted();
             }
+        }
 
+        if (Angry && treasureHolder.TreasureIsAtStartAmount())
+        {
+            Angry = false;
         }
     }
 
@@ -90,7 +91,6 @@ public class GhostBehaviour : NetworkBehaviour
             FollowPlayer();
             StealFromPlayer();
         }
-
     }
 
     private void CalmPattern()
@@ -124,7 +124,6 @@ public class GhostBehaviour : NetworkBehaviour
                 currentSiphonCooldown = siphonCooldown;
             }
         }
-
     }
 
     private void MoveToDestination(Vector3 destination, float speed)

@@ -42,8 +42,6 @@ public class CameraMovement : MonoBehaviour
             transform.position = new Vector3(Mathf.Clamp(playerAvatar.position.x + relativeCameraPosition.x, minX, maxX),
                                          playerAvatar.position.y + relativeCameraPosition.y,
                                          Mathf.Clamp(playerAvatar.position.z + relativeCameraPosition.z, minZ, maxZ));
-        }
-
-        
+        }      
     }
 }

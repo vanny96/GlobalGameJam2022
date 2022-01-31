@@ -4,6 +4,7 @@ using System.Linq;
 using System;
 using System.Collections.Generic;
 using Random = UnityEngine.Random;
+using TMPro;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -11,7 +12,9 @@ public class PlayerController : NetworkBehaviour
 
     [SerializeField] private float siphonCooldown;
     [Networked] private float currentSiphonCooldown { get; set; } = 0;
-    [Networked] public NetworkBool siphoning { get; set; } = false; 
+    [Networked] public NetworkBool siphoning { get; set; } = false;
+
+    [SerializeField] private int treasureThresholdForBeacon;
 
     private NetworkCharacterController characterController;
     private StepsSoundController stepsSoundController;
@@ -31,14 +34,18 @@ public class PlayerController : NetworkBehaviour
     private static readonly int Y = Animator.StringToHash("Y");
     private static readonly int X = Animator.StringToHash("X");
     private static readonly int Running = Animator.StringToHash("Running");
-    
+    private static readonly int Steal = Animator.StringToHash("Steal");
+    private static readonly int Stunned = Animator.StringToHash("Stunned");
+
+
     [Networked] private NetworkBool wasMoving { get; set; }
 
 
     private float animationXdirection = 1;
     private float animationYdirection = 1;
 
-    [SerializeField] private int treasureThresholdForBeacon;
+    [SerializeField] private ParticleSystem coinEffect;
+    
     [SerializeField] private GameObject beaconTarget;
     [Networked(OnChanged = nameof(BeaconCallBack))] public NetworkBool isBeacon { get; set; }
 
@@ -83,8 +90,6 @@ public class PlayerController : NetworkBehaviour
         manager.AddToDirectory(Object.InputAuthority, Object);
 
         manager.RetrieveSkin(Object.InputAuthority, this);
-
-
     }
 
     public void ApplySkin()
@@ -100,7 +105,6 @@ public class PlayerController : NetworkBehaviour
                     skins[j].SetActive(false);
                 }
             }
-            
         }
 
         Debug.Log(skins[skin].name);
@@ -115,10 +119,17 @@ public class PlayerController : NetworkBehaviour
         animator = skinObject.GetComponentInChildren<Animator>();
 
         GameObject.Find("SceneManager").GetComponent<GameSceneManager>().AddToDirectory(Object.InputAuthority, Object);
-        animator = GetComponentInChildren<Animator>() ;
-        beaconTarget = skinObject.transform.Find("X").gameObject;
+        animator = GetComponentInChildren<Animator>();
+        //beaconTarget = skinObject.transform.Find("X").gameObject;
         beaconTarget.SetActive(isBeacon);
     }
+
+    public void ApplyName(string name)
+    {
+        var nameText = transform.Find("NameTag").GetChild(0);
+        nameText.GetComponent<TextMeshPro>().text = name;
+    }
+
 
     public override void FixedUpdateNetwork()
     {
@@ -130,11 +141,20 @@ public class PlayerController : NetworkBehaviour
 
     public void OnGainedCoin()
     {
-        if(treasureHolder.treasure >= treasureThresholdForBeacon)
+        if (treasureHolder.treasure >= treasureThresholdForBeacon)
         {
             isBeacon = true;
             RPC_NotifyBeacon("playername");
         }
+
+        var emission = coinEffect.emission;
+        emission.rateOverTime = treasureHolder.treasure;
+        
+        if (Object.HasInputAuthority)
+        {
+            mainSoundController.SiphonSound();
+        }
+
     }
 
     public void OnLostCoin()
@@ -148,6 +168,9 @@ public class PlayerController : NetworkBehaviour
         {
             isBeacon = false;
         }
+
+        var emission = coinEffect.emission;
+        emission.rateOverTime = treasureHolder.treasure;
 
         if (treasureHolder.treasure == 0)
             RPC_CallGameOver();
@@ -212,28 +235,25 @@ public class PlayerController : NetworkBehaviour
 
     private void Siphon(NetworkButtons buttons)
     {
-        siphoning = buttons.IsSet(PirateButtons.Space);
+        siphoning = buttons.IsSet(PirateButtons.Steal);
 
         if (currentSiphonCooldown >= 0) currentSiphonCooldown -= Runner.DeltaTime;
 
         if(siphoning && currentSiphonCooldown <= 0f)
         {
+            animator.SetTrigger("Steal");
+
             TreasureHolder activeTreasureHolder = treasureHolderTrigger.ActiveTreasureHolder;
             if (activeTreasureHolder != null)
             {
                 GhostBehaviour ghostBehaviour = activeTreasureHolder.GetComponent<GhostBehaviour>();
-                if (ghostBehaviour == null || !ghostBehaviour.Angry)
+                if (ghostBehaviour != null) // || !ghostBehaviour.Angry)
                 {
                     int stolenAmount = activeTreasureHolder.GiveTreasure();
                     treasureHolder.TakeTreasure(stolenAmount);
 
                     currentSiphonCooldown = siphonCooldown;
                 }
-            }
-
-            if (Object.HasInputAuthority)
-            {
-                mainSoundController.SiphonSound();
             }
         }
     }
