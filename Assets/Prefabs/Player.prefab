@@ -292,6 +292,8 @@ MonoBehaviour:
   soundController: {fileID: 0}
   _playerName: 
   coinEffect: {fileID: 5971518264287075472}
+  stolenCoinPrefab:
+    RawGuidValue: 88cdf5e8ce7d14f1b995016a88f3746e
   beaconTarget: {fileID: 7579149179301485557}
   _isBeacon:
     _value: 0

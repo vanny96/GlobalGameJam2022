@@ -10,6 +10,7 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float siphonCooldown;
     [Networked] private float currentSiphonCooldown { get; set; } = 0;
 
+    [SerializeField] private TreasureHolderTrigger treasureHolderTrigger;
     [SerializeField] private int treasureThresholdForBeacon;
 
     private NetworkCharacterController characterController;
@@ -32,6 +33,7 @@ public class PlayerController : NetworkBehaviour
     [Networked] private NetworkBool wasMoving { get; set; }
 
     [SerializeField] private ParticleSystem coinEffect;
+    [SerializeField] private NetworkPrefabRef stolenCoinPrefab;
     
     [SerializeField] private GameObject beaconTarget;
     [Networked(OnChanged = nameof(BeaconCallBack))] public NetworkBool isBeacon { get; set; }
