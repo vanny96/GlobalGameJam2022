@@ -2001,7 +2001,7 @@ GameObject:
   - component: {fileID: 7772082810205469201}
   m_Layer: 0
   m_Name: Island
-  m_TagString: Untagged
+  m_TagString: World
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
