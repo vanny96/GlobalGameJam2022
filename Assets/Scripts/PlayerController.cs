@@ -37,7 +37,7 @@ public class PlayerController : NetworkBehaviour
     private static readonly int Steal = Animator.StringToHash("Steal");
     private static readonly int Stunned = Animator.StringToHash("Stunned");
 
-
+    [Networked(OnChanged = nameof(NameChangeCallBack))][Capacity(32)] public string playerName { get; set; }
     [Networked] private NetworkBool wasMoving { get; set; }
 
 
@@ -53,7 +53,10 @@ public class PlayerController : NetworkBehaviour
     {
         changed.Behaviour.beaconTarget.SetActive(changed.Behaviour.isBeacon);
     }
-
+    protected static void NameChangeCallBack(Changed<PlayerController> changed)
+    {
+        changed.Behaviour.ApplyName();
+    }
     
     void Awake()
     {
@@ -88,6 +91,10 @@ public class PlayerController : NetworkBehaviour
 
         var manager=GameObject.Find("SceneManager").GetComponent<GameSceneManager>();
         manager.AddToDirectory(Object.InputAuthority, Object);
+        if (Object.HasInputAuthority)
+        {
+            manager.RetrieveName(this);
+        }
 
         manager.RetrieveSkin(Object.InputAuthority, this);
     }
@@ -124,10 +131,16 @@ public class PlayerController : NetworkBehaviour
         beaconTarget.SetActive(isBeacon);
     }
 
-    public void ApplyName(string name)
+    public void ApplyName()
     {
         var nameText = transform.Find("NameTag").GetChild(0);
-        nameText.GetComponent<TextMeshPro>().text = name;
+        nameText.GetComponent<TextMeshPro>().text = playerName;
+    }
+    
+    [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
+    public void RPC_UpdatePlayerName(string newName){
+        playerName = newName;
+
     }
 
 

@@ -90,7 +90,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         {
             gameUI.SetActive(true);
         }
-        
+        //Debug.LogError("GameSceneManager state authority: "+Object.HasStateAuthority.ToString());
         Debug.Log("Player " + player + " joined the lobby");
     }
 
@@ -205,4 +205,8 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     }
 
 
+    public void RetrieveName(PlayerController player)
+    {
+        player.RPC_UpdatePlayerName(playerNameUI.text);
+    }
 }
