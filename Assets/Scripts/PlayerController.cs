@@ -1,9 +1,6 @@
 using UnityEngine;
 using Fusion;
-using System.Linq;
 using System;
-using System.Collections.Generic;
-using Random = UnityEngine.Random;
 using TMPro;
 
 public class PlayerController : NetworkBehaviour
@@ -48,15 +45,6 @@ public class PlayerController : NetworkBehaviour
     
     [SerializeField] private GameObject beaconTarget;
     [Networked(OnChanged = nameof(BeaconCallBack))] public NetworkBool isBeacon { get; set; }
-
-    protected static void BeaconCallBack(Changed<PlayerController> changed)
-    {
-        changed.Behaviour.beaconTarget.SetActive(changed.Behaviour.isBeacon);
-    }
-    protected static void NameChangeCallBack(Changed<PlayerController> changed)
-    {
-        changed.Behaviour.ApplyName();
-    }
     
     void Awake()
     {
@@ -114,21 +102,25 @@ public class PlayerController : NetworkBehaviour
             }
         }
 
-        Debug.Log(skins[skin].name);
         var skinObject = skins[skin];
-        Debug.Log(skinObject);
         skinObject.SetActive(true);
-        //var skinObject = Instantiate(skins[skin],
-        //    playerView.transform);
-        
-        //skinObject.transform.localPosition = new Vector3(0, -0.6f, 0);
-        //skinObject.transform.Rotate(new Vector3(45, 0, 0));
+
         animator = skinObject.GetComponentInChildren<Animator>();
 
         GameObject.Find("SceneManager").GetComponent<GameSceneManager>().AddToDirectory(Object.InputAuthority, Object);
         animator = GetComponentInChildren<Animator>();
-        //beaconTarget = skinObject.transform.Find("X").gameObject;
+
         beaconTarget.SetActive(isBeacon);
+    }
+
+    protected static void BeaconCallBack(Changed<PlayerController> changed)
+    {
+        changed.Behaviour.beaconTarget.SetActive(changed.Behaviour.isBeacon);
+    }
+
+    protected static void NameChangeCallBack(Changed<PlayerController> changed)
+    {
+        changed.Behaviour.ApplyName();
     }
 
     public void ApplyName()
