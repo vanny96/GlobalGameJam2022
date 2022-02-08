@@ -10,9 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4896015350766095995}
   - component: {fileID: 1738844169348360965}
-  - component: {fileID: 4413254336488494146}
+  - component: {fileID: 300043155958003240}
   m_Layer: 0
-  m_Name: TreasureHoldersTrigger
+  m_Name: TargetTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -45,7 +45,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0.25, z: 0}
---- !u!114 &4413254336488494146
+--- !u!114 &300043155958003240
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -54,10 +54,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2441968299904413499}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 506e7cd814e184342b98aa2ac368036f, type: 3}
+  m_Script: {fileID: 11500000, guid: 90e94b724cfb846d09198fa217f2c94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ThisTreasureHolder: {fileID: 4259027426557984416}
+  thisTargetCollider: {fileID: 3335285417905086492}
   outlining: 1
   outlineMaterial: {fileID: 2100000, guid: 6eb74db231172484a9ee535af6b75e8a, type: 2}
   normalMaterial: {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
@@ -236,6 +236,7 @@ GameObject:
   - component: {fileID: 4259027426557984416}
   - component: {fileID: 6938286709200908751}
   - component: {fileID: 2283606126156590892}
+  - component: {fileID: 766186568603483569}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -278,8 +279,6 @@ MonoBehaviour:
   _interpolationDataSource: 0
   speed: 5
   siphonCooldown: 1
-  _siphoning:
-    _value: 0
   treasureThresholdForBeacon: 8
   animator: {fileID: 0}
   skins:
@@ -287,9 +286,11 @@ MonoBehaviour:
   - {fileID: 6642169277187134119, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
   - {fileID: 3371345196949557576, guid: 8f8276561dc049e4ca8ae0c4869dba6b, type: 3}
   - {fileID: 5236920238050429460, guid: b6ff84fe4f8fa6841a3ce0e7f5963ed5, type: 3}
+  - {fileID: 2441968299904413499}
   _skin: -1
-  treasureHolderTrigger: {fileID: 4413254336488494146}
+  targetColliderTrigger: {fileID: 300043155958003240}
   soundController: {fileID: 0}
+  _playerName: 
   coinEffect: {fileID: 5971518264287075472}
   beaconTarget: {fileID: 7579149179301485557}
   _isBeacon:
@@ -561,6 +562,51 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &766186568603483569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4743985825440454326}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcbac2aa4ecda45d5ad23b1daad87b9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  stunDuration: 3
+  stunCooldown: 5
+  OnStunned:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5298650122944942551}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnStunned
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  OnStunRemoved:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5298650122944942551}
+        m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
+        m_MethodName: OnStunned
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4850882414085235268
 GameObject:
   m_ObjectHideFlags: 0
@@ -770,6 +816,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5055939588211516750}
   - component: {fileID: 5606617678028598252}
+  - component: {fileID: 3335285417905086492}
   m_Layer: 0
   m_Name: PlayerCollider
   m_TagString: ActualCollider
@@ -805,6 +852,21 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &3335285417905086492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7734478979747647365}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f9908159cec482096b609d9f3d1eb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treasureHolder: {fileID: 4259027426557984416}
+  stunEntity: {fileID: 766186568603483569}
+  parent: {fileID: 4743985825440454326}
 --- !u!1 &8661109767020900803
 GameObject:
   m_ObjectHideFlags: 0
@@ -984,7 +1046,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 16107813399928303, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
       propertyPath: TriggerHashes.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 16107813399928303, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
       propertyPath: StateHashes.Array.data[5]
@@ -996,11 +1058,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 16107813399928303, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
       propertyPath: StateHashes.Array.data[7]
-      value: 1150883238
+      value: 724700051
       objectReference: {fileID: 0}
     - target: {fileID: 16107813399928303, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
       propertyPath: StateHashes.Array.data[8]
-      value: -1365015364
+      value: -1367456751
       objectReference: {fileID: 0}
     - target: {fileID: 746362839446938406, guid: 56e4ae53a657d984bbb6b2b336c798d4, type: 3}
       propertyPath: m_IsActive
@@ -1226,11 +1288,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f8276561dc049e4ca8ae0c4869dba6b, type: 3}
---- !u!4 &3504713346317548666 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1368920127704694932, guid: 8f8276561dc049e4ca8ae0c4869dba6b, type: 3}
-  m_PrefabInstance: {fileID: 2475959045868715246}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5801114637659382510 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8277031882255425024, guid: 8f8276561dc049e4ca8ae0c4869dba6b, type: 3}
@@ -1242,6 +1299,11 @@ MonoBehaviour:
   m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &3504713346317548666 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1368920127704694932, guid: 8f8276561dc049e4ca8ae0c4869dba6b, type: 3}
+  m_PrefabInstance: {fileID: 2475959045868715246}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3806449902308430585
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -15,41 +15,41 @@ public class PlayerController : NetworkBehaviour
     private NetworkCharacterController characterController;
     private StepsSoundController stepsSoundController;
     private TreasureHolder treasureHolder;
+    private StunEntity stunEntity;
     public Animator animator;
 
     [SerializeField]private GameObject[] skins;
 
-    [Networked]
-    public int skin { get; set; } = -1;
+    [Networked] public int skin { get; set; } = -1;
 
     private MainSoundController mainSoundController;
     private GameUIManager gameUIManager;
 
-    [SerializeField] private TreasureHolderTrigger treasureHolderTrigger;
+    [SerializeField] private TargetColliderTrigger targetColliderTrigger;
     [SerializeField] StepsSoundController soundController;
-    private static readonly int Y = Animator.StringToHash("Y");
-    private static readonly int X = Animator.StringToHash("X");
-    private static readonly int Running = Animator.StringToHash("Running");
-    private static readonly int Steal = Animator.StringToHash("Steal");
-    private static readonly int Stunned = Animator.StringToHash("Stunned");
 
     [Networked(OnChanged = nameof(NameChangeCallBack))][Capacity(32)] public string playerName { get; set; }
     [Networked] private NetworkBool wasMoving { get; set; }
-
-
-    private float animationXdirection = 1;
-    private float animationYdirection = 1;
 
     [SerializeField] private ParticleSystem coinEffect;
     
     [SerializeField] private GameObject beaconTarget;
     [Networked(OnChanged = nameof(BeaconCallBack))] public NetworkBool isBeacon { get; set; }
-    
+
+    private static readonly int Y = Animator.StringToHash("Y");
+    private static readonly int X = Animator.StringToHash("X");
+    private static readonly int Running = Animator.StringToHash("Running");
+    private static readonly int Steal = Animator.StringToHash("Steal");
+    private static readonly int Stunned = Animator.StringToHash("Stunned");
+    private float animationXdirection = 1;
+    private float animationYdirection = 1;
+
     void Awake()
     {
         characterController = GetComponent<NetworkCharacterController>();
         stepsSoundController = GetComponent<StepsSoundController>();
         treasureHolder = GetComponent<TreasureHolder>();
+        stunEntity = GetComponent<StunEntity>();
     }
 
     void Start()
@@ -137,8 +137,11 @@ public class PlayerController : NetworkBehaviour
     {
         if (GetInput<PirateGameInput>(out PirateGameInput input) == false) return;
 
+        if (stunEntity.IsStunned()) return;
+        
         Move(input.Buttons);
         Siphon(input.Buttons);
+        Stun(input.Buttons);
     }
 
     public void OnGainedCoin()
@@ -241,7 +244,8 @@ public class PlayerController : NetworkBehaviour
 
         bool stealing = buttons.IsSet(PirateButtons.Steal);
         bool giving = buttons.IsSet(PirateButtons.Give);
-        TreasureHolder targetTreasureHolder = treasureHolderTrigger.ActiveTreasureHolder;
+
+        TreasureHolder targetTreasureHolder = targetColliderTrigger.activeTarget?.treasureHolder;
 
         if(targetTreasureHolder != null && currentSiphonCooldown <= 0f)
         {
@@ -263,6 +267,28 @@ public class PlayerController : NetworkBehaviour
         moneyReceiver.TakeTreasure(stolenAmount);
 
         currentSiphonCooldown = siphonCooldown;
+    }
+
+    private void Stun(NetworkButtons buttons)
+    {
+        bool stealing = buttons.IsSet(PirateButtons.Stun);
+
+        StunEntity targetStunEntity = targetColliderTrigger.activeTarget?.stunEntity;
+
+        if(stealing && targetStunEntity != null)
+        {
+            bool targetStunned = stunEntity.Stun(targetStunEntity);
+
+            if(targetStunned && Object.HasInputAuthority)
+            {
+                mainSoundController.StunSound();
+            }
+        }
+    }
+
+    public void OnStunned()
+    {
+        animator.SetBool(Stunned, stunEntity.IsStunned());
     }
 
     private void UpdateSoundController(bool isMoving, NetworkBool wasMoving)
