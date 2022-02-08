@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Fusion;
@@ -90,7 +89,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         {
             gameUI.SetActive(true);
         }
-        //Debug.LogError("GameSceneManager state authority: "+Object.HasStateAuthority.ToString());
+
         Debug.Log("Player " + player + " joined the lobby");
     }
 

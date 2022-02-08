@@ -1,7 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Fusion;
 
 public class GameEndScreen : MonoBehaviour
 {
@@ -9,13 +8,8 @@ public class GameEndScreen : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        NetworkRunner networkRunner = FindObjectOfType<NetworkRunner>();
+        Destroy(networkRunner.gameObject);
     }
 
     public void BackToMain()

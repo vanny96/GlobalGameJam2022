@@ -104,8 +104,6 @@ public class PlayerController : NetworkBehaviour
         var skinObject = skins[skin];
         skinObject.SetActive(true);
 
-        animator = skinObject.GetComponentInChildren<Animator>();
-
         GameObject.Find("SceneManager").GetComponent<GameSceneManager>().AddToDirectory(Object.InputAuthority, Object);
         animator = GetComponentInChildren<Animator>();
 
