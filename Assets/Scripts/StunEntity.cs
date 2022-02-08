@@ -21,13 +21,17 @@ public class StunEntity : NetworkBehaviour
         if (currentStunCooldown >= 0) currentStunCooldown -= Runner.DeltaTime;
     }
 
-    public void Stun(StunEntity target)
+    public bool Stun(StunEntity target)
     {
         if(currentStunCooldown <= 0)
         {
             target.StartCoroutine(target.GetStunned());
             currentStunCooldown = stunCooldown;
+
+            return true;
         }
+
+        return false;
     }
 
     public bool IsStunned()

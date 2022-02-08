@@ -277,7 +277,12 @@ public class PlayerController : NetworkBehaviour
 
         if(stealing && targetStunEntity != null)
         {
-            stunEntity.Stun(targetStunEntity);
+            bool targetStunned = stunEntity.Stun(targetStunEntity);
+
+            if(targetStunned && Object.HasInputAuthority)
+            {
+                mainSoundController.StunSound();
+            }
         }
     }
 

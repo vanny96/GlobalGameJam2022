@@ -15,7 +15,7 @@ public class MainSoundController : MonoBehaviour
 
     //Audio Sources
     [SerializeField] private AudioSource siphonAS;
-    [SerializeField] private AudioSource ghostStun;
+    [SerializeField] private AudioSource stunSound;
     [SerializeField] private AudioSource ghostLockOn;
     [SerializeField] private AudioSource coinSteal;
     [SerializeField] private AudioSource music;
@@ -76,9 +76,9 @@ public class MainSoundController : MonoBehaviour
         this.music.Play();
     }
 
-    public void GhostStun()
+    public void StunSound()
     {
-        this.ghostStun.Play();
+        this.stunSound.Play();
     }
 
     public void GhostLockOn()
