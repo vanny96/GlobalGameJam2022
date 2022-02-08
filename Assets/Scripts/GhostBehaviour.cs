@@ -21,11 +21,13 @@ public class GhostBehaviour : NetworkBehaviour
     [SerializeField] private TargetColliderTrigger targetColliderTrigger;
     [SerializeField] private ParticleSystem coinEffect;
 
-    [SerializeField] private StunEntity stunEntity;
+    [SerializeField] private NetworkPrefabRef movingCoinPrefab;
 
     private new Rigidbody rigidbody;
     private TreasureHolder treasureHolder;
     private Animator animator;
+    private StunEntity stunEntity;
+
     private static readonly int Angry1 = Animator.StringToHash("Angry");
     private static readonly int Y = Animator.StringToHash("Y");
     private static readonly int X = Animator.StringToHash("X");
@@ -74,7 +76,6 @@ public class GhostBehaviour : NetworkBehaviour
             Angry = true;
             if (ghostSightTrigger.ActiveTreasureHolder != null)
             {
-                Debug.Log("Got Angry and has a target");
                 ghostSightTrigger.ActiveTreasureHolder.GetComponent<PlayerController>().OnTargeted();
             }
         }
@@ -127,6 +128,9 @@ public class GhostBehaviour : NetworkBehaviour
                 treasureHolder.TakeTreasure(stolenAmount);
 
                 currentSiphonCooldown = siphonCooldown;
+
+                NetworkObject coinNO = Runner.Spawn(movingCoinPrefab, activeTreasureHolder.transform.position, Quaternion.identity);
+                coinNO.GetComponent<StolenCoinBehaviour>().target = this.transform;
             }
         }
     }

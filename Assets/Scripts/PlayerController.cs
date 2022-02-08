@@ -10,7 +10,6 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private float siphonCooldown;
     [Networked] private float currentSiphonCooldown { get; set; } = 0;
 
-    [SerializeField] private TreasureHolderTrigger treasureHolderTrigger;
     [SerializeField] private int treasureThresholdForBeacon;
 
     private NetworkCharacterController characterController;
@@ -269,6 +268,9 @@ public class PlayerController : NetworkBehaviour
         moneyReceiver.TakeTreasure(stolenAmount);
 
         currentSiphonCooldown = siphonCooldown;
+
+        NetworkObject coinNO = Runner.Spawn(stolenCoinPrefab, moneyGiver.transform.position, Quaternion.identity);
+        coinNO.GetComponent<StolenCoinBehaviour>().target = moneyReceiver.transform;
     }
 
     private void Stun(NetworkButtons buttons)

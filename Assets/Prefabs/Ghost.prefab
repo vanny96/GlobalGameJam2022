@@ -216,6 +216,7 @@ MonoBehaviour:
   - {fileID: 8426044348922004093}
   - {fileID: 63163226549319935}
   - {fileID: 304986511069415913}
+  - {fileID: 7971006551579519687}
   SimulationBehaviours: []
 --- !u!54 &6375065396051541235
 Rigidbody:
@@ -287,6 +288,9 @@ MonoBehaviour:
   ghostSightTrigger: {fileID: 7707255508795537770}
   targetColliderTrigger: {fileID: 5427392832696537593}
   coinEffect: {fileID: 5876600547081536576}
+  stunEntity: {fileID: 7971006551579519687}
+  movingCoinPrefab:
+    RawGuidValue: 88cdf5e8ce7d14f1b995016a88f3746e
 --- !u!114 &304986511069415913
 MonoBehaviour:
   m_ObjectHideFlags: 0
