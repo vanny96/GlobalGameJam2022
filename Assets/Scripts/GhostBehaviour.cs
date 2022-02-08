@@ -18,10 +18,12 @@ public class GhostBehaviour : NetworkBehaviour
     [HideInInspector] public Bounds destinationBounds;
 
     [SerializeField] private GhostSightTrigger ghostSightTrigger;
-    [SerializeField] private TreasureHolderTrigger treasureHolderTrigger;
+    [SerializeField] private TargetColliderTrigger targetColliderTrigger;
     [SerializeField] private ParticleSystem coinEffect;
 
-    private Rigidbody rigidbody;
+    [SerializeField] private StunEntity stunEntity;
+
+    private new Rigidbody rigidbody;
     private TreasureHolder treasureHolder;
     private Animator animator;
     private static readonly int Angry1 = Animator.StringToHash("Angry");
@@ -37,10 +39,13 @@ public class GhostBehaviour : NetworkBehaviour
         rigidbody = GetComponent<Rigidbody>();
         currentDestination = GetNextDestination();
         treasureHolder = GetComponent<TreasureHolder>();
+        stunEntity = GetComponent<StunEntity>();
     }
 
     public override void FixedUpdateNetwork()
     {
+        if (stunEntity.IsStunned()) return;
+
         if (Angry)
         {
             AngryPattern();
@@ -114,7 +119,7 @@ public class GhostBehaviour : NetworkBehaviour
 
         if (currentSiphonCooldown <= 0f)
         {
-            TreasureHolder activeTreasureHolder = treasureHolderTrigger.ActiveTreasureHolder;
+            TreasureHolder activeTreasureHolder = targetColliderTrigger.activeTarget?.treasureHolder;
 
             if (activeTreasureHolder != null)
             {

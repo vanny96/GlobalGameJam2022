@@ -100,6 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7140667813272997941}
   - component: {fileID: 3956263207550874449}
+  - component: {fileID: 6539582399556464733}
   m_Layer: 0
   m_Name: GhostCollider
   m_TagString: ActualCollider
@@ -134,6 +135,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6539582399556464733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6658969286980249193}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58f9908159cec482096b609d9f3d1eb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treasureHolder: {fileID: 304986511069415913}
+  stunEntity: {fileID: 7971006551579519687}
+  parent: {fileID: 7532207286343549071}
 --- !u!1 &7532207286343549071
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,6 +164,7 @@ GameObject:
   - component: {fileID: 8426044348922004093}
   - component: {fileID: 63163226549319935}
   - component: {fileID: 304986511069415913}
+  - component: {fileID: 7971006551579519687}
   m_Layer: 0
   m_Name: Ghost
   m_TagString: Untagged
@@ -268,7 +285,7 @@ MonoBehaviour:
     m_Center: {x: 0, y: 0, z: 0}
     m_Extent: {x: 0, y: 0, z: 0}
   ghostSightTrigger: {fileID: 7707255508795537770}
-  treasureHolderTrigger: {fileID: 5828208097658706952}
+  targetColliderTrigger: {fileID: 5427392832696537593}
   coinEffect: {fileID: 5876600547081536576}
 --- !u!114 &304986511069415913
 MonoBehaviour:
@@ -315,6 +332,27 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7971006551579519687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7532207286343549071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcbac2aa4ecda45d5ad23b1daad87b9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _interpolationDataSource: 0
+  stunDuration: 3
+  stunCooldown: 5
+  OnStunned:
+    m_PersistentCalls:
+      m_Calls: []
+  OnStunRemoved:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &7862808853493423798
 GameObject:
   m_ObjectHideFlags: 0
@@ -356,9 +394,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5804776596017251715}
   - component: {fileID: 3473794859285928021}
-  - component: {fileID: 5828208097658706952}
+  - component: {fileID: 5427392832696537593}
   m_Layer: 0
-  m_Name: StealingRange
+  m_Name: TargetTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -391,7 +429,7 @@ SphereCollider:
   serializedVersion: 2
   m_Radius: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5828208097658706952
+--- !u!114 &5427392832696537593
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -400,10 +438,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 8735566705674041129}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 506e7cd814e184342b98aa2ac368036f, type: 3}
+  m_Script: {fileID: 11500000, guid: 90e94b724cfb846d09198fa217f2c94b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ThisTreasureHolder: {fileID: 304986511069415913}
+  thisTargetCollider: {fileID: 6539582399556464733}
   outlining: 0
   outlineMaterial: {fileID: 0}
   normalMaterial: {fileID: 0}
