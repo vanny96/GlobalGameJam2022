@@ -9,7 +9,6 @@ public class PlayerController : NetworkBehaviour
 
     [SerializeField] private float siphonCooldown;
     [Networked] private float currentSiphonCooldown { get; set; } = 0;
-    [Networked] public NetworkBool siphoning { get; set; } = false;
 
     [SerializeField] private int treasureThresholdForBeacon;
 
@@ -240,23 +239,32 @@ public class PlayerController : NetworkBehaviour
 
     private void Siphon(NetworkButtons buttons)
     {
-        siphoning = buttons.IsSet(PirateButtons.Steal);
-
         if (currentSiphonCooldown >= 0) currentSiphonCooldown -= Runner.DeltaTime;
 
-        if(siphoning && currentSiphonCooldown <= 0f)
+        bool stealing = buttons.IsSet(PirateButtons.Steal);
+        bool giving = buttons.IsSet(PirateButtons.Give);
+        TreasureHolder targetTreasureHolder = treasureHolderTrigger.ActiveTreasureHolder;
+
+        if(targetTreasureHolder != null && currentSiphonCooldown <= 0f)
         {
-            animator.SetTrigger("Steal");
-
-            TreasureHolder activeTreasureHolder = treasureHolderTrigger.ActiveTreasureHolder;
-            if (activeTreasureHolder != null)
+            if (stealing)
             {
-                int stolenAmount = activeTreasureHolder.GiveTreasure();
-                treasureHolder.TakeTreasure(stolenAmount);
-
-                currentSiphonCooldown = siphonCooldown;
+                animator.SetTrigger("Steal");
+                MoveMoney(targetTreasureHolder, treasureHolder);
+            }
+            else if (giving)
+            {
+                MoveMoney(treasureHolder, targetTreasureHolder);
             }
         }
+    }
+
+    private void MoveMoney(TreasureHolder moneyGiver, TreasureHolder moneyReceiver)
+    {
+        int stolenAmount = moneyGiver.GiveTreasure();
+        moneyReceiver.TakeTreasure(stolenAmount);
+
+        currentSiphonCooldown = siphonCooldown;
     }
 
     private void UpdateSoundController(bool isMoving, NetworkBool wasMoving)
