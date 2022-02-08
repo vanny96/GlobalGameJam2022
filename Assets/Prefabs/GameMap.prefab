@@ -2975,13 +2975,13 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 1233447345648352310, guid: 092774e9ed22d0045b42474bdfd2d8dc, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 3479503835600549446, guid: 092774e9ed22d0045b42474bdfd2d8dc, type: 3}
       propertyPath: m_RootOrder
       value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 3479503835600549446, guid: 092774e9ed22d0045b42474bdfd2d8dc, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -4
       objectReference: {fileID: 0}
     - target: {fileID: 3479503835600549446, guid: 092774e9ed22d0045b42474bdfd2d8dc, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x

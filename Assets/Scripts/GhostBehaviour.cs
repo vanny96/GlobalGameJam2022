@@ -28,6 +28,7 @@ public class GhostBehaviour : NetworkBehaviour
     private Animator animator;
     private StunEntity stunEntity;
 
+    private static readonly int Stunned = Animator.StringToHash("Stunned");
     private static readonly int Angry1 = Animator.StringToHash("Angry");
     private static readonly int Y = Animator.StringToHash("Y");
     private static readonly int X = Animator.StringToHash("X");
@@ -163,6 +164,14 @@ public class GhostBehaviour : NetworkBehaviour
         animator.SetFloat(X,animationXdirection); 
         animator.SetFloat(Y,animationYdirection); 
         animator.SetBool(Angry1,angry);
+    }
+
+    public void OnStunned()
+    {
+        animator.SetFloat(X, animationXdirection);
+        animator.SetFloat(Y, animationYdirection);
+        animator.SetBool(Stunned, stunEntity.IsStunned());
+        animator.SetBool(Angry1, Angry);
     }
 
     private Vector3 GetNextDestination()

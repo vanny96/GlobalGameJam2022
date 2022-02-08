@@ -54,32 +54,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4039249461979425374, guid: e84f37afe23286347811d73536ea42bf, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4039249461979425374, guid: e84f37afe23286347811d73536ea42bf, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4039249461979425374, guid: e84f37afe23286347811d73536ea42bf, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4039249461979425374, guid: e84f37afe23286347811d73536ea42bf, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4039249461979425374, guid: e84f37afe23286347811d73536ea42bf, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4039249461979425374, guid: e84f37afe23286347811d73536ea42bf, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4039249461979425374, guid: e84f37afe23286347811d73536ea42bf, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 4039249461979425374, guid: e84f37afe23286347811d73536ea42bf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -108,6 +84,10 @@ PrefabInstance:
     - target: {fileID: 6814328909616099522, guid: e84f37afe23286347811d73536ea42bf, type: 3}
       propertyPath: m_Bounds.m_Extent.y
       value: 3.0746002
+      objectReference: {fileID: 0}
+    - target: {fileID: 8130534017515762524, guid: e84f37afe23286347811d73536ea42bf, type: 3}
+      propertyPath: m_Bounds.m_Center.y
+      value: 2.1095943
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6814328909616099522, guid: e84f37afe23286347811d73536ea42bf, type: 3}

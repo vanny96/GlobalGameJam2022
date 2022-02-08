@@ -288,7 +288,6 @@ MonoBehaviour:
   ghostSightTrigger: {fileID: 7707255508795537770}
   targetColliderTrigger: {fileID: 5427392832696537593}
   coinEffect: {fileID: 5876600547081536576}
-  stunEntity: {fileID: 7971006551579519687}
   movingCoinPrefab:
     RawGuidValue: 88cdf5e8ce7d14f1b995016a88f3746e
 --- !u!114 &304986511069415913
@@ -353,10 +352,34 @@ MonoBehaviour:
   stunCooldown: 5
   OnStunned:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 63163226549319935}
+        m_TargetAssemblyTypeName: GhostBehaviour, Assembly-CSharp
+        m_MethodName: OnStunned
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   OnStunRemoved:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 63163226549319935}
+        m_TargetAssemblyTypeName: GhostBehaviour, Assembly-CSharp
+        m_MethodName: OnStunned
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7862808853493423798
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,7 +404,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7862808853493423798}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 3090807732871523306}
@@ -461,34 +484,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2118101896442126787, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 45
       objectReference: {fileID: 0}
@@ -505,8 +500,8 @@ PrefabInstance:
       value: coinEffect
       objectReference: {fileID: 0}
     - target: {fileID: 7353289940651511401, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}
-      propertyPath: EmissionModule.rateOverTime.scalar
-      value: 5
+      propertyPath: ShapeModule.m_Position.y
+      value: 4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3f9cdee88bbe9524892ff3b188288a52, type: 3}

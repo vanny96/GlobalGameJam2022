@@ -268,9 +268,12 @@ public class PlayerController : NetworkBehaviour
         moneyReceiver.TakeTreasure(stolenAmount);
 
         currentSiphonCooldown = siphonCooldown;
+        if (stolenAmount > 0)
+        {
+            NetworkObject coinNO = Runner.Spawn(stolenCoinPrefab, moneyGiver.transform.position, Quaternion.identity);
+            coinNO.GetComponent<StolenCoinBehaviour>().target = moneyReceiver.transform;
+        }
 
-        NetworkObject coinNO = Runner.Spawn(stolenCoinPrefab, moneyGiver.transform.position, Quaternion.identity);
-        coinNO.GetComponent<StolenCoinBehaviour>().target = moneyReceiver.transform;
     }
 
     private void Stun(NetworkButtons buttons)
@@ -292,6 +295,8 @@ public class PlayerController : NetworkBehaviour
 
     public void OnStunned()
     {
+        animator.SetFloat(X, animationXdirection);
+        animator.SetFloat(Y, animationYdirection);
         animator.SetBool(Stunned, stunEntity.IsStunned());
     }
 
