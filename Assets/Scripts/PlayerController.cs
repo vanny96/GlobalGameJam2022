@@ -32,7 +32,6 @@ public class PlayerController : NetworkBehaviour
     [Networked] private NetworkBool wasMoving { get; set; }
 
     [SerializeField] private ParticleSystem coinEffect;
-    [SerializeField] private NetworkPrefabRef stolenCoinPrefab;
     
     [SerializeField] private GameObject beaconTarget;
     [Networked(OnChanged = nameof(BeaconCallBack))] public NetworkBool isBeacon { get; set; }
@@ -43,7 +42,7 @@ public class PlayerController : NetworkBehaviour
     private static readonly int Steal = Animator.StringToHash("Steal");
     private static readonly int Stunned = Animator.StringToHash("Stunned");
     private float animationXdirection = 1;
-    private float animationYdirection = 1;
+    private float animationYdirection = -1;
 
     void Awake()
     {
@@ -253,27 +252,17 @@ public class PlayerController : NetworkBehaviour
             if (stealing)
             {
                 animator.SetTrigger("Steal");
-                MoveMoney(targetTreasureHolder, treasureHolder);
+                currentSiphonCooldown = siphonCooldown;
+
+                treasureHolder.MoveMoney(targetTreasureHolder, treasureHolder);
             }
             else if (giving)
             {
-                MoveMoney(treasureHolder, targetTreasureHolder);
+                currentSiphonCooldown = siphonCooldown;
+
+                treasureHolder.MoveMoney(treasureHolder, targetTreasureHolder);
             }
         }
-    }
-
-    private void MoveMoney(TreasureHolder moneyGiver, TreasureHolder moneyReceiver)
-    {
-        int stolenAmount = moneyGiver.GiveTreasure();
-        moneyReceiver.TakeTreasure(stolenAmount);
-
-        currentSiphonCooldown = siphonCooldown;
-        if (stolenAmount > 0)
-        {
-            NetworkObject coinNO = Runner.Spawn(stolenCoinPrefab, moneyGiver.transform.position, Quaternion.identity);
-            coinNO.GetComponent<StolenCoinBehaviour>().target = moneyReceiver.transform;
-        }
-
     }
 
     private void Stun(NetworkButtons buttons)

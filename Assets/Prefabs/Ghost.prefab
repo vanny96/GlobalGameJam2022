@@ -288,8 +288,6 @@ MonoBehaviour:
   ghostSightTrigger: {fileID: 7707255508795537770}
   targetColliderTrigger: {fileID: 5427392832696537593}
   coinEffect: {fileID: 5876600547081536576}
-  movingCoinPrefab:
-    RawGuidValue: 88cdf5e8ce7d14f1b995016a88f3746e
 --- !u!114 &304986511069415913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,6 +301,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _interpolationDataSource: 0
+  stolenCoinPrefab: {fileID: 1984275057487921130, guid: 88cdf5e8ce7d14f1b995016a88f3746e, type: 3}
   _treasure: 0
   startingTreasure: 5
   OnTreasureTaken:

@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Fusion;
-using System;
+using UnityEngine;
 
 public class GhostBehaviour : NetworkBehaviour
 {
@@ -20,8 +17,6 @@ public class GhostBehaviour : NetworkBehaviour
     [SerializeField] private GhostSightTrigger ghostSightTrigger;
     [SerializeField] private TargetColliderTrigger targetColliderTrigger;
     [SerializeField] private ParticleSystem coinEffect;
-
-    [SerializeField] private NetworkPrefabRef movingCoinPrefab;
 
     private new Rigidbody rigidbody;
     private TreasureHolder treasureHolder;
@@ -121,17 +116,13 @@ public class GhostBehaviour : NetworkBehaviour
 
         if (currentSiphonCooldown <= 0f)
         {
-            TreasureHolder activeTreasureHolder = targetColliderTrigger.activeTarget?.treasureHolder;
+            TreasureHolder targetTreasureHolder = targetColliderTrigger.activeTarget?.treasureHolder;
 
-            if (activeTreasureHolder != null)
+            if (targetTreasureHolder != null)
             {
-                int stolenAmount = activeTreasureHolder.GiveTreasure();
-                treasureHolder.TakeTreasure(stolenAmount);
-
                 currentSiphonCooldown = siphonCooldown;
 
-                NetworkObject coinNO = Runner.Spawn(movingCoinPrefab, activeTreasureHolder.transform.position, Quaternion.identity);
-                coinNO.GetComponent<StolenCoinBehaviour>().target = this.transform;
+                treasureHolder.MoveMoney(targetTreasureHolder, treasureHolder);
             }
         }
     }
