@@ -13,6 +13,7 @@ public class VictoryDetection : SimulationBehaviour
 
         if(playerController != null && playerController.isBeacon)
         {
+            FindObjectOfType<DataHolder>().AddData("playerName", playerController.playerName);
             networkRunner.SetActiveScene(2);
         }
     }

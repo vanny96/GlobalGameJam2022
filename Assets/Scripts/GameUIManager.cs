@@ -39,7 +39,6 @@ public class GameUIManager : MonoBehaviour
 
     public IEnumerator ShowMessage(string message)
     {
-        Debug.Log("Called");
         messageText.text = message;
 
         Transform messageTransform = messageText.transform;

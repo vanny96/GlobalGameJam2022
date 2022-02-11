@@ -149,7 +149,9 @@ public class PlayerController : NetworkBehaviour
         if (treasureHolder.treasure >= treasureThresholdForBeacon)
         {
             isBeacon = true;
-            RPC_NotifyBeacon("playername");
+
+            if(Object.HasStateAuthority)
+                RPC_NotifyBeacon(playerName);
         }
 
         var emission = coinEffect.emission;
@@ -181,7 +183,7 @@ public class PlayerController : NetworkBehaviour
             RPC_CallGameOver();
     }
 
-    [Rpc(sources: RpcSources.InputAuthority, targets: RpcTargets.All)]
+    [Rpc(sources: RpcSources.StateAuthority, targets: RpcTargets.All)]
     public void RPC_NotifyBeacon(String player)
     {
         gameUIManager.StartCoroutine(gameUIManager.ShowMessage(player + " got the beacon"));
