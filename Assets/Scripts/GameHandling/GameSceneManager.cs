@@ -52,30 +52,6 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
             .Select(collider => collider.bounds);     
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown("i"))
-        {
-            if(!startScreen.activeSelf)
-            {
-                if (instructionsScreen.activeSelf)
-                {
-                    closeInsructions();
-                }
-                else
-                {
-                    bringUpInstructions();
-                }
-            }
-        }
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (!startScreen.activeSelf)
-            {
-                doExitGame();
-            }
-        }
-    }
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {

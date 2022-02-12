@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AI;
 using Fusion;
 using System;
 using TMPro;
@@ -44,6 +45,8 @@ public class PlayerController : NetworkBehaviour
     private float animationXdirection = 1;
     private float animationYdirection = -1;
 
+    [SerializeField] private GameObject lineBuilder;
+
     void Awake()
     {
         characterController = GetComponent<NetworkCharacterController>();
@@ -78,6 +81,7 @@ public class PlayerController : NetworkBehaviour
 
         var manager=GameObject.Find("SceneManager").GetComponent<GameSceneManager>();
         manager.AddToDirectory(Object.InputAuthority, Object);
+
         if (Object.HasInputAuthority)
         {
             manager.RetrieveName(this);
@@ -86,10 +90,21 @@ public class PlayerController : NetworkBehaviour
         manager.RetrieveSkin(Object.InputAuthority, this);
     }
 
+    public override void FixedUpdateNetwork()
+    {
+        if (GetInput<PirateGameInput>(out PirateGameInput input) == false) return;
+
+        if (stunEntity.IsStunned()) return;
+        
+        Move(input.Buttons);
+        Siphon(input.Buttons);
+        Stun(input.Buttons);
+    }
+
     public void ApplySkin()
     {
         var playerView = transform.Find("PlayerView");
-        for (var i =0;i<playerView.childCount;i++)
+        for (var i = 0; i < playerView.childCount; i++)
         {
             for (var j = 0; j < skins.Length; j++)
             {
@@ -125,23 +140,12 @@ public class PlayerController : NetworkBehaviour
         var nameText = transform.Find("NameTag").GetChild(0);
         nameText.GetComponent<TextMeshPro>().text = playerName;
     }
-    
+
     [Rpc(RpcSources.InputAuthority, RpcTargets.All)]
-    public void RPC_UpdatePlayerName(string newName){
+    public void RPC_UpdatePlayerName(string newName)
+    {
         playerName = newName;
 
-    }
-
-
-    public override void FixedUpdateNetwork()
-    {
-        if (GetInput<PirateGameInput>(out PirateGameInput input) == false) return;
-
-        if (stunEntity.IsStunned()) return;
-        
-        Move(input.Buttons);
-        Siphon(input.Buttons);
-        Stun(input.Buttons);
     }
 
     public void OnGainedCoin()
@@ -151,7 +155,7 @@ public class PlayerController : NetworkBehaviour
             isBeacon = true;
 
             if(Object.HasStateAuthority)
-                RPC_NotifyBeacon(playerName);
+                RPC_NotifyBeacon();
         }
 
         var emission = coinEffect.emission;
@@ -184,9 +188,19 @@ public class PlayerController : NetworkBehaviour
     }
 
     [Rpc(sources: RpcSources.StateAuthority, targets: RpcTargets.All)]
-    public void RPC_NotifyBeacon(String player)
+    public void RPC_NotifyBeacon()
     {
-        gameUIManager.StartCoroutine(gameUIManager.ShowMessage(player + " got the beacon"));
+        gameUIManager.StartCoroutine(gameUIManager.ShowMessage(playerName + " got the beacon"));
+
+        if (Object.HasInputAuthority)
+        {
+            StartBuildLine(GetComponent<NavMeshAgent>(), FindObjectOfType<VictoryDetection>().transform);
+        }
+        else
+        {
+            NetworkObject personalPlayer = FindObjectOfType<GameSceneManager>().GetMyPlayerObject();
+            StartBuildLine(personalPlayer.GetComponent<NavMeshAgent>(), this.transform);
+        }
     }
 
     public void OnTargeted()
@@ -295,5 +309,12 @@ public class PlayerController : NetworkBehaviour
     {
         if (isMoving && !wasMoving) stepsSoundController.StartWalking();
         if (wasMoving && !isMoving) stepsSoundController.StopWalking();
+    }
+
+    private void StartBuildLine(NavMeshAgent agent, Transform destination)
+    {
+        GameObject lineBuilderObject = Instantiate(lineBuilder, this.transform);
+        lineBuilderObject.GetComponent<LineBuilder>().playerAgent = agent;
+        lineBuilderObject.GetComponent<LineBuilder>().destination = destination;
     }
 }

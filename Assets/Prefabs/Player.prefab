@@ -219,6 +219,7 @@ GameObject:
   - component: {fileID: 275239101009880408}
   - component: {fileID: 1183636069031501164}
   - component: {fileID: 4642790668263848947}
+  - component: {fileID: 3184992433837552268}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -277,6 +278,7 @@ MonoBehaviour:
   beaconTarget: {fileID: 5881666460855210276}
   _isBeacon:
     _value: 0
+  lineBuilder: {fileID: 1632660254013978853, guid: 5151dcb10e4f74c55b1d7c4615609836, type: 3}
 --- !u!114 &5008614112207115279
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -591,6 +593,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!195 &3184992433837552268
+NavMeshAgent:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3418451818123338141}
+  m_Enabled: 1
+  m_AgentTypeID: 0
+  m_Radius: 0.5
+  m_Speed: 0
+  m_Acceleration: 0
+  avoidancePriority: 50
+  m_AngularSpeed: 0
+  m_StoppingDistance: 0
+  m_AutoTraverseOffMeshLink: 1
+  m_AutoBraking: 1
+  m_AutoRepath: 1
+  m_Height: 2
+  m_BaseOffset: 0
+  m_WalkableMask: 4294967295
+  m_ObstacleAvoidanceType: 4
 --- !u!1 &5421676708447201525
 GameObject:
   m_ObjectHideFlags: 0
@@ -1224,6 +1248,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6ff84fe4f8fa6841a3ce0e7f5963ed5, type: 3}
+--- !u!4 &1982509766753246714 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8402391132370213832, guid: b6ff84fe4f8fa6841a3ce0e7f5963ed5, type: 3}
+  m_PrefabInstance: {fileID: 8005148434820515378}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8908620477275276142 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1493443594344973660, guid: b6ff84fe4f8fa6841a3ce0e7f5963ed5, type: 3}
@@ -1235,11 +1264,6 @@ MonoBehaviour:
   m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &1982509766753246714 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8402391132370213832, guid: b6ff84fe4f8fa6841a3ce0e7f5963ed5, type: 3}
-  m_PrefabInstance: {fileID: 8005148434820515378}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9176061869689760088
 PrefabInstance:
   m_ObjectHideFlags: 0

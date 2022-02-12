@@ -1,31 +1,24 @@
 using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
+using UnityEngine.AI;
 
 public class LineBuilder : MonoBehaviour
 {
-    private LineRenderer lineRenderer;
+    [SerializeField] private LineRenderer lineRenderer;
 
-    [SerializeField] private float dotLength;
-    [SerializeField] private Transform[] objects;
+    [HideInInspector] public NavMeshAgent playerAgent;
+    [HideInInspector] public Transform destination;
 
-    [SerializeField] float distanceToCover;
-
-
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        lineRenderer.positionCount = objects.Length;
+        playerAgent.destination = destination.position;
+        Vector3[] corners = playerAgent.path.corners;
 
-        for(int i=0; i<objects.Length; i++)
-        {
-            lineRenderer.SetPosition(i, objects[i].position);
-        }
+        lineRenderer.positionCount = corners.Length;
+        lineRenderer.SetPositions(corners);
     }
 }
