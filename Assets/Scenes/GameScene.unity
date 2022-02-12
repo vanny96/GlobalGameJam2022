@@ -210,10 +210,10 @@ AudioSource:
   m_GameObject: {fileID: 53280878}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7314673074697126753, guid: 2ddb8e3b46182fa468197c643c59bbb6, type: 2}
   m_audioClip: {fileID: 8300000, guid: eda1f9604218a4a40b93fc26d61875b7, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.305
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -306,10 +306,10 @@ AudioSource:
   m_GameObject: {fileID: 53280878}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7314673074697126753, guid: 2ddb8e3b46182fa468197c643c59bbb6, type: 2}
   m_audioClip: {fileID: 8300000, guid: 2193855ec37baf44c9fcd4fd2d3b4eb6, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -402,10 +402,10 @@ AudioSource:
   m_GameObject: {fileID: 53280878}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7314673074697126753, guid: 2ddb8e3b46182fa468197c643c59bbb6, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -544,10 +544,10 @@ AudioSource:
   m_GameObject: {fileID: 53280878}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7314673074697126753, guid: 2ddb8e3b46182fa468197c643c59bbb6, type: 2}
   m_audioClip: {fileID: 8300000, guid: fa110f1138c85584bb8e6351f44b1731, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.1
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -2655,12 +2655,12 @@ AudioSource:
   m_GameObject: {fileID: 1519891332}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2394296030576013278, guid: 2ddb8e3b46182fa468197c643c59bbb6, type: 2}
   m_audioClip: {fileID: 8300000, guid: b413a5a0a96abc34487e3f3391677ec5, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.15
+  m_Volume: 1
   m_Pitch: 1
-  Loop: 0
+  Loop: 1
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -3283,6 +3283,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3693422256600844348, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
+      propertyPath: Loop
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693422256600844348, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
+      propertyPath: m_Volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3693422256600844348, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
+      propertyPath: OutputAudioMixerGroup
+      value: 
+      objectReference: {fileID: 2394296030576013278, guid: 2ddb8e3b46182fa468197c643c59bbb6, type: 2}
     - target: {fileID: 4529933795501606988, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
       propertyPath: m_RootOrder
       value: 9

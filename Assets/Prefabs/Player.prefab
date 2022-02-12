@@ -332,7 +332,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: deaa22ba4b29429408e3d85fa196febb, type: 3}
   - {fileID: 8300000, guid: 4d4e657e9261b6a4b9e98b338036133f, type: 3}
   pirateFootStepsAS: {fileID: 2428316438086928826}
-  footStepDelay: 0.5
+  footStepDelay: 0.89
 --- !u!82 &2428316438086928826
 AudioSource:
   m_ObjectHideFlags: 0
@@ -342,17 +342,17 @@ AudioSource:
   m_GameObject: {fileID: 3418451818123338141}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 7314673074697126753, guid: 2ddb8e3b46182fa468197c643c59bbb6, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 0
-  m_Volume: 0.08
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
   Priority: 128
-  DopplerLevel: 1
+  DopplerLevel: 0
   MinDistance: 0
   MaxDistance: 15
   Pan2D: 0
@@ -413,7 +413,7 @@ AudioSource:
     m_Curve:
     - serializedVersion: 3
       time: 0
-      value: 0
+      value: 0.5555556
       inSlope: 0
       outSlope: 0
       tangentMode: 0
@@ -952,7 +952,7 @@ AudioSource:
   m_GameObject: {fileID: 8629949090471746358}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 2163635163075244810, guid: 2ddb8e3b46182fa468197c643c59bbb6, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.15
@@ -1224,11 +1224,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6ff84fe4f8fa6841a3ce0e7f5963ed5, type: 3}
---- !u!4 &1982509766753246714 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8402391132370213832, guid: b6ff84fe4f8fa6841a3ce0e7f5963ed5, type: 3}
-  m_PrefabInstance: {fileID: 8005148434820515378}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8908620477275276142 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1493443594344973660, guid: b6ff84fe4f8fa6841a3ce0e7f5963ed5, type: 3}
@@ -1240,6 +1235,11 @@ MonoBehaviour:
   m_Script: {fileID: 506319458, guid: e725a070cec140c4caffb81624c8c787, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &1982509766753246714 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8402391132370213832, guid: b6ff84fe4f8fa6841a3ce0e7f5963ed5, type: 3}
+  m_PrefabInstance: {fileID: 8005148434820515378}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &9176061869689760088
 PrefabInstance:
   m_ObjectHideFlags: 0
