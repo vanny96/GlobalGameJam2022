@@ -4726,6 +4726,42 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2448408572160495081, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2448408572160495081, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2448408572160495081, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
+      propertyPath: m_Size.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231845846573728072, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231845846573728072, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 3231845846573728072, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3592532076912947387, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
+      propertyPath: m_Size.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3592532076912947387, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
+      propertyPath: m_Size.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3592532076912947387, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
+      propertyPath: m_Size.z
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3693422256600844348, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
       propertyPath: Loop
       value: 1
