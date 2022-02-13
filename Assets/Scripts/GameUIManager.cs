@@ -27,6 +27,8 @@ public class GameUIManager : MonoBehaviour
     private Queue<string> messagesQueue = new Queue<string>();
     private bool showingMessage = false;
 
+    [SerializeField] private GameObject errorPopupPanel;
+
     void Start()
     {
         messageTextStartPosition = messageText.transform.position.y;
@@ -36,6 +38,11 @@ public class GameUIManager : MonoBehaviour
     {
         UpdateTreasure();
         CheckForMessages();
+    }
+
+    public void HideErrorMessages()
+    {
+        errorPopupPanel.SetActive(false);
     }
 
     // Treasure
