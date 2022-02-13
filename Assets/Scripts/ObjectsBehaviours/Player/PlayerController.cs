@@ -158,6 +158,11 @@ public class PlayerController : NetworkBehaviour
                 RPC_NotifyBeacon();
         }
 
+        if (Object.HasStateAuthority && treasureHolder.treasure == 2)
+        {
+            RPC_OutOfRisk();
+        }
+
         var emission = coinEffect.emission;
         emission.rateOverTime = treasureHolder.treasure;
         
@@ -165,7 +170,6 @@ public class PlayerController : NetworkBehaviour
         {
             mainSoundController.SiphonSound();
         }
-
     }
 
     public void OnLostCoin()
@@ -229,6 +233,13 @@ public class PlayerController : NetworkBehaviour
     public void RPC_NotifyLowHealth()
     {
         gameUIManager.BroadcastMessage(playerName + " is about to die!!");
+        gameUIManager.ShowVignette();
+    }
+
+    [Rpc(sources: RpcSources.StateAuthority, targets: RpcTargets.All)]
+    public void RPC_OutOfRisk()
+    {
+        gameUIManager.HideVignette();
     }
 
     public void OnTargeted()

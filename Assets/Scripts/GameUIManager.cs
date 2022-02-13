@@ -3,12 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+
 
 public class GameUIManager : MonoBehaviour
 {
     [SerializeField] private GameSceneManager gameSceneManager;
     [SerializeField] private TextMeshProUGUI treasureText;
     [SerializeField] private TreasureHolder playerTreasure= null;
+
+    [SerializeField] private Volume postprocessingVolume;
+    [SerializeField] private float finalVignetteIntensity;
+    [SerializeField] private float vignetteSpeed;
+    private IEnumerator runningVignetteCoroutine;
 
     [SerializeField] private TextMeshProUGUI messageText;
     [SerializeField] private float messageTextSpeed;
@@ -30,6 +38,7 @@ public class GameUIManager : MonoBehaviour
         CheckForMessages();
     }
 
+    // Treasure
     private void UpdateTreasure()
     {
         if (playerTreasure == null)
@@ -46,6 +55,63 @@ public class GameUIManager : MonoBehaviour
         }
     }
 
+    // Vignette
+    public void ShowVignette()
+    {
+        HandleVignette(true);
+    }
+
+    public void HideVignette()
+    {
+        HandleVignette(false);
+    }
+
+    private void HandleVignette(bool show)
+    {
+        if (runningVignetteCoroutine != null)
+            StopCoroutine(runningVignetteCoroutine);
+
+        runningVignetteCoroutine = show ? ShowVignetteCoroutine() : HideVignetteCoroutine();
+        StartCoroutine(runningVignetteCoroutine);
+    }
+
+    private IEnumerator ShowVignetteCoroutine()
+    {
+        postprocessingVolume.gameObject.SetActive(true);
+        Vignette vignetteEffect = (Vignette) postprocessingVolume.profile.components[0];
+        
+        while(vignetteEffect.intensity.value < finalVignetteIntensity)
+        {
+            vignetteEffect.intensity.value += Math.Min(
+                vignetteSpeed * Time.deltaTime,
+                finalVignetteIntensity - vignetteEffect.intensity.value
+                );
+
+            yield return null;
+        }
+
+        runningVignetteCoroutine = null;
+    }
+
+    private IEnumerator HideVignetteCoroutine()
+    {
+        Vignette vignetteEffect = (Vignette)postprocessingVolume.profile.components[0];
+
+        while (vignetteEffect.intensity.value > 0)
+        {
+            vignetteEffect.intensity.value -= Math.Min(
+                vignetteSpeed * Time.deltaTime,
+                vignetteEffect.intensity.value
+                );
+
+            yield return null;
+        }
+
+        postprocessingVolume.gameObject.SetActive(false);
+        runningVignetteCoroutine = null;
+    }
+
+    // Messages
     public new void BroadcastMessage(string message)
     {
         messagesQueue.Enqueue(message);
@@ -59,7 +125,6 @@ public class GameUIManager : MonoBehaviour
             StartCoroutine(ShowMessage(message));
         }
     }
-
 
     private IEnumerator ShowMessage(string message)
     {
