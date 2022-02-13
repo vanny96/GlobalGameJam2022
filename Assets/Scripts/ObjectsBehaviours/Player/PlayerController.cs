@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.AI;
 using Fusion;
-using System;
+using System.Linq;
 using TMPro;
 
 public class PlayerController : NetworkBehaviour
@@ -175,9 +175,17 @@ public class PlayerController : NetworkBehaviour
             mainSoundController.CoinSteal();
         }
 
-        if (treasureHolder.treasure < treasureThresholdForBeacon)
+        if (treasureHolder.treasure < treasureThresholdForBeacon && isBeacon)
         {
             isBeacon = false;
+
+            if (Object.HasStateAuthority)
+                RPC_RemoveBeaconLine();
+        }
+
+        if(Object.HasStateAuthority && treasureHolder.treasure == 1)
+        {
+            RPC_NotifyLowHealth();
         }
 
         var emission = coinEffect.emission;
@@ -190,7 +198,7 @@ public class PlayerController : NetworkBehaviour
     [Rpc(sources: RpcSources.StateAuthority, targets: RpcTargets.All)]
     public void RPC_NotifyBeacon()
     {
-        gameUIManager.StartCoroutine(gameUIManager.ShowMessage(playerName + " got the beacon"));
+        gameUIManager.BroadcastMessage(playerName + " got the beacon");
 
         if (Object.HasInputAuthority)
         {
@@ -201,6 +209,26 @@ public class PlayerController : NetworkBehaviour
             NetworkObject personalPlayer = FindObjectOfType<GameSceneManager>().GetMyPlayerObject();
             StartBuildLine(personalPlayer.GetComponent<NavMeshAgent>(), this.transform);
         }
+    }
+
+    [Rpc(sources: RpcSources.StateAuthority, targets: RpcTargets.All)]
+    public void RPC_RemoveBeaconLine()
+    {
+        if (Object.HasInputAuthority)
+        {
+            DestroyBuildLine(this.gameObject, FindObjectOfType<VictoryDetection>().transform);
+        }
+        else
+        {
+            NetworkObject personalPlayer = FindObjectOfType<GameSceneManager>().GetMyPlayerObject();
+            DestroyBuildLine(personalPlayer.gameObject, this.transform);
+        }
+    }
+
+    [Rpc(sources: RpcSources.StateAuthority, targets: RpcTargets.All)]
+    public void RPC_NotifyLowHealth()
+    {
+        gameUIManager.BroadcastMessage(playerName + " is about to die!!");
     }
 
     public void OnTargeted()
@@ -313,8 +341,19 @@ public class PlayerController : NetworkBehaviour
 
     private void StartBuildLine(NavMeshAgent agent, Transform destination)
     {
-        GameObject lineBuilderObject = Instantiate(lineBuilder, this.transform);
+        GameObject lineBuilderObject = Instantiate(lineBuilder, agent.transform);
         lineBuilderObject.GetComponent<LineBuilder>().playerAgent = agent;
         lineBuilderObject.GetComponent<LineBuilder>().destination = destination;
+    }
+
+    private void DestroyBuildLine(GameObject parent, Transform buildlineDestination)
+    {
+        LineBuilder[] lineBuilders = parent.GetComponentsInChildren<LineBuilder>();
+
+        LineBuilder lineBuilder = lineBuilders
+            .Where(lb => lb.destination == buildlineDestination)
+            .First();
+
+        Destroy(lineBuilder.gameObject);
     }
 }

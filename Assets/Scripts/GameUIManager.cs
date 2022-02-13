@@ -1,8 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GameUIManager : MonoBehaviour
 {
@@ -16,6 +16,9 @@ public class GameUIManager : MonoBehaviour
     [SerializeField] private float messageTextPosition;
     private float messageTextStartPosition;
 
+    private Queue<string> messagesQueue = new Queue<string>();
+    private bool showingMessage = false;
+
     void Start()
     {
         messageTextStartPosition = messageText.transform.position.y;
@@ -23,13 +26,19 @@ public class GameUIManager : MonoBehaviour
 
     void Update()
     {
+        UpdateTreasure();
+        CheckForMessages();
+    }
+
+    private void UpdateTreasure()
+    {
         if (playerTreasure == null)
         {
             var playerObject = gameSceneManager.GetMyPlayerObject();
 
             if (playerObject == null) return;
-        
-            playerTreasure=playerObject.GetComponent<TreasureHolder>();
+
+            playerTreasure = playerObject.GetComponent<TreasureHolder>();
         }
         else
         {
@@ -37,8 +46,24 @@ public class GameUIManager : MonoBehaviour
         }
     }
 
-    public IEnumerator ShowMessage(string message)
+    public new void BroadcastMessage(string message)
     {
+        messagesQueue.Enqueue(message);
+    }
+
+    private void CheckForMessages()
+    {
+        if (!showingMessage && messagesQueue.Count != 0)
+        {
+            String message = messagesQueue.Dequeue();
+            StartCoroutine(ShowMessage(message));
+        }
+    }
+
+
+    private IEnumerator ShowMessage(string message)
+    {
+        showingMessage = true;
         messageText.text = message;
 
         Transform messageTransform = messageText.transform;
@@ -55,7 +80,7 @@ public class GameUIManager : MonoBehaviour
             MoveAndAdjustMessage(messageTextStartPosition, Vector2.down);
             yield return 1;
         }
-
+        showingMessage = false;
     }
 
     private void MoveAndAdjustMessage(float position, Vector2 direction)
