@@ -5,18 +5,24 @@ public class LineBuilder : MonoBehaviour
 {
     [SerializeField] private LineRenderer lineRenderer;
 
-    [HideInInspector] public NavMeshAgent playerAgent;
     [HideInInspector] public Transform destination;
+
+    private NavMeshPath path;
 
     void Awake()
     {
         lineRenderer = GetComponent<LineRenderer>();
     }
 
+    void Start()
+    {
+        path = new NavMeshPath();
+    }
+
     void Update()
     {
-        playerAgent.destination = destination.position;
-        Vector3[] corners = playerAgent.path.corners;
+        NavMesh.CalculatePath(this.transform.position, destination.position, NavMesh.AllAreas, path);
+        Vector3[] corners = path.corners;
 
         lineRenderer.positionCount = corners.Length;
         lineRenderer.SetPositions(corners);

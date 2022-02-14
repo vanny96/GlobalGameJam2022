@@ -206,12 +206,12 @@ public class PlayerController : NetworkBehaviour
 
         if (Object.HasInputAuthority)
         {
-            StartBuildLine(GetComponent<NavMeshAgent>(), FindObjectOfType<VictoryDetection>().transform);
+            StartBuildLine(this.transform, FindObjectOfType<VictoryDetection>().transform);
         }
         else
         {
             NetworkObject personalPlayer = FindObjectOfType<GameSceneManager>().GetMyPlayerObject();
-            StartBuildLine(personalPlayer.GetComponent<NavMeshAgent>(), this.transform);
+            StartBuildLine(personalPlayer.transform, this.transform);
         }
     }
 
@@ -350,10 +350,9 @@ public class PlayerController : NetworkBehaviour
         if (wasMoving && !isMoving) stepsSoundController.StopWalking();
     }
 
-    private void StartBuildLine(NavMeshAgent agent, Transform destination)
+    private void StartBuildLine(Transform parent, Transform destination)
     {
-        GameObject lineBuilderObject = Instantiate(lineBuilder, agent.transform);
-        lineBuilderObject.GetComponent<LineBuilder>().playerAgent = agent;
+        GameObject lineBuilderObject = Instantiate(lineBuilder, parent.transform);
         lineBuilderObject.GetComponent<LineBuilder>().destination = destination;
     }
 
