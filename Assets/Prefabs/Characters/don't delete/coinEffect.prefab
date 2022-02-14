@@ -747,7 +747,7 @@ ParticleSystem:
     randomPositionAmount: 0
     radius:
       value: 1
-      mode: 1
+      mode: 0
       spread: 0
       speed:
         serializedVersion: 2

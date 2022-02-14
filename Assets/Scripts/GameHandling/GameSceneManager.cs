@@ -19,6 +19,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     [SerializeField] private GameObject startScreen;
     [SerializeField] private GameObject gameUI;
     [SerializeField] private GameObject instructionsScreen;
+    [SerializeField] private Text versionNumber;
     [SerializeField] private Text playerNameInput;
     [SerializeField] private Text playerNameUI;
 
@@ -35,13 +36,20 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     {
         if (startScreen != null)
         {
+            if (versionNumber != null)
+            {
+                versionNumber.text = "Version " + Application.version;
+            }
             startScreen.SetActive(true);
         }
         if (gameUI != null)
         {
             gameUI.SetActive(false);
         }
-
+        if (instructionsScreen != null)
+        {
+            instructionsScreen.SetActive(false);
+        }
         runner.AddCallbacks(this);
 
         ghostsSpawnAreas = FindObjectsOfType<GameObject>()
