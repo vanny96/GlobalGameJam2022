@@ -2313,9 +2313,21 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7499294995082183551, guid: 1041c33c79496fd45812aa01810ba42c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7499294995082183551, guid: 1041c33c79496fd45812aa01810ba42c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1535212024}
+    - target: {fileID: 7499294995082183551, guid: 1041c33c79496fd45812aa01810ba42c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: closeInsructions
+      objectReference: {fileID: 0}
+    - target: {fileID: 7499294995082183551, guid: 1041c33c79496fd45812aa01810ba42c, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: GameSceneManager, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 7499294995245312492, guid: 1041c33c79496fd45812aa01810ba42c, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
