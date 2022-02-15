@@ -18,7 +18,6 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     [SerializeField] private int ghostsPerArea;
     [SerializeField] private GameObject startScreen;
     [SerializeField] private GameObject gameUI;
-    [SerializeField] private GameObject instructionsScreen;
     [SerializeField] private Text versionNumber;
     [SerializeField] private Text playerNameInput;
     [SerializeField] private Text playerNameUI;
@@ -54,10 +53,6 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         if (gameUI != null)
         {
             gameUI.SetActive(false);
-        }
-        if (instructionsScreen != null)
-        {
-            instructionsScreen.SetActive(false);
         }
     }
 
@@ -172,19 +167,6 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     {
         Application.Quit();
     }
-
-
-    public void bringUpInstructions()
-    {
-        instructionsScreen.SetActive(true);
-        
-    }
-
-    public void closeInsructions()
-    {
-        instructionsScreen.SetActive(false);
-    }
-
 
     public void ShowPlayerName()
     {
