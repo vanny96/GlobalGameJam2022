@@ -1545,6 +1545,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1535212024}
+    - target: {fileID: 7499294995391940554, guid: 1041c33c79496fd45812aa01810ba42c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7499294995391940556, guid: 1041c33c79496fd45812aa01810ba42c, type: 3}
       propertyPath: gameSceneManager
       value: 

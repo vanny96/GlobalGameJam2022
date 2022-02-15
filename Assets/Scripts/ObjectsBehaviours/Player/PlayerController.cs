@@ -112,7 +112,16 @@ public class PlayerController : NetworkBehaviour
     private void StartGame(NetworkButtons buttons)
     {
         if (buttons.IsSet(PirateButtons.StartGame))
+        {
             gameStateHandler.StartGame();
+            RPC_StartGameMessage();
+        }
+    }
+
+    [Rpc(sources: RpcSources.StateAuthority, targets: RpcTargets.All)]
+    private void RPC_StartGameMessage()
+    {
+        gameUIManager.BroadcastMessage("Treasure hunt is open!");
     }
 
     public void ApplySkin()
