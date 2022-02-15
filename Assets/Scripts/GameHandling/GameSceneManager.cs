@@ -22,10 +22,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     [SerializeField] private Text versionNumber;
     [SerializeField] private Text playerNameInput;
     [SerializeField] private Text playerNameUI;
-
-    [SerializeField] private Vector3 spawnPosition;
-    Text userNameInputText;
-
+    [SerializeField] private GameObject spawnLocationsHolder;
 
     private Dictionary<PlayerRef, NetworkObject> spawnedCharacters = new Dictionary<PlayerRef, NetworkObject>();
     private Dictionary<PlayerRef, int> playerSkins = new Dictionary<PlayerRef, int>();
@@ -33,6 +30,18 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 
 
     void Awake()
+    {
+        runner.AddCallbacks(this);
+
+        ghostsSpawnAreas = FindObjectsOfType<GameObject>()
+            .Where(gameObject => gameObject.tag == "World")
+            .First()
+            .GetComponentsInChildren<Collider>()
+            .Where(collider => collider.gameObject.tag == "SpawnArea")
+            .Select(collider => collider.bounds);     
+    }
+
+    void Start()
     {
         if (startScreen != null)
         {
@@ -50,20 +59,15 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         {
             instructionsScreen.SetActive(false);
         }
-        runner.AddCallbacks(this);
-
-        ghostsSpawnAreas = FindObjectsOfType<GameObject>()
-            .Where(gameObject => gameObject.tag == "World")
-            .First()
-            .GetComponentsInChildren<Collider>()
-            .Where(collider => collider.gameObject.tag == "SpawnArea")
-            .Select(collider => collider.bounds);     
     }
 
 
     public void OnPlayerJoined(NetworkRunner runner, PlayerRef player)
     {
-        runner.Spawn(playerPrefab, spawnPosition, Quaternion.identity, player);
+        Transform[] spawnLocations = spawnLocationsHolder.GetComponentsInChildren<Transform>();
+        int numberOfPlayers = spawnedCharacters.Count;
+
+        runner.Spawn(playerPrefab, spawnLocations[numberOfPlayers].position, Quaternion.identity, player);
 
         if (startScreen != null)
         {

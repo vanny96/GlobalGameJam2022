@@ -1010,7 +1010,7 @@ MonoBehaviour:
   versionNumber: {fileID: 449370499}
   playerNameInput: {fileID: 2023140950}
   playerNameUI: {fileID: 816422510}
-  spawnPosition: {x: 0, y: 0, z: 0}
+  spawnLocationsHolder: {fileID: 1852993669}
 --- !u!4 &1535212025
 Transform:
   m_ObjectHideFlags: 0
@@ -1096,6 +1096,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1852993669 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5517447046365732315, guid: dfc4242914325fc4d9dba8c9e2f48107, type: 3}
+  m_PrefabInstance: {fileID: 1997037831}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1877685769 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7499294995932114897, guid: 1041c33c79496fd45812aa01810ba42c, type: 3}

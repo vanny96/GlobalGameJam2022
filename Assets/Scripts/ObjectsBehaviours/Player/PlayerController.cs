@@ -53,6 +53,7 @@ public class PlayerController : NetworkBehaviour
         stepsSoundController = GetComponent<StepsSoundController>();
         treasureHolder = GetComponent<TreasureHolder>();
         stunEntity = GetComponent<StunEntity>();
+        mainSoundController = GameObject.Find("MainSoundController").GetComponent<MainSoundController>();
     }
 
     void Start()
@@ -64,12 +65,7 @@ public class PlayerController : NetworkBehaviour
             gameObject.AddComponent<AudioListener>();
             Destroy(FindObjectOfType<Camera>().GetComponent<AudioListener>());
 
-            mainSoundController = GameObject.Find("MainSoundController").GetComponent<MainSoundController>();
-
-            if (Object.HasInputAuthority)
-            {
-                mainSoundController.musicPlay();
-            }
+            mainSoundController.musicPlay();
         }
 
         gameUIManager = FindObjectOfType<GameUIManager>();
