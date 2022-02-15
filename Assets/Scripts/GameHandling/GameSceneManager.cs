@@ -1,8 +1,8 @@
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using Fusion;
 using Fusion.Sockets;
-using System;
 using System.Linq;
 
 using Random = UnityEngine.Random;
@@ -15,6 +15,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     [SerializeField] private NetworkRunner runner;
     [SerializeField] private NetworkPrefabRef playerPrefab;
     [SerializeField] private NetworkPrefabRef ghostPrefab;
+    [SerializeField] private NetworkPrefabRef gameStateHandlerPrefab;
     [SerializeField] private int ghostsPerArea;
     [SerializeField] private GameObject startScreen;
     [SerializeField] private GameObject gameUI;
@@ -37,7 +38,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
             .First()
             .GetComponentsInChildren<Collider>()
             .Where(collider => collider.gameObject.tag == "SpawnArea")
-            .Select(collider => collider.bounds);     
+            .Select(collider => collider.bounds);
     }
 
     void Start()
@@ -93,7 +94,7 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
 
     public void OnSceneLoadDone(NetworkRunner runner)
     {
-        foreach(Bounds ghostSpawnArea in ghostsSpawnAreas)
+        foreach (Bounds ghostSpawnArea in ghostsSpawnAreas)
         {
             for(int i=0; i< ghostsPerArea; i++)
             {
@@ -104,21 +105,8 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         }
 
         FindObjectOfType<VictoryDetection>().networkRunner = runner;
+        runner.Spawn(gameStateHandlerPrefab, Vector3.zero);
     }
-
-    public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
-    public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
-
-    public void OnConnectedToServer(NetworkRunner runner) { }
-    public void OnDisconnectedFromServer(NetworkRunner runner) { }
-    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
-    public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
-    public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
-    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
-    public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) { }
-    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) { }
-    public void OnSceneLoadStart(NetworkRunner runner) { }
-    public void OnInput(NetworkRunner runner, NetworkInput input) { }
 
     public NetworkObject GetMyPlayerObject()
     {
@@ -173,9 +161,22 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         playerNameUI.text = playerNameInput.text;
     }
 
-
     public void RetrieveName(PlayerController player)
     {
         player.RPC_UpdatePlayerName(playerNameUI.text);
     }
+
+    public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
+    public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }
+
+    public void OnConnectedToServer(NetworkRunner runner) { }
+    public void OnDisconnectedFromServer(NetworkRunner runner) { }
+    public void OnConnectRequest(NetworkRunner runner, NetworkRunnerCallbackArgs.ConnectRequest request, byte[] token) { }
+    public void OnConnectFailed(NetworkRunner runner, NetAddress remoteAddress, NetConnectFailedReason reason) { }
+    public void OnUserSimulationMessage(NetworkRunner runner, SimulationMessagePtr message) { }
+    public void OnSessionListUpdated(NetworkRunner runner, List<SessionInfo> sessionList) { }
+    public void OnCustomAuthenticationResponse(NetworkRunner runner, Dictionary<string, object> data) { }
+    public void OnReliableDataReceived(NetworkRunner runner, PlayerRef player, ArraySegment<byte> data) { }
+    public void OnSceneLoadStart(NetworkRunner runner) { }
+    public void OnInput(NetworkRunner runner, NetworkInput input) { }
 }

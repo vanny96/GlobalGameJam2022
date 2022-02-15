@@ -514,7 +514,7 @@ MonoBehaviour:
     RotTeleportRadians: 1.5
   SyncScale: 0
   Space: 0
-  _collider: {fileID: 7909483504031119294}
+  _collider: {fileID: 0}
   Config:
     AllowedPenetration: 0.1
     PenetrationCorrection: 0.5
@@ -766,8 +766,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1660110423099475539}
-  - component: {fileID: 7909483504031119294}
   - component: {fileID: 7992447033038341547}
+  - component: {fileID: 163438294975870472}
   m_Layer: 0
   m_Name: PlayerCollider
   m_TagString: ActualCollider
@@ -789,20 +789,6 @@ Transform:
   m_Father: {fileID: 8389709909456872114}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &7909483504031119294
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6646522523206752979}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!114 &7992447033038341547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -818,6 +804,19 @@ MonoBehaviour:
   treasureHolder: {fileID: 2287997307259256653}
   stunEntity: {fileID: 4642790668263848947}
   parent: {fileID: 3418451818123338141}
+--- !u!65 &163438294975870472
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6646522523206752979}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 4, z: 1}
+  m_Center: {x: 0, y: 2, z: 0}
 --- !u!1 &6801086525813467036
 GameObject:
   m_ObjectHideFlags: 0

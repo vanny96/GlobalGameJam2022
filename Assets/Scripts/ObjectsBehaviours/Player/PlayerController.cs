@@ -6,6 +6,15 @@ using TMPro;
 
 public class PlayerController : NetworkBehaviour
 {
+    private NetworkCharacterController characterController;
+    private StepsSoundController stepsSoundController;
+    private TreasureHolder treasureHolder;
+    private StunEntity stunEntity;
+    private GameSceneManager gameSceneManager;
+    private MainSoundController mainSoundController;
+    private GameUIManager gameUIManager;
+    private GameStateHandler gameStateHandler;
+
     [SerializeField] private float speed;
 
     [SerializeField] private float siphonCooldown;
@@ -13,18 +22,12 @@ public class PlayerController : NetworkBehaviour
 
     [SerializeField] private int treasureThresholdForBeacon;
 
-    private NetworkCharacterController characterController;
-    private StepsSoundController stepsSoundController;
-    private TreasureHolder treasureHolder;
-    private StunEntity stunEntity;
     public Animator animator;
 
     [SerializeField]private GameObject[] skins;
 
     [Networked] public int skin { get; set; } = -1;
 
-    private MainSoundController mainSoundController;
-    private GameUIManager gameUIManager;
 
     [SerializeField] private TargetColliderTrigger targetColliderTrigger;
     [SerializeField] StepsSoundController soundController;
@@ -53,7 +56,10 @@ public class PlayerController : NetworkBehaviour
         stepsSoundController = GetComponent<StepsSoundController>();
         treasureHolder = GetComponent<TreasureHolder>();
         stunEntity = GetComponent<StunEntity>();
-        mainSoundController = GameObject.Find("MainSoundController").GetComponent<MainSoundController>();
+
+        gameSceneManager = FindObjectOfType<GameSceneManager>();
+        mainSoundController = FindObjectOfType<MainSoundController>();
+        gameStateHandler = FindObjectOfType<GameStateHandler>();
     }
 
     void Start()
@@ -75,15 +81,14 @@ public class PlayerController : NetworkBehaviour
     {
         base.Spawned();
 
-        var manager=GameObject.Find("SceneManager").GetComponent<GameSceneManager>();
-        manager.AddToDirectory(Object.InputAuthority, Object);
+        gameSceneManager.AddToDirectory(Object.InputAuthority, Object);
 
         if (Object.HasInputAuthority)
         {
-            manager.RetrieveName(this);
+            gameSceneManager.RetrieveName(this);
         }
 
-        manager.RetrieveSkin(Object.InputAuthority, this);
+        gameSceneManager.RetrieveSkin(Object.InputAuthority, this);
     }
 
     public override void FixedUpdateNetwork()
@@ -93,8 +98,21 @@ public class PlayerController : NetworkBehaviour
         if (stunEntity.IsStunned()) return;
         
         Move(input.Buttons);
-        Siphon(input.Buttons);
         Stun(input.Buttons);
+
+        if (gameStateHandler.GameStarted)
+        {
+            Siphon(input.Buttons);
+        } else if (Object.HasStateAuthority)
+        {
+            StartGame(input.Buttons);
+        }
+    }
+
+    private void StartGame(NetworkButtons buttons)
+    {
+        if (buttons.IsSet(PirateButtons.StartGame))
+            gameStateHandler.StartGame();
     }
 
     public void ApplySkin()
