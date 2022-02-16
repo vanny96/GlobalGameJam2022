@@ -236,6 +236,8 @@ public class PlayerController : NetworkBehaviour
             NetworkObject personalPlayer = FindObjectOfType<GameSceneManager>().GetMyPlayerObject();
             StartBuildLine(personalPlayer.transform, this.transform);
         }
+
+        mainSoundController.PlayerIsBeacon();
     }
 
     [Rpc(sources: RpcSources.StateAuthority, targets: RpcTargets.All)]
@@ -257,6 +259,7 @@ public class PlayerController : NetworkBehaviour
     {
         gameUIManager.BroadcastMessage(playerName + " is about to die!!");
         gameUIManager.ShowVignette();
+        mainSoundController.PlayerInDanger();
     }
 
     [Rpc(sources: RpcSources.StateAuthority, targets: RpcTargets.All)]

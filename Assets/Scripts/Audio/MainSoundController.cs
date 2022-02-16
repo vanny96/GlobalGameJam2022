@@ -11,6 +11,7 @@ public class MainSoundController : MonoBehaviour
     [SerializeField] private AudioClip[] shanty1;
     [SerializeField] private AudioClip[] shanty2;
     [SerializeField] private AudioClip[] shanty3;
+    [SerializeField] private AudioClip[] shanty4;
     private Dictionary<int, AudioClip[]> shantyMap;
 
     //Audio Sources
@@ -19,6 +20,8 @@ public class MainSoundController : MonoBehaviour
     [SerializeField] private AudioSource ghostLockOn;
     [SerializeField] private AudioSource coinSteal;
     [SerializeField] private AudioSource music;
+    [SerializeField] private AudioSource playerDanger;
+    [SerializeField] private AudioSource playerBeacon;
 
     [SerializeField] private GameSceneManager gameSceneManager;
 
@@ -29,7 +32,8 @@ public class MainSoundController : MonoBehaviour
             {
                 {0, shanty1 },
                 {1, shanty2 },
-                {2, shanty3 }
+                {2, shanty3 },
+                {3, shanty4 }
             };
     }
 
@@ -89,5 +93,15 @@ public class MainSoundController : MonoBehaviour
     public void CoinSteal()
     {
         this.coinSteal.Play();
+    }
+
+    public void PlayerInDanger()
+    {
+        this.playerDanger.Play();
+    }
+
+    public void PlayerIsBeacon()
+    {
+        this.playerBeacon.Play();
     }
 }
