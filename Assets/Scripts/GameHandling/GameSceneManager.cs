@@ -28,6 +28,10 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     private Dictionary<PlayerRef, int> playerSkins = new Dictionary<PlayerRef, int>();
     private IEnumerable<Bounds> ghostsSpawnAreas;
 
+    public GameObject Ship;
+
+    public Camera MainCam;
+    public Camera CutsceneCam;
 
     void Awake()
     {
@@ -55,6 +59,9 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         {
             gameUI.SetActive(false);
         }
+        MainCam = Camera.main;
+        MainCam.enabled = true;
+        CutsceneCam.enabled = false;
     }
 
 
@@ -63,7 +70,17 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
         Transform[] spawnLocations = spawnLocationsHolder.GetComponentsInChildren<Transform>();
         int numberOfPlayers = spawnedCharacters.Count;
 
-        runner.Spawn(playerPrefab, spawnLocations[numberOfPlayers].position, Quaternion.identity, player);
+        runner.Spawn(playerPrefab, Vector3.zero, Quaternion.identity, player);
+        spawnedCharacters[player].GetComponent<Rigidbody>().isKinematic = true;
+        spawnedCharacters[player].GetComponentInChildren<BoxCollider>().enabled = false;
+
+        var player_transform = spawnedCharacters[player].transform;
+        
+        player_transform.parent = spawnLocations[numberOfPlayers];
+        player_transform.localPosition = Vector3.zero;
+        
+
+        SwitchMainCamera(false);
 
         if (startScreen != null)
         {
@@ -104,7 +121,6 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
             }
         }
 
-        FindObjectOfType<VictoryDetection>().networkRunner = runner;
         runner.Spawn(gameStateHandlerPrefab, Vector3.zero);
     }
 
@@ -165,6 +181,20 @@ public class GameSceneManager : SimulationBehaviour, INetworkRunnerCallbacks
     {
         player.RPC_UpdatePlayerName(playerNameUI.text);
     }
+
+    public void SwitchMainCamera(bool cam)
+    {
+        if ( cam)
+        {
+            MainCam.enabled = true;
+        }
+
+        else if (!cam)
+        {
+            MainCam.enabled = false;
+        }
+    }
+
 
     public void OnInputMissing(NetworkRunner runner, PlayerRef player, NetworkInput input) { }
     public void OnShutdown(NetworkRunner runner, ShutdownReason shutdownReason) { }

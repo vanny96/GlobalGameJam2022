@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using Fusion;
 using System.Linq;
+using System.Collections;
 using TMPro;
 
 public class PlayerController : NetworkBehaviour
@@ -50,6 +51,11 @@ public class PlayerController : NetworkBehaviour
 
     [SerializeField] private GameObject lineBuilder;
 
+    private Animator cutscene_animator;
+    private float cutscene_currentClipLength;
+
+    public bool canMove = true;
+
     void Awake()
     {
         characterController = GetComponent<NetworkCharacterController>();
@@ -64,17 +70,23 @@ public class PlayerController : NetworkBehaviour
 
     void Start()
     {
+        cutscene_animator = gameSceneManager.Ship.GetComponent<Animator>();
+
         wasMoving = true;
 
         if (Object.HasInputAuthority)
         {
             gameObject.AddComponent<AudioListener>();
-            Destroy(FindObjectOfType<Camera>().GetComponent<AudioListener>());
+            Destroy(gameSceneManager.MainCam.GetComponent<AudioListener>());
 
             mainSoundController.musicPlay();
         }
 
+        cutscene_animator.SetTrigger("Lobby");
+
         gameUIManager = FindObjectOfType<GameUIManager>();
+        gameUIManager.BroadcastMessage("When ye crew be ready, the Captain must press Enter");
+        canMove = false;
     }
 
     public override void Spawned()
@@ -89,7 +101,7 @@ public class PlayerController : NetworkBehaviour
         }
 
         gameSceneManager.RetrieveSkin(Object.InputAuthority, this);
-    }
+     }
 
     public override void FixedUpdateNetwork()
     {
@@ -103,16 +115,71 @@ public class PlayerController : NetworkBehaviour
         if (gameStateHandler.GameStarted)
         {
             Siphon(input.Buttons);
-        } else if (Object.HasStateAuthority)
+        }
+        
+        else if (Object.HasStateAuthority)
         {
             StartGame(input.Buttons);
         }
     }
 
+
+
+    IEnumerator StartCutcene(string cutscene, bool game_over, bool win)
+    {
+        if (canMove)
+        {
+            canMove = false;
+        }
+
+        cutscene_animator.SetTrigger(cutscene);
+        cutscene_currentClipLength = cutscene_animator.GetCurrentAnimatorClipInfo(0)[0].clip.length;
+
+        gameSceneManager.SwitchMainCamera(false);
+
+        yield return new WaitForSecondsRealtime(cutscene_currentClipLength - 1f);
+
+        gameSceneManager.SwitchMainCamera(true);
+
+        if (transform.parent != null && win != true && game_over != true)
+        {
+            var pos = transform.parent.position;
+            transform.parent = null;
+            transform.position = pos;
+
+            canMove = true;
+
+            GetComponentInChildren<BoxCollider>().enabled = true;
+
+            bool kinematic = GetComponent<Rigidbody>().isKinematic;
+
+            if (kinematic)
+            {
+                GetComponent<Rigidbody>().isKinematic = false;
+            }
+        }
+
+        yield return new WaitForSecondsRealtime(3);
+
+        if (win)
+        {
+            RPC_CallWinner();
+        }
+
+        if (game_over)
+        {
+            RPC_CallGameOver();
+        }
+    }
+
+
+
     private void StartGame(NetworkButtons buttons)
     {
         if (buttons.IsSet(PirateButtons.StartGame))
         {
+            StartCoroutine(StartCutcene("Start", false, false));
+
             gameStateHandler.StartGame();
             RPC_StartGameMessage();
         }
@@ -121,7 +188,7 @@ public class PlayerController : NetworkBehaviour
     [Rpc(sources: RpcSources.StateAuthority, targets: RpcTargets.All)]
     private void RPC_StartGameMessage()
     {
-        gameUIManager.BroadcastMessage("Treasure hunt is open!");
+        gameUIManager.BroadcastMessage("Pieces of eight! No Prey, no Pay!");
     }
 
     public void ApplySkin()
@@ -219,13 +286,28 @@ public class PlayerController : NetworkBehaviour
         emission.rateOverTime = treasureHolder.treasure;
 
         if (treasureHolder.treasure == 0)
-            RPC_CallGameOver();
+        {
+            StartCoroutine(StartCutcene("Lose", true, false));
+        }
     }
+
+    public void Win()
+    {
+        canMove = false;
+
+        UpdateAnimation(new Vector3(-2, -2, -2), false);
+        UpdateSoundController(false, wasMoving);
+
+        isBeacon = false;
+
+        StartCoroutine(StartCutcene("Win", false, true));
+    }
+
 
     [Rpc(sources: RpcSources.StateAuthority, targets: RpcTargets.All)]
     public void RPC_NotifyBeacon()
     {
-        gameUIManager.BroadcastMessage(playerName + " got the beacon");
+        gameUIManager.BroadcastMessage(playerName + " has enough booty escape!");
 
         if (Object.HasInputAuthority)
         {
@@ -257,7 +339,7 @@ public class PlayerController : NetworkBehaviour
     [Rpc(sources: RpcSources.StateAuthority, targets: RpcTargets.All)]
     public void RPC_NotifyLowHealth()
     {
-        gameUIManager.BroadcastMessage(playerName + " is about to die!!");
+        gameUIManager.BroadcastMessage("Avast! " + playerName + " is runnin' low on doubloons!");
         gameUIManager.ShowVignette();
         mainSoundController.PlayerInDanger();
     }
@@ -277,30 +359,40 @@ public class PlayerController : NetworkBehaviour
     }
 
     [Rpc(sources: RpcSources.All, targets: RpcTargets.StateAuthority)]
+
     private void RPC_CallGameOver()
     {
         Runner.SetActiveScene(1);
     }
 
+    [Rpc(sources: RpcSources.All, targets: RpcTargets.StateAuthority)]
+
+    private void RPC_CallWinner()
+    {
+        Runner.SetActiveScene(2);
+    }
+
     private void Move(NetworkButtons buttons)
     {
-        Vector3 movement = new Vector3();
+        if (canMove)
+        {
+            Vector3 movement = new Vector3();
 
-        if (buttons.IsSet(PirateButtons.Forward)) movement.z++;
-        if (buttons.IsSet(PirateButtons.Backward)) movement.z--;
-        if (buttons.IsSet(PirateButtons.Right)) movement.x++;
-        if (buttons.IsSet(PirateButtons.Left)) movement.x--;
+            if (buttons.IsSet(PirateButtons.Forward)) movement.z++;
+            if (buttons.IsSet(PirateButtons.Backward)) movement.z--;
+            if (buttons.IsSet(PirateButtons.Right)) movement.x++;
+            if (buttons.IsSet(PirateButtons.Left)) movement.x--;
 
-        bool isMoving = movement != Vector3.zero;
+            bool isMoving = movement != Vector3.zero;
 
-        movement.Normalize();
-        characterController.Velocity = new Vector3(characterController.Velocity.x, 0, characterController.Velocity.z);
-        UpdateSoundController(isMoving, wasMoving);
-        characterController.Move( movement);
-        UpdateAnimation(movement, isMoving);
-        
-        wasMoving = isMoving;
-        
+            movement.Normalize();
+            characterController.Velocity = new Vector3(characterController.Velocity.x, 0, characterController.Velocity.z);
+            UpdateSoundController(isMoving, wasMoving);
+            characterController.Move(movement);
+            UpdateAnimation(movement, isMoving);
+
+            wasMoving = isMoving;
+        }
     }
 
     private void UpdateAnimation(Vector3 direction, bool moving)
@@ -332,7 +424,7 @@ public class PlayerController : NetworkBehaviour
         {
             if (stealing)
             {
-                animator.SetTrigger("Steal");
+                animator.SetTrigger(Steal);
                 currentSiphonCooldown = siphonCooldown;
 
                 treasureHolder.MoveMoney(targetTreasureHolder, treasureHolder);
