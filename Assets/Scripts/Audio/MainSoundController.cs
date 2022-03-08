@@ -22,6 +22,7 @@ public class MainSoundController : MonoBehaviour
     [SerializeField] private AudioSource music;
     [SerializeField] private AudioSource playerDanger;
     [SerializeField] private AudioSource playerBeacon;
+    [SerializeField] private AudioSource instructionOpen;
 
     [SerializeField] private GameSceneManager gameSceneManager;
 
@@ -104,4 +105,10 @@ public class MainSoundController : MonoBehaviour
     {
         this.playerBeacon.Play();
     }
+
+    public void InstructionMenuOpen()
+    {
+        this.instructionOpen.Play();
+    }
+
 }
